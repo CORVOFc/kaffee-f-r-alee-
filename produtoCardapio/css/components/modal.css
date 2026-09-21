@@ -1,0 +1,149 @@
+/* ============================================================
+   MODAL.CSS - Estilos do modal flutuante
+   ============================================================ */
+
+   .sobreposicao-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+  
+  .sobreposicao-modal.ativo {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .caixa-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: #f1d79f;
+    border-radius: 25px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    max-width: 480px;
+    width: 90%;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    border: 6px solid #3d2817;
+  }
+  
+  .caixa-modal.ativo {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .botao-fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #3d2817;
+    color: #f1d79f;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .botao-fechar-modal:hover {
+    transform: scale(1.1);
+  }
+  
+  .container-img-modal {
+    width: 100%;
+    height: 280px;
+  }
+  
+  .container-img-modal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .info-modal {
+    padding: 30px;
+    text-align: center;
+    color: #3d2817;
+  }
+  
+  .info-modal h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  
+  .info-modal p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }
+  
+  .preco-modal {
+    font-family: 'TAN-NIMBUS', serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    display: block;
+  }
+  
+  .botao-adicionar {
+    background-color: #3d2817;
+    color: #f1d79f;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 12px;
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease;
+  }
+  
+  .botao-adicionar:hover {
+    background-color: #5d2a16;
+    transform: translateY(-3px);
+  }
+  
+  @media (max-width: 600px) {
+    .caixa-modal {
+      width: 95%;
+      max-width: 95%;
+    }
+  
+    .container-img-modal {
+      height: 200px;
+    }
+  
+    .info-modal {
+      padding: 20px;
+    }
+  
+    .info-modal h2 {
+      font-size: 22px;
+    }
+  
+    .botao-adicionar {
+      padding: 12px 30px;
+      font-size: 16px;
+    }
+  }

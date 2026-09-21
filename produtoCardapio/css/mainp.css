@@ -1,0 +1,401 @@
+/* ============================================================
+   MAIN.CSS - Estilos globais do Kaffee Für Alle
+   Unifica styles.css + cafe.central.css
+   ============================================================ */
+
+/* ===== FONTES ===== */
+@font-face {
+    font-family: 'TAN-NIMBUS';
+    src: url('../fonts/TAN-NIMBUS.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* ===== RESET E BASE ===== */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    width: 100%;
+    min-height: 100%;
+  }
+  
+  body {
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #4c1f0a;
+    font-family: 'Quicksand', sans-serif;
+    color: #f6eadf;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+        /* Cabeçalho Principal */
+        .cabecalho {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1px 35px;
+          background-color: #4c1f0a;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          flex-wrap: nowrap; /* Mantém logo e ícones nas pontas */
+      }
+
+      /* Lado esquerdo: Logo Fixa */
+      .logo {
+          
+          margin-left: -75px;
+          height: 100px;
+      }
+
+      .logo img {
+          width: clamp(190px, 40vw, 260px);
+          height: 100%;
+          display: block;
+      }
+
+      /* Centro: Barra de Navegação (Pílula) */
+      .menu-container {
+          flex-grow: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          
+          min-width: 0; /* Permite que o container encolha */
+      }
+
+      .menu {
+          display: flex;
+          align-items: center;
+          gap: clamp(8px, 2vw, 30px); /* Espaçamento entre itens que diminui com a tela */
+          border: 2px solid #c97b5a;
+          padding: 6px 22px;
+          border-radius: 40px;
+          background: #5a220c;
+          box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+          max-width: 100%;
+          overflow-x: auto; /* Permite rolagem se o conteúdo for maior que a tela em celulares pequenos */
+          scrollbar-width: none; /* Esconde barra de rolagem no Firefox */
+          -ms-overflow-style: none; /* Esconde barra de rolagem no IE/Edge */
+      }
+
+      .menu::-webkit-scrollbar {
+          display: none; /* Esconde barra de rolagem no Chrome/Safari */
+      }
+
+      .menu a {
+          color: #f5d6c6;
+          text-decoration: none;
+          font-family: 'Cinzel Decorative', serif;
+          font-size: clamp(18px, 5vw, 19px); /* Fonte que se ajusta ao tamanho da tela */
+          font-weight: 900;
+          transition: color 0.2s, transform 0.2s;
+          white-space: nowrap;
+      }
+
+      .menu a:hover {
+          color: #ffffff;
+          transform: translateY(-1px);
+      }
+
+      /* Barra de Pesquisa dentro da Pílula */
+      .BarraPesquisa {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+      }
+
+      .texto {
+          background: none;
+          border: 0;
+          outline: 0;
+          width: 0;
+          padding: 0;
+          transition: 0.4s;
+          color: #ffffff;
+          
+          font-family: 'Cinzel Decorative', serif;
+      }
+
+      .botao {
+          background: none;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+      }
+
+      .botao img {
+          height: clamp(16px, 120vw, 30px);
+          width: auto;
+         
+      }
+
+      .BarraPesquisa:hover > .texto,
+      .texto:focus {
+          width: clamp(60px, 8vw, 100px);
+          padding: 2px 8px;
+          border: 1px solid #c97b5a;
+          border-radius: 15px;
+          background: rgba(43, 17, 5, 0.7);
+          margin-right: 5px;
+      }
+
+      /* Lado direito: Ícones Fixos */
+      .icones {
+          display: flex;
+          gap: clamp(10px, 1.5vw, 20px);
+          align-items: center;
+          flex-shrink: 0;
+          z-index: 10;
+      }
+
+      .icones img {
+          width: clamp(20px, 2vw, 26px);
+          height: auto;
+          
+          transition: transform 0.2s;
+      }
+
+      .icones img:hover {
+          transform: scale(1.15);
+      }
+
+  /* ===== CONTEÚDO PRINCIPAL ===== */
+  .conteudo {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+    padding: 26px 4vw 40px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .card {
+    min-height: 330px;
+    background: #f3eadf;
+    color: #3e241a;
+    border: 4px solid #a96a4c;
+    border-radius: 22px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 2px 0 rgba(0,0,0,.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  }
+  
+  .card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 2vw, 2.3rem);
+    margin-bottom: 22px;
+    border-bottom: 4px solid #a96a4c;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  
+  .ilustra {
+    width: 150px;
+    height: 180px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+  
+  .ilustra-bebidas {
+    background-image: url("../img/bebida.png");
+  }
+  
+  .ilustra-salgados {
+    background-image: url("../img/salgados.png");
+  }
+  
+  .ilustra-doces {
+    background-image: url("../img/doce.png");
+  }
+  
+  .ilustra-paes {
+    background-image: url("../img/paes.png");
+  }
+  
+  /* ===== CATEGORIAS ===== */
+  .categorias {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    padding: 0 4vw 38px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .categorias article {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 18px;
+    padding: 18px 16px;
+    min-height: 120px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .categorias article:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-3px);
+  }
+  
+  .categorias h3 {
+    font-family: 'Cinzel', serif;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+  
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: auto;
+    padding: 0 24px 32px;
+    width: 100%;
+  }
+  
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .divider {
+    border-top: 1px solid #262626;
+  }
+  
+  .divider-dashed {
+    border-top: 1px dashed #333;
+    margin-top: 48px;
+  }
+  
+  .brand-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 48px;
+  }
+  
+  .brand-name {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .nav {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 32px;
+  }
+  
+  .nav a {
+    color: #d4d4d4;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .2s;
+  }
+  
+  .nav a:hover {
+    color: #fff;
+  }
+  
+  .bottom {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .copyright {
+    color: #737373;
+    font-size: 14px;
+  }
+  
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 24px;
+  }
+  
+  .socials a {
+    color: #a3a3a3;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color .2s;
+  }
+  
+  .socials a:hover {
+    color: #fff;
+  }
+  
+  /* ===== RESPONSIVO ===== */
+  @media (max-width: 1100px) {
+    .conteudo,
+    .categorias {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (max-width: 720px) {
+    .cabecalho {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .menu {
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  
+    .conteudo,
+    .categorias {
+      grid-template-columns: 1fr;
+    }
+  
+    .card {
+      min-height: 280px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    body {
+      padding: 10px;
+    }
+  
+    .menu a {
+      font-size: 14px;
+    }
+  
+    .logo img {
+      width: 180px;
+      height: auto;
+      margin-left: 0;
+    }
+  }
