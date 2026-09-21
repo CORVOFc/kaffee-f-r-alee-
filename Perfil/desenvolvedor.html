@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>Diário técnico — Perfil do desenvolvedor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos-perfis.css">
+  <script>
+    (function () {
+      try {
+        document.documentElement.classList.toggle('modo-claro', localStorage.getItem('kaffe_perfil_tema') === 'claro');
+      } catch (erro) {}
+    })();
+  </script>
+</head>
+<body data-perfil="desenvolvedor" data-tipo-permitido="desenvolvedor" data-pagina-login="../cadastro/login.html">
+  <div class="fundo-jornal" aria-hidden="true"></div>
+  <div class="pagina-perfil">
+    <header class="cabecalho-perfil">
+      <div class="marca-perfil">
+        <span class="marca-simbolo" aria-hidden="true">K</span>
+        <span>
+          <strong class="marca-nome">Kaffee Für Alle</strong>
+          <small class="marca-edicao">Diário técnico</small>
+        </span>
+      </div>
+      <div class="acoes-cabecalho">
+        <button class="botao-tema" id="botao-tema" type="button" data-acao="alternar-tema" aria-pressed="false">Modo claro</button>
+        <button class="botao-sair" id="botao-sair" type="button" data-acao="sair">Sair</button>
+      </div>
+    </header>
+
+    <main class="conteudo-perfil">
+      <section class="manchete-perfil" aria-labelledby="titulo-desenvolvedor">
+        <article class="manchete-conteudo">
+          <span class="manchete-rotulo">Edição de integração</span>
+          <h1 class="manchete-titulo" id="titulo-desenvolvedor">Olá, <span data-nome-usuario>Desenvolvedor</span>.</h1>
+          <p class="manchete-texto">Uma visão técnica e direta dos serviços que sustentam o catálogo, o carrinho e a leitura do projeto.</p>
+          <div class="manchete-acao">
+            <button class="botao-primario" type="button" data-abrir-modal data-modal-alvo="modal-registro">Registrar ocorrência</button>
+            <button class="botao-secundario" type="button" data-acao="copiar-texto" data-copiar="https://sldvrltkeatmjdpbtrpe.supabase.co">Copiar endereço da API</button>
+          </div>
+        </article>
+        <aside class="manchete-lateral">
+          <div>
+            <span class="manchete-rotulo">Serviço principal</span>
+            <strong class="manchete-numero"><span class="tag-jornal tag-sucesso">Ativo</span></strong>
+            <span class="manchete-data">Autenticação e dados</span>
+          </div>
+          <p class="manchete-resumo">Use os controles para simular e registrar o estado da integração.</p>
+          <button class="botao-secundario" type="button" data-abrir-modal>Editar perfil</button>
+        </aside>
+      </section>
+
+      <section class="grade-perfil grade-tres" aria-label="Indicadores técnicos">
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Banco</span>
+          <strong class="resumo-numero">Supabase</strong>
+          <span class="resumo-mudanca">Conectado</span>
+        </article>
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Catálogo</span>
+          <strong class="resumo-numero">Produtos</strong>
+          <span class="resumo-mudanca">Sincronizado</span>
+        </article>
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Carrinho</span>
+          <strong class="resumo-numero">Local</strong>
+          <span class="resumo-mudanca">Em uso</span>
+        </article>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Serviços e registros">
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Painel de serviços</span>
+              <h2 class="painel-titulo">Integrações do projeto</h2>
+            </div>
+            <span class="tag-jornal tag-sucesso">3 serviços</span>
+          </div>
+          <div class="lista-jornal">
+            <div class="servico-jornal">
+              <span class="servico-indicador">S</span>
+              <div class="item-conteudo"><strong class="servico-nome">Supabase</strong><span class="servico-detalhe">Dados e autenticação</span></div>
+              <div class="servico-acao"><button class="interruptor-servico" type="button" data-acao="alternar-servico" aria-pressed="true" aria-label="Ativar ou pausar Supabase"></button><span class="item-detalhe" data-status-servico>Ativo</span></div>
+            </div>
+            <div class="servico-jornal">
+              <span class="servico-indicador">C</span>
+              <div class="item-conteudo"><strong class="servico-nome">Catálogo</strong><span class="servico-detalhe">Cardápio e produtos</span></div>
+              <div class="servico-acao"><button class="interruptor-servico" type="button" data-acao="alternar-servico" aria-pressed="true" aria-label="Ativar ou pausar catálogo"></button><span class="item-detalhe" data-status-servico>Ativo</span></div>
+            </div>
+            <div class="servico-jornal">
+              <span class="servico-indicador">P</span>
+              <div class="item-conteudo"><strong class="servico-nome">Pedidos</strong><span class="servico-detalhe">Carrinho e retirada</span></div>
+              <div class="servico-acao"><button class="interruptor-servico" type="button" data-acao="alternar-servico" aria-pressed="true" aria-label="Ativar ou pausar pedidos"></button><span class="item-detalhe" data-status-servico>Ativo</span></div>
+            </div>
+          </div>
+          <div class="diagnostico"><strong>Diagnóstico rápido</strong><span class="diagnostico-conteudo" id="diagnostico-servicos">Autenticação, catálogo e carrinho disponíveis para teste local.</span></div>
+        </article>
+
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Diário de bordo</span>
+              <h2 class="painel-titulo">Registros técnicos</h2>
+            </div>
+            <button class="botao-secundario" type="button" data-acao="limpar-registros">Limpar registros</button>
+          </div>
+          <div class="lista-jornal" id="lista-registros">
+            <div class="estado-vazio">Nenhum registro local. Use o formulário para criar uma entrada.</div>
+          </div>
+          <div style="margin-top:18px">
+            <button class="botao-primario" type="button" data-abrir-modal data-modal-alvo="modal-registro">Adicionar registro</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Acessos técnicos">
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Navegação técnica</span>
+              <h2 class="cartao-titulo">Abrir projeto</h2>
+            </div>
+            <span class="tag-jornal tag-ok">Links ativos</span>
+          </div>
+          <div class="lista-jornal">
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Cardápio</strong><span class="item-detalhe">Catálogo do cliente</span></div><div class="item-acao"><a class="botao-jornal" href="../cardapio.html">Abrir</a></div></div>
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Carrinho</strong><span class="item-detalhe">Fluxo de pedidos</span></div><div class="item-acao"><a class="botao-jornal" href="../Carrinho/carrinho.html">Abrir</a></div></div>
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Jornal</strong><span class="item-detalhe">Leitura e conteúdo</span></div><div class="item-acao"><a class="botao-jornal" href="../leitura.html">Abrir</a></div></div>
+          </div>
+        </article>
+
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Configuração pública</span>
+              <h2 class="cartao-titulo">Endereço da integração</h2>
+            </div>
+          </div>
+          <p class="texto-jornal">Endereço usado pelo cliente público do Supabase. A chave de serviço não fica exposta nesta página.</p>
+          <div class="diagnostico"><span class="codigo-diagnostico">https://sldvrltkeatmjdpbtrpe.supabase.co</span></div>
+          <div class="acoes-formulario">
+            <button class="botao-secundario" type="button" data-acao="copiar-texto" data-copiar="https://sldvrltkeatmjdpbtrpe.supabase.co">Copiar endereço</button>
+<button class="botao-secundario" type="button" data-abrir-modal data-modal-alvo="modal-perfil">Editar perfil</button>
+          </div>
+        </article>
+      </section>
+
+      <footer class="perfil-rodape">
+        <span>Perfil do desenvolvedor · Kaffee Für Alle</span>
+        <a href="../index.html">Voltar ao site</a>
+      </footer>
+    </main>
+  </div>
+
+  <div class="mensagem-perfil" id="mensagem-perfil" role="status" aria-live="polite"></div>
+
+  <dialog class="modal-jornal" id="modal-registro" aria-labelledby="titulo-registro">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" data-fechar-modal aria-label="Fechar">×</button>
+      <span class="etiqueta-jornal">Diário técnico</span>
+      <h2 class="modal-titulo" id="titulo-registro">Registrar ocorrência</h2>
+      <p class="texto-jornal">Crie uma entrada local para acompanhar uma ação ou teste.</p>
+      <form class="formulario-jornal" data-formulario-registro>
+        <label class="campo-jornal">Título<input name="titulo_registro" type="text" placeholder="Ex.: Catálogo verificado" required></label>
+        <label class="campo-jornal">Detalhe<textarea name="detalhe_registro" placeholder="Descreva o que foi verificado"></textarea></label>
+        <div class="acoes-formulario">
+          <button class="botao-secundario" type="button" data-fechar-modal>Cancelar</button>
+          <button class="botao-primario" type="submit">Salvar registro</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="modal-jornal" id="modal-perfil" aria-labelledby="titulo-perfil">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" data-fechar-modal aria-label="Fechar">×</button>
+      <span class="etiqueta-jornal">Minha conta</span>
+      <h2 class="modal-titulo" id="titulo-perfil">Editar perfil</h2>
+      <p class="texto-jornal">Atualize os dados usados neste perfil.</p>
+      <form class="formulario-jornal" id="formulario-perfil" data-formulario-perfil>
+        <label class="campo-jornal">Nome completo<input data-campo="nome" name="nome" type="text" value="Camila Souza" required></label>
+        <label class="campo-jornal">E-mail<input data-campo="email" name="email" type="email" value="camila.souza@email.com" required></label>
+        <label class="campo-jornal">Telefone<input data-campo="telefone" name="telefone" type="tel" value="(11) 97777-1122"></label>
+        <div class="acoes-formulario">
+          <button class="botao-secundario" type="button" data-fechar-modal>Cancelar</button>
+          <button class="botao-primario" type="submit">Salvar perfil</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/configuracao-supabase.js"></script>
+  <script src="../js/proteger-area.js"></script>
+  <script src="interacoes-perfis.js"></script>
+</body>
+</html>

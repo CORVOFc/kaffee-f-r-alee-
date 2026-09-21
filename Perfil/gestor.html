@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>Gestão — Perfil do gestor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos-perfis.css">
+  <script>
+    (function () {
+      try {
+        document.documentElement.classList.toggle('modo-claro', localStorage.getItem('kaffe_perfil_tema') === 'claro');
+      } catch (erro) {}
+    })();
+  </script>
+</head>
+<body data-perfil="gestor" data-tipo-permitido="gestor" data-pagina-login="../cadastro/login.html">
+  <div class="fundo-jornal" aria-hidden="true"></div>
+  <div class="pagina-perfil">
+    <header class="cabecalho-perfil">
+      <div class="marca-perfil">
+        <span class="marca-simbolo" aria-hidden="true">K</span>
+        <span>
+          <strong class="marca-nome">Kaffee Für Alle</strong>
+          <small class="marca-edicao">Edição da gestão</small>
+        </span>
+      </div>
+      <div class="acoes-cabecalho">
+        <button class="botao-tema" id="botao-tema" type="button" data-acao="alternar-tema" aria-pressed="false">Modo claro</button>
+        <button class="botao-sair" id="botao-sair" type="button" data-acao="sair">Sair</button>
+      </div>
+    </header>
+
+    <main class="conteudo-perfil">
+      <section class="manchete-perfil" aria-labelledby="titulo-gestor">
+        <article class="manchete-conteudo">
+          <span class="manchete-rotulo">Edição da operação</span>
+          <h1 class="manchete-titulo" id="titulo-gestor">Bom trabalho, <span data-nome-usuario>Gestor</span>.</h1>
+          <p class="manchete-texto">A operação do dia em uma página clara: unidade, pedidos, produtos e relatórios prontos para ação.</p>
+          <div class="manchete-acao">
+            <button class="botao-primario" type="button" data-acao="alternar-unidade" aria-pressed="true">Fechar unidade</button>
+            <button class="botao-secundario" type="button" data-abrir-modal data-modal-alvo="modal-produto">Registrar produto</button>
+          </div>
+        </article>
+        <aside class="manchete-lateral">
+          <div>
+            <span class="manchete-rotulo">Status da unidade</span>
+            <strong class="manchete-numero"><span id="status-unidade" class="tag-jornal tag-aberta">Aberta</span></strong>
+            <span class="manchete-data" id="texto-unidade">A operação está recebendo pedidos.</span>
+          </div>
+          <p class="manchete-resumo">Centro · atualização local</p>
+          <button class="botao-secundario" type="button" data-abrir-modal>Editar perfil</button>
+        </aside>
+      </section>
+
+      <section class="grade-perfil grade-tres" aria-label="Indicadores da gestão">
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Pedidos hoje</span>
+          <strong class="resumo-numero">84</strong>
+          <span class="resumo-mudanca">+12% ontem</span>
+        </article>
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Faturamento</span>
+          <strong class="resumo-numero">R$ 2.840</strong>
+          <span class="resumo-mudanca">+8,4% ontem</span>
+        </article>
+        <article class="cartao-jornal">
+          <span class="cabecalho-cartao-rotulo">Equipe ativa</span>
+          <strong class="resumo-numero">8</strong>
+          <span class="resumo-mudanca">2 em pausa</span>
+        </article>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Pedidos e produtos">
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Balanço do balcão</span>
+              <h2 class="painel-titulo">Pedidos em andamento</h2>
+            </div>
+            <button class="botao-secundario" type="button" data-acao="baixar-relatorio">Baixar relatório</button>
+          </div>
+          <label class="campo-jornal">Buscar pedido<input class="campo-busca-gestor" data-filtro-pedidos type="search" placeholder="Número, cliente ou status"></label>
+          <p class="materia-meta" id="resultado-pedidos">4 pedido(s) encontrado(s).</p>
+          <div style="overflow-x:auto">
+            <table class="tabela-jornal">
+              <thead>
+                <tr><th>Pedido</th><th>Cliente</th><th>Itens</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr data-linha-pedido><td>#2481</td><td>Marina Costa</td><td>2</td><td class="celula-status"><button class="tag-jornal tag-atencao" type="button" data-acao="atualizar-status" data-status-atual="Preparando">Preparando</button></td></tr>
+                <tr data-linha-pedido><td>#2480</td><td>Lucas Almeida</td><td>1</td><td class="celula-status"><button class="tag-jornal tag-aberta" type="button" data-acao="atualizar-status" data-status-atual="Pronto">Pronto</button></td></tr>
+                <tr data-linha-pedido><td>#2479</td><td>Bianca Reis</td><td>4</td><td class="celula-status"><button class="tag-jornal tag-atencao" type="button" data-acao="atualizar-status" data-status-atual="Preparando">Preparando</button></td></tr>
+                <tr data-linha-pedido><td>#2478</td><td>Diego Fernandes</td><td>2</td><td class="celula-status"><button class="tag-jornal tag-sucesso" type="button" data-acao="atualizar-status" data-status-atual="Retirado">Retirado</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Edição do estoque</span>
+              <h2 class="painel-titulo">Produtos registrados</h2>
+            </div>
+            <a class="botao-jornal" href="../cardapio.html">Abrir cardápio</a>
+          </div>
+          <div class="lista-jornal" id="lista-produtos-gestor">
+            <div class="estado-vazio">Nenhum produto local registrado.</div>
+          </div>
+          <div style="margin-top:18px">
+            <a class="botao-jornal" href="../Carrinho/carrinho.html">Ver carrinho da unidade</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Ações da gestão">
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Fechamento</span>
+              <h2 class="cartao-titulo">Relatórios disponíveis</h2>
+            </div>
+            <span class="tag-jornal tag-sucesso">Pronto</span>
+          </div>
+          <div class="lista-jornal">
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Vendas do dia</strong><span class="item-detalhe">CSV com pedidos filtrados</span></div><div class="item-acao"><button class="botao-secundario" type="button" data-acao="baixar-relatorio">Baixar</button></div></div>
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Cardápio ativo</strong><span class="item-detalhe">Abre a página de produtos</span></div><div class="item-acao"><a class="botao-jornal" href="../cardapio.html">Abrir</a></div></div>
+            <div class="item-jornal"><div class="item-conteudo"><strong class="item-titulo">Retornos ao site</strong><span class="item-detalhe">Volta à página inicial</span></div><div class="item-acao"><a class="botao-jornal" href="../index.html">Abrir</a></div></div>
+          </div>
+        </article>
+
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Acesso rápido</span>
+              <h2 class="cartao-titulo">Próxima ação</h2>
+            </div>
+          </div>
+          <p class="texto-jornal">Use o formulário para incluir um produto na edição local do gestor. O registro fica disponível nesta página.</p>
+          <div class="acoes-formulario">
+            <button class="botao-primario" type="button" data-abrir-modal data-modal-alvo="modal-produto">Registrar produto</button>
+<button class="botao-secundario" type="button" data-abrir-modal data-modal-alvo="modal-perfil">Editar perfil</button>
+          </div>
+        </article>
+      </section>
+
+      <footer class="perfil-rodape">
+        <span>Perfil do gestor · Kaffee Für Alle</span>
+        <a href="../index.html">Voltar ao site</a>
+      </footer>
+    </main>
+  </div>
+
+  <div class="mensagem-perfil" id="mensagem-perfil" role="status" aria-live="polite"></div>
+
+  <dialog class="modal-jornal" id="modal-produto" aria-labelledby="titulo-produto">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" data-fechar-modal aria-label="Fechar">×</button>
+      <span class="etiqueta-jornal">Gestão de produtos</span>
+      <h2 class="modal-titulo" id="titulo-produto">Registrar produto</h2>
+      <p class="texto-jornal">Adicione uma entrada à edição local da unidade.</p>
+      <form class="formulario-jornal" data-formulario-produto>
+        <label class="campo-jornal">Nome do produto<input name="nome_produto" type="text" placeholder="Ex.: Café coado" required></label>
+        <label class="campo-jornal">Categoria<select name="categoria_produto" required><option value="">Escolha uma categoria</option><option>Bebida</option><option>Pão</option><option>Doce</option><option>Salgado</option></select></label>
+        <label class="campo-jornal">Preço<input name="preco_produto" type="number" min="0" step="0.01" placeholder="0.00" required></label>
+        <label class="campo-jornal">Estoque inicial<input name="estoque_produto" type="number" min="0" step="1" value="10" required></label>
+        <div class="acoes-formulario">
+          <button class="botao-secundario" type="button" data-fechar-modal>Cancelar</button>
+          <button class="botao-primario" type="submit">Salvar produto</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="modal-jornal" id="modal-perfil" aria-labelledby="titulo-perfil">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" data-fechar-modal aria-label="Fechar">×</button>
+      <span class="etiqueta-jornal">Minha conta</span>
+      <h2 class="modal-titulo" id="titulo-perfil">Editar perfil</h2>
+      <p class="texto-jornal">Atualize os dados usados neste perfil.</p>
+      <form class="formulario-jornal" id="formulario-perfil" data-formulario-perfil>
+        <label class="campo-jornal">Nome completo<input data-campo="nome" name="nome" type="text" value="Rafael Lima" required></label>
+        <label class="campo-jornal">E-mail<input data-campo="email" name="email" type="email" value="rafael.lima@email.com" required></label>
+        <label class="campo-jornal">Telefone<input data-campo="telefone" name="telefone" type="tel" value="(11) 99123-4567"></label>
+        <div class="acoes-formulario">
+          <button class="botao-secundario" type="button" data-fechar-modal>Cancelar</button>
+          <button class="botao-primario" type="submit">Salvar perfil</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/configuracao-supabase.js"></script>
+  <script src="../js/proteger-area.js"></script>
+  <script src="interacoes-perfis.js"></script>
+</body>
+</html>

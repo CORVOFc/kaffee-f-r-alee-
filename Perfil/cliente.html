@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>Meu café — Perfil do cliente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos-perfis.css">
+  <script>
+    (function () {
+      try {
+        document.documentElement.classList.toggle('modo-claro', localStorage.getItem('kaffe_perfil_tema') === 'claro');
+      } catch (erro) {}
+    })();
+  </script>
+</head>
+<body data-perfil="cliente" data-tipo-permitido="cliente" data-pagina-login="../cadastro/login.html">
+  <div class="fundo-jornal" aria-hidden="true"></div>
+  <div class="pagina-perfil">
+    <header class="cabecalho-perfil">
+      <div class="marca-perfil">
+        <span class="marca-simbolo" aria-hidden="true">K</span>
+        <span>
+          <strong class="marca-nome">Kaffee Für Alle</strong>
+          <small class="marca-edicao">Edição do cliente</small>
+        </span>
+      </div>
+      <div class="acoes-cabecalho">
+        <button class="botao-tema" id="botao-tema" type="button" data-acao="alternar-tema" aria-pressed="false">Modo claro</button>
+        <button class="botao-sair" id="botao-sair" type="button" data-acao="sair">Sair</button>
+      </div>
+    </header>
+
+    <main class="conteudo-perfil">
+      <section class="manchete-perfil" aria-labelledby="titulo-cliente">
+        <article class="manchete-conteudo">
+          <span class="manchete-rotulo">Sua pausa, sua edição</span>
+          <h1 class="manchete-titulo" id="titulo-cliente">Bom dia, <span data-nome-usuario>Leitor</span>.</h1>
+          <p class="manchete-texto">Seu pedido, seus favoritos e as histórias do dia estão reunidos em uma página feita para ser lida sem pressa.</p>
+          <div class="manchete-acao">
+            <a class="botao-primario" href="../cardapio.html">Fazer pedido</a>
+            <a class="botao-jornal" href="../Carrinho/carrinho.html">Ver carrinho <span id="contador-carrinho">0</span></a>
+          </div>
+        </article>
+        <aside class="manchete-lateral">
+          <div>
+            <span class="manchete-rotulo">Edição de hoje</span>
+            <strong class="manchete-numero">01</strong>
+            <span class="manchete-data">Café, leitura e bairro</span>
+          </div>
+          <p class="manchete-resumo">A casa está aberta para o seu próximo pedido.</p>
+          <button class="botao-secundario" type="button" data-abrir-modal data-modal-alvo="modal-perfil">Editar perfil</button>
+        </aside>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Resumo do cliente">
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Última notícia do balcão</span>
+              <h2 class="painel-titulo">Seu pedido em andamento</h2>
+            </div>
+            <button class="botao-secundario" type="button" data-acao="ver-detalhes" data-alvo="detalhes-pedido" aria-expanded="false">Ver detalhes</button>
+          </div>
+          <p class="texto-jornal">Pedido <strong>#2481</strong> · Retirada na loja · 10:35 às 10:45</p>
+          <div class="avanco-pedido" aria-label="Etapas do pedido">
+            <span class="etapa etapa-atual">Recebido</span>
+            <span class="etapa etapa-atual">Preparando</span>
+            <span class="etapa">Pronto</span>
+            <span class="etapa">Retirada</span>
+          </div>
+          <div class="pedido-resumo">
+            <div class="pedido-linha"><span>Capuccino de aveia</span><strong>R$ 14,90</strong></div>
+            <div class="pedido-linha"><span>Cookie de chocolate</span><strong>R$ 8,50</strong></div>
+            <div class="pedido-linha pedido-total"><span>Total</span><strong>R$ 23,40</strong></div>
+          </div>
+          <div class="detalhes-pedido oculto" id="detalhes-pedido">
+            <strong>Detalhes da retirada</strong>
+            <p class="materia-resumo">Apresente o número do pedido no balcão. A equipe avisará quando estiver pronto.</p>
+            <a class="botao-jornal" href="../Carrinho/carrinho.html">Acompanhar no carrinho</a>
+          </div>
+        </article>
+
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Programa de fidelidade</span>
+              <h2 class="cartao-titulo">Grãos de presença</h2>
+            </div>
+            <span class="tag-jornal tag-aberta">348 pontos</span>
+          </div>
+          <p class="texto-jornal">Faltam 52 grãos para o próximo mimo da casa.</p>
+          <div class="progresso-fidelidade">
+            <div class="barra-progresso"><span class="barra-preenchida" style="--progresso: 87%"></span></div>
+          </div>
+          <p class="materia-meta">87% até 400 grãos</p>
+          <a class="botao-jornal" href="../leitura.html">Ler o jornal</a>
+        </article>
+      </section>
+
+      <section class="grade-perfil grade-duas" aria-label="Favoritos e leitura">
+        <article class="painel-jornal">
+          <div class="cabecalho-painel">
+            <div>
+              <span class="cabecalho-painel-rotulo">Para pedir de novo</span>
+              <h2 class="painel-titulo">Favoritos da casa</h2>
+            </div>
+            <a class="botao-jornal" href="../cardapio.html">Ver cardápio</a>
+          </div>
+          <div class="grade-produtos">
+            <div class="produto-jornal">
+              <div class="item-conteudo">
+                <strong class="produto-nome">Capuccino de aveia</strong>
+                <span class="item-detalhe">R$ 14,90 · Bebida</span>
+              </div>
+              <div class="produto-acao">
+                <button class="botao-secundario" type="button" data-acao="adicionar-ao-carrinho" data-produto-identificador="capuccino-aveia" data-produto-nome="Capuccino de aveia" data-produto-preco="14.90" data-produto-tipo="Bebida">Adicionar</button>
+              </div>
+            </div>
+            <div class="produto-jornal">
+              <div class="item-conteudo">
+                <strong class="produto-nome">Cookie de chocolate</strong>
+                <span class="item-detalhe">R$ 8,50 · Doce</span>
+              </div>
+              <div class="produto-acao">
+                <button class="botao-secundario" type="button" data-acao="adicionar-ao-carrinho" data-produto-identificador="cookie-chocolate" data-produto-nome="Cookie de chocolate" data-produto-preco="8.50" data-produto-tipo="Doce">Adicionar</button>
+              </div>
+            </div>
+            <div class="produto-jornal">
+              <div class="item-conteudo">
+                <strong class="produto-nome">Pão na chapa</strong>
+                <span class="item-detalhe">R$ 10,00 · Pão</span>
+              </div>
+              <div class="produto-acao">
+                <button class="botao-secundario" type="button" data-acao="adicionar-ao-carrinho" data-produto-identificador="pao-na-chapa" data-produto-nome="Pão na chapa" data-produto-preco="10.00" data-produto-tipo="Pão">Adicionar</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="cartao-jornal">
+          <div class="cabecalho-cartao">
+            <div>
+              <span class="cabecalho-cartao-rotulo">Leitura da pausa</span>
+              <h2 class="cartao-titulo">Jornal do café</h2>
+            </div>
+            <span class="tag-jornal tag-sucesso">Hoje</span>
+          </div>
+          <div class="lista-jornal">
+            <a class="item-jornal" href="../leitura.html">
+              <span class="item-conteudo"><strong class="item-titulo">O ritual de coar café está de volta</strong><span class="item-detalhe">Cultura e sabor · 5 min</span></span>
+              <span class="item-acao"><span class="botao-jornal">Ler</span></span>
+            </a>
+            <a class="item-jornal" href="../leitura.html">
+              <span class="item-conteudo"><strong class="item-titulo">Pequenos produtores do Cerrado</strong><span class="item-detalhe">Origem · 3 min</span></span>
+              <span class="item-acao"><span class="botao-jornal">Ler</span></span>
+            </a>
+            <a class="item-jornal" href="../musica.html">
+              <span class="item-conteudo"><strong class="item-titulo">A playlist da manhã</strong><span class="item-detalhe">Som da casa · 42 músicas</span></span>
+              <span class="item-acao"><span class="botao-jornal">Ouvir</span></span>
+            </a>
+          </div>
+        </article>
+      </section>
+
+      <footer class="perfil-rodape">
+        <span>Perfil do cliente · Kaffee Für Alle</span>
+        <a href="../index.html">Voltar ao site</a>
+      </footer>
+    </main>
+  </div>
+
+  <div class="mensagem-perfil" id="mensagem-perfil" role="status" aria-live="polite"></div>
+
+  <dialog class="modal-jornal" id="modal-perfil" aria-labelledby="titulo-modal">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" data-fechar-modal aria-label="Fechar">×</button>
+      <span class="etiqueta-jornal">Minha conta</span>
+      <h2 class="modal-titulo" id="titulo-modal">Editar perfil</h2>
+      <p class="texto-jornal">Atualize os dados usados neste perfil.</p>
+      <form class="formulario-jornal" id="formulario-perfil" data-formulario-perfil>
+        <label class="campo-jornal">Nome completo<input data-campo="nome" name="nome" type="text" value="Marina Costa" required></label>
+        <label class="campo-jornal">E-mail<input data-campo="email" name="email" type="email" value="marina.costa@email.com" required></label>
+        <label class="campo-jornal">Telefone<input data-campo="telefone" name="telefone" type="tel" value="(11) 99821-4402"></label>
+        <div class="acoes-formulario">
+          <button class="botao-secundario" type="button" data-fechar-modal>Cancelar</button>
+          <button class="botao-primario" type="submit">Salvar perfil</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/configuracao-supabase.js"></script>
+  <script src="../js/proteger-area.js"></script>
+  <script src="interacoes-perfis.js"></script>
+</body>
+</html>

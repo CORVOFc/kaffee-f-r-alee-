@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#461706" />
+    <meta name="description" content="Carrinho da Cafeteria Alameda" />
+    <link rel="icon" type="image/png" href="/manus-storage/marca-xicara_87de9f30.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="carrinho.css" />
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/innicial.css">
+    <title>Seu Carrinho — Cafeteria Alameda</title>
+  </head>
+  <body>
+
+    
+    <header class="cabecalho">
+      <!-- Logo -->
+      <div class="logo">
+          <img src="../logs/Kaffee Für Alle hb.png" alt="Kaffee Für Alle Logo">
+      </div>
+
+      <!-- Menu de Navegação em Pílula -->
+      <nav class="menu">
+          <a href="../index.html">INICIO</a>
+          <a href="../cardapio.html">CARDAPIO</a>
+          <a href="../index.html #sobre">SOBRE NÓS</a>
+          <a href="../noticias.html">NOTICIAS</a>
+          <a href="../musica.html">MÚSICA</a>
+
+          <!-- Barra de Pesquisa -->
+          <div class="BarraPesquisa">
+              <input type="text" class="texto" placeholder="pesquisa">
+              <button class="botao">
+                  <img class="abrir" src="../logs/icone de pesquisa.png" alt="Pesquisar">
+              </button>
+          </div>
+      </nav>
+
+      <!-- Ícones do Lado Direito -->
+      <div class="icones">
+          <a href="#"><img src="../logs/cora.png" alt="Favoritos"></a>
+          <a href="../Carrinho/carrinho.html"><img src="../logs/carrinho.png" alt="Carrinho"></a>
+          <a href="../cadastro/cadastro.html"><img src="../logs/perfil.png" alt="Perfil"></a>
+      </div>
+
+      <!-- Adicione isso no <head> ou antes do <script> principal -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </header>
+
+    <main class="pagina-carrinho">
+      <section class="carrinho-moldura" aria-labelledby="titulo-carrinho">
+        <div class="filete-interno" aria-hidden="true"></div>
+
+        <header class="cabecalho-carrinho">
+          <div class="marca-cabecalho">
+            <img src="/manus-storage/marca-xicara_87de9f30.png" alt="" aria-hidden="true" />
+            <span>ALAMEDA</span>
+          </div>
+          <p class="sobretitulo">CAFETERIA ALAMEDA</p>
+          <h1 id="titulo-carrinho">Seu carrinho</h1>
+          <span class="linha-titulo" aria-hidden="true"></span>
+          <p class="microtexto">Revise seus cafés antes de finalizar</p>
+        </header>
+
+        <div id="aviso-sucesso" class="aviso-sucesso" role="status" hidden>
+          <span class="icone-aviso"></span>
+          <span>Pedido recebido. Seu café estará esperando por você.</span>
+        </div>
+
+        <div id="lista-produtos" class="lista-produtos" aria-live="polite"></div>
+
+        <section id="resumo-pedido" class="resumo-pedido" aria-label="Resumo do pedido"></section>
+
+        <button id="botao-finalizar" class="botao-finalizar" type="button">
+          <span class="simbolo-xicara">
+            <img src="/manus-storage/marca-xicara_87de9f30.png" alt="" aria-hidden="true" />
+          </span>
+          <span class="texto-finalizar">Continuar
+            Pedido</span>
+          <span class="seta-finalizar" aria-hidden="true"></span>
+        </button>
+      </section>
+    </main>
+
+    <script  src="../js/carrinho.js"></script>
+  </body>
+</html>

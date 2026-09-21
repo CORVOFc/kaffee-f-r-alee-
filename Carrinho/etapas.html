@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout Café</title>
+
+    <!-- ============================================================
+         CSS PURO — Não usa bibliotecas nem arquivos externos.
+         Os blocos estão organizados em: base, layout, componentes,
+         etapas, resumo do pedido e responsividade.
+         ============================================================ -->
+    <style>
+      :root {
+        --vinho: #692008;
+        --vinho-escuro: #421606;
+        --marrom: #5a1f0d;
+        --borda: #985e36;
+        --creme: #fff5e7;
+        --baunilha: #f8dfad;
+        --verde: #2a994c;
+        --serifa: Georgia, "Times New Roman", serif;
+      }
+
+      /* ---------- Base ---------- */
+      * { box-sizing: border-box; }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        color: var(--marrom);
+        font-family: var(--serifa);
+        background:
+          radial-gradient(circle at 50% 45%, rgba(123, 51, 16, 0.25), transparent 42%),
+          linear-gradient(135deg, #54210e, var(--vinho-escuro));
+      }
+
+      button, input { font: inherit; }
+      button { color: inherit; cursor: pointer; }
+
+      /* ---------- Estrutura principal ---------- */
+      .pagina {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 12px;
+      }
+
+      .checkout {
+        width: min(100%, 900px);
+        min-height: 534px;
+        position: relative;
+        overflow: hidden;
+        padding: 14px 27px 13px;
+        border: 3px solid #f3dfb9;
+        border-radius: 26px;
+        background:
+          radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.56), transparent 35%),
+          linear-gradient(115deg, #fff4e6, #f9ece1 52%, #fff8ec);
+        box-shadow:
+          inset 0 0 0 2px #8b512c,
+          0 5px 0 rgba(42, 12, 3, 0.35),
+          0 18px 32px rgba(25, 6, 0, 0.27);
+      }
+
+      .checkout::after {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        opacity: 0.17;
+        background-image: radial-gradient(rgba(102, 44, 14, 0.18) 0.65px, transparent 0.65px);
+        background-size: 5px 5px;
+      }
+
+      .progresso,
+      .conteudo { position: relative; z-index: 1; }
+
+      /* ---------- Indicador de etapas ---------- */
+      .progresso {
+        min-height: 79px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .grupo-etapa { display: flex; align-items: center; }
+
+      .numero-etapa {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 3px solid #693018;
+        border-radius: 50%;
+        background: #f8e6b9;
+        box-shadow: inset 0 0 0 2px #cba76a;
+        color: #663018;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .numero-etapa.atual { background: #e2c171; }
+      .numero-etapa.concluida { color: var(--verde); background: #5d2a16; }
+      .numero-etapa:disabled { cursor: default; }
+
+      .linha-etapa {
+        width: 40px;
+        height: 1px;
+        margin: 0 5px;
+        background: #71351c;
+      }
+
+      /* ---------- Elementos compartilhados ---------- */
+      .conteudo { padding: 19px 1px 0; }
+
+      .etapa {
+        min-height: 399px;
+        display: flex;
+        flex-direction: column;
+        animation: entrar 180ms ease-out;
+      }
+
+      .titulo,
+      .campo label,
+      .resumo-detalhe p,
+      .linha-pedido > span {
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .titulo {
+        margin: 0 0 8px 5px;
+        font-size: clamp(19px, 2.4vw, 25px);
+      }
+
+      .campo label {
+        display: block;
+        margin: 0 0 2px 5px;
+        font-size: clamp(17px, 2.1vw, 24px);
+      }
+
+      .campo input,
+      .entrada-com-icone {
+        width: 100%;
+        height: 42px;
+        border: 1.5px solid var(--borda);
+        border-radius: 11px;
+        background: linear-gradient(100deg, #fff0c5, var(--baunilha));
+        box-shadow: inset 0 1px 2px rgba(90, 37, 10, 0.14);
+      }
+
+      .campo input {
+        padding: 0 14px;
+        outline: none;
+        color: #683018;
+        font-size: 23px;
+      }
+
+      .campo input:focus,
+      .entrada-com-icone:focus-within {
+        border-color: #6f270f;
+        box-shadow: 0 0 0 3px rgba(185, 126, 43, 0.24);
+      }
+
+      .entrada-com-icone {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 11px;
+        color: #9d764e;
+      }
+
+      .entrada-com-icone input {
+        height: 100%;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .botao-continuar {
+        width: 100%;
+        min-height: 54px;
+        display: grid;
+        grid-template-columns: 54px auto;
+        justify-content: center;
+        align-items: center;
+        gap: 23px;
+        padding: 5px 24px;
+        border: 1.5px solid #a87851;
+        border-radius: 8px;
+        color: #faeac7;
+        background: linear-gradient(90deg, #712208, #591a07 55%, #702207);
+        box-shadow: inset 0 1px 0 rgba(255, 233, 190, 0.15);
+        font-size: clamp(21px, 3.2vw, 28px);
+        font-weight: 700;
+      }
+
+      .botao-continuar:active { transform: scale(0.985); }
+      .icone-xicara { width: 48px; height: 48px; }
+
+      /* ---------- Menu de escolha ---------- */
+      .seletor { position: relative; z-index: 3; }
+
+      .botao-seletor,
+      .opcoes-seletor button {
+        width: 100%;
+        min-height: 42px;
+        padding: 4px 15px;
+        border: 1.5px solid var(--borda);
+        color: #693018;
+        background: linear-gradient(100deg, #fff0c5, var(--baunilha));
+        text-align: left;
+        font-size: clamp(16px, 2.1vw, 22px);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .botao-seletor {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 7px;
+      }
+
+      .seletor.aberto .botao-seletor { border-radius: 7px 7px 0 0; }
+      .seletor.aberto .seta { transform: rotate(180deg); }
+
+      .seta { transition: transform 160ms ease; }
+
+      .opcoes-seletor {
+        position: absolute;
+        top: calc(100% - 1px);
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        border-radius: 0 0 7px 7px;
+        box-shadow: 0 7px 9px rgba(66, 24, 5, 0.08);
+      }
+
+      .opcoes-seletor[hidden] { display: none; }
+      .opcoes-seletor button { border-top: 0; background: #fbefdb; }
+
+      /* ---------- Etapa 1: cliente ---------- */
+      .etapa-cliente { gap: 25px; padding: 9px 3px 8px; }
+      .etapa-cliente .botao-continuar { margin-top: auto; }
+
+      /* ---------- Etapa 2: retirada ---------- */
+      .etapa-retirada { padding: 7px 1px 5px; }
+
+      .endereco-fixo {
+        margin: 18px 7px 0;
+        font-size: clamp(18px, 2.4vw, 23px);
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+
+      .grade-endereco {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 86px;
+        margin: 8px 2px 0;
+      }
+
+      .resumo-detalhe {
+        display: flex;
+        gap: 80px;
+        margin: auto 7px 15px;
+      }
+
+      .resumo-detalhe p { margin: 0; font-size: clamp(17px, 2.3vw, 23px); }
+      .resumo-detalhe strong { display: block; margin-left: 10px; font-size: clamp(24px, 3.1vw, 29px); }
+      .resumo-detalhe strong span { margin-left: 8px; font-size: 0.82em; font-weight: 400; text-transform: uppercase; }
+
+      /* ---------- Etapa 3: pagamento ---------- */
+      .etapa-pagamento { padding: 7px 0 5px; }
+
+      .opcoes-pagamento {
+        display: grid;
+        grid-template-columns: minmax(0, 363px);
+        gap: 15px;
+        margin-top: 29px;
+      }
+
+      .opcoes-pagamento.online {
+        grid-template-columns: minmax(0, 363px) minmax(0, 363px);
+        column-gap: 83px;
+      }
+
+      .opcao-pagamento {
+        min-height: 39px;
+        padding: 4px 16px;
+        border: 1.5px solid var(--borda);
+        border-radius: 6px;
+        color: #693018;
+        background: rgba(255, 239, 198, 0.35);
+        text-align: left;
+        font-size: clamp(15px, 2.05vw, 21px);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .opcao-pagamento.ativa { background: var(--baunilha); }
+      .opcao-pagamento.google { grid-column: 2; grid-row: 1; border-color: #9b5aed; }
+      .resumo-pagamento { margin-top: auto; margin-bottom: 15px; }
+
+      /* ---------- Etapa 4: revisão ---------- */
+      .etapa-revisao { min-height: 430px; padding: 20px 0 2px; }
+      .lista-itens { display: grid; gap: 20px; padding: 0 27px; }
+
+      .item-pedido {
+        display: grid;
+        grid-template-columns: 124px minmax(0, 1fr) 196px;
+        align-items: center;
+        gap: 17px;
+      }
+
+      .produto-ilustracao {
+        width: 124px;
+        height: 80px;
+        overflow: hidden;
+        border: 2px solid #8b512c;
+        border-radius: 9px;
+        background: #70401f;
+      }
+
+      .texto-item h2 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; }
+      .selo { display: inline-block; min-width: 105px; border-radius: 9px; padding: 2px 10px; color: #ffedbd; background: #a36a23; font-size: 9px; text-align: center; text-transform: uppercase; }
+      .texto-item p { margin: 4px 0 0; color: #7c4933; font-size: 11px; text-transform: uppercase; }
+
+      .controle-item { display: grid; justify-items: end; gap: 13px; }
+      .controle-item > strong { font-size: 23px; }
+      .linha-quantidade { display: flex; align-items: center; gap: 22px; }
+
+      .quantidade {
+        height: 36px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border: 2px solid #7c3519;
+        border-radius: 8px;
+      }
+
+      .quantidade button { width: 40px; height: 100%; border: 0; background: transparent; font-size: 20px; }
+      .quantidade span { min-width: 34px; text-align: center; font-size: 17px; }
+      .remover-item { border: 0; color: #8a4c2e; background: transparent; font-size: 25px; }
+
+      .caixa-total {
+        overflow: hidden;
+        margin: auto 0 3px;
+        border: 1.5px solid var(--borda);
+        border-radius: 13px;
+        background: linear-gradient(105deg, #fff2ca, #f7dfaf);
+      }
+
+      .linha-pedido {
+        min-height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 23px;
+      }
+
+      .linha-pedido > span { font-size: 15px; }
+      .linha-pedido > strong { font-size: 21px; }
+
+      .linha-local {
+        gap: 18px;
+        border-bottom: 1px solid rgba(139, 81, 44, 0.42);
+      }
+
+      .linha-local p {
+        flex: 1;
+        margin: 0;
+        overflow: hidden;
+        text-align: right;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+
+      .linha-total { min-height: 38px; }
+      .linha-total > span, .linha-total > strong { font-size: 24px; }
+
+      @keyframes entrar {
+        from { opacity: 0; transform: translateY(7px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ---------- Responsividade ---------- */
+      @media (max-width: 650px) {
+        .pagina { display: block; padding: 7px; }
+        .checkout { min-height: calc(100dvh - 14px); padding: 8px 14px 12px; border-radius: 20px; }
+        .progresso { min-height: 65px; }
+        .numero-etapa { width: 31px; height: 31px; font-size: 16px; }
+        .linha-etapa { width: clamp(15px, 7vw, 31px); margin: 0 3px; }
+        .conteudo { padding-top: 10px; }
+        .etapa { min-height: calc(100dvh - 100px); }
+        .titulo, .campo label { margin-left: 1px; }
+        .campo input, .entrada-com-icone { height: 45px; }
+        .botao-continuar { grid-template-columns: 38px auto; gap: 10px; min-height: 51px; padding: 5px 10px; }
+        .icone-xicara { width: 38px; height: 38px; }
+        .grade-endereco { grid-template-columns: 1fr; gap: 10px; }
+        .resumo-detalhe { gap: 35px; margin-left: 1px; }
+        .opcoes-pagamento, .opcoes-pagamento.online { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .opcao-pagamento.google { grid-column: auto; grid-row: auto; }
+        .etapa-revisao { min-height: calc(100dvh - 90px); padding-top: 5px; }
+        .lista-itens { gap: 13px; padding: 0 2px; }
+        .item-pedido { grid-template-columns: 78px minmax(0, 1fr); gap: 9px; }
+        .produto-ilustracao { width: 78px; height: 60px; }
+        .texto-item h2 { font-size: 10px; }
+        .texto-item p { font-size: 9px; }
+        .controle-item { grid-column: 1 / -1; grid-template-columns: 1fr auto; align-items: center; gap: 4px; }
+        .controle-item > strong { grid-column: 2; grid-row: 1; font-size: 18px; }
+        .linha-quantidade { grid-column: 1; grid-row: 1; gap: 13px; }
+        .quantidade { height: 31px; }
+        .quantidade button { width: 32px; }
+        .caixa-total { margin-top: 15px; }
+        .linha-pedido { padding: 4px 10px; }
+        .linha-local { align-items: flex-start; flex-direction: column; gap: 3px; }
+        .linha-local p { width: 100%; font-size: 13px; text-align: left; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================================
+         HTML PURO — Estrutura mínima. O JavaScript abaixo preenche
+         os indicadores de etapas e o conteúdo de cada tela.
+         ============================================================ -->
+    <main class="pagina">
+      <section class="checkout" aria-label="Checkout do café">
+        <nav id="progresso" class="progresso" aria-label="Progresso do checkout"></nav>
+        <section id="conteudo" class="conteudo" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         JAVASCRIPT PURO — Organização de leitura:
+         1. Estado e dados
+         2. Ícones e funções auxiliares
+         3. Função de desenho para cada etapa
+         4. Eventos do usuário
+         ============================================================ -->
+    <script>
+      "use strict";
+
+      // =============================================================
+      // 1. ESTADO E DADOS DO PEDIDO
+      // =============================================================
+      const estado = {
+        etapa: 1,
+        retirada: "loja",
+        pagamento: "online",
+        pagamentoOnline: "pix",
+        pagamentoEntrega: "dinheiro",
+        cliente: {
+          nome: "Maria do Carmo Conceição",
+          telefone: "41 99999-9999"
+        },
+        endereco: {
+          bairro: "",
+          numero: "",
+          rua: "",
+          complemento: ""
+        },
+        quantidades: [1, 1]
+      };
+
+      const produtos = [
+        { nome: "Capuccino cremoso", descricao: "Cremoso e delicioso", selo: "Zero lactose", preco: 15 },
+        { nome: "Capuccino cremoso", descricao: "Cremoso e delicioso", selo: "Zero lactose", preco: 15 }
+      ];
+
+      const progresso = document.getElementById("progresso");
+      const conteudo = document.getElementById("conteudo");
+
+      // =============================================================
+      // 2. FUNÇÕES AUXILIARES E ÍCONES
+      // =============================================================
+      function formatarMoeda(valor) {
+        return valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      }
+
+      function escaparHtml(texto) {
+        return String(texto).replace(/[&<>"']/g, caractere => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[caractere]);
+      }
+
+      function iconeUsuario() {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"></circle>
+          <path d="M4.5 21c.7-4.2 3.4-6.3 7.5-6.3S18.8 16.8 19.5 21"></path>
+        </svg>`;
+      }
+
+      function iconeTelefone() {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M7 3.5 4.8 5.3c-1 1 1.4 6.1 5.4 10.1s9.1 6.4 10.1 5.4l1.8-2.2-4-3.2-2.4 2c-1.6-.8-3.1-2-4.5-3.4s-2.6-2.9-3.4-4.5l2-2.4z"></path>
+        </svg>`;
+      }
+
+      function iconeSeta() {
+        return `<svg class="seta" width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" aria-hidden="true">
+          <path d="m5 8 7 7 7-7"></path>
+        </svg>`;
+      }
+
+      function iconeXicara() {
+        return `<svg class="icone-xicara" viewBox="0 0 64 64" aria-hidden="true">
+          <g fill="none" stroke="#faeac7" stroke-width="2">
+            <path d="M18 32h28c0 11-5 17-14 17s-14-6-14-17Z"></path>
+            <path d="M46 35h5c4 0 4 9-5 9"></path>
+            <path d="M14 52h36"></path>
+            <path d="M25 27c-4-4 4-7 0-12M33 27c-4-4 4-7 0-13M40 27c-4-3 3-6 0-10"></path>
+          </g>
+        </svg>`;
+      }
+
+      function botaoContinuar(rotulo = "Continuar") {
+        return `<button class="botao-continuar" type="button" data-acao="avancar">
+          ${iconeXicara()}
+          <span>${rotulo}</span>
+        </button>`;
+      }
+
+      function campo(rotulo, chave, valor, icone = "", tipoTeclado = "") {
+        const entrada = `<input id="${chave}" data-campo="${chave}" value="${escaparHtml(valor)}" ${tipoTeclado ? `inputmode="${tipoTeclado}"` : ""} required>`;
+        const iconeEscolhido = icone === "usuario" ? iconeUsuario() : icone === "telefone" ? iconeTelefone() : "";
+
+        return `<div class="campo">
+          <label for="${chave}">${rotulo}</label>
+          ${icone ? `<div class="entrada-com-icone">${iconeEscolhido}${entrada}</div>` : entrada}
+        </div>`;
+      }
+
+      function seletor(tipo, valor, primeiraOpcao, segundaOpcao, primeiroValor, segundoValor) {
+        const primeiraEstaAtiva = valor === primeiroValor;
+        const textoAtual = primeiraEstaAtiva ? primeiraOpcao : segundaOpcao;
+        const proximoValor = primeiraEstaAtiva ? segundoValor : primeiroValor;
+        const proximoTexto = primeiraEstaAtiva ? segundaOpcao : primeiraOpcao;
+
+        return `<div class="seletor" data-seletor="${tipo}">
+          <button class="botao-seletor" type="button" data-acao="abrir-seletor" data-seletor="${tipo}">
+            <span>${textoAtual}</span>
+            ${iconeSeta()}
+          </button>
+          <div class="opcoes-seletor" hidden>
+            <button type="button" data-acao="escolher" data-tipo="${tipo}" data-valor="${proximoValor}">${proximoTexto}</button>
+          </div>
+        </div>`;
+      }
+
+      function totalItens() {
+        return produtos.reduce((soma, produto, indice) => soma + produto.preco * estado.quantidades[indice], 0);
+      }
+
+      function taxaEntrega() {
+        return estado.retirada === "endereco" ? 3 : 0;
+      }
+
+      function totalPedido() {
+        return totalItens() + taxaEntrega();
+      }
+
+      // =============================================================
+      // 3. RENDERIZAÇÃO DE CADA ETAPA
+      // =============================================================
+      function desenharProgresso() {
+        let html = "";
+
+        for (let numero = 1; numero <= 4; numero += 1) {
+          const classe = numero < estado.etapa ? "concluida" : numero === estado.etapa ? "atual" : "";
+          const rotulo = numero < estado.etapa ? "✓" : numero;
+
+          html += `<div class="grupo-etapa">
+            <button class="numero-etapa ${classe}" type="button" data-etapa="${numero}" ${numero > estado.etapa ? "disabled" : ""} aria-label="Etapa ${numero}">${rotulo}</button>
+            ${numero < 4 ? `<span class="linha-etapa"></span>` : ""}
+          </div>`;
+        }
+
+        progresso.innerHTML = html;
+      }
+
+      // ETAPA 1 — Dados de contato do cliente
+      function desenharEtapaCliente() {
+        return `<form class="etapa etapa-cliente" data-formulario="cliente">
+          ${campo("Nome completo", "nome", estado.cliente.nome, "usuario")}
+          ${campo("Número para contato", "telefone", estado.cliente.telefone, "telefone", "tel")}
+          ${botaoContinuar()}
+        </form>`;
+      }
+
+      // ETAPA 2 — Retirada no local ou entrega por endereço
+      function desenharEtapaRetirada() {
+        const retiradaNaLoja = estado.retirada === "loja";
+        const dadosEndereco = retiradaNaLoja
+          ? `<p class="endereco-fixo">Alameda Cel. Eizío Pereira, S/N - 0 - Estradinha, Paranaguá</p>`
+          : `<div class="grade-endereco">
+              ${campo("Bairro", "bairro", estado.endereco.bairro)}
+              ${campo("Nº da casa", "numero", estado.endereco.numero, "", "numeric")}
+              ${campo("Rua", "rua", estado.endereco.rua)}
+              ${campo("Complemento", "complemento", estado.endereco.complemento)}
+            </div>`;
+
+        const blocoTaxa = retiradaNaLoja ? "" : `<div><p>Taxa</p><strong>${formatarMoeda(3)}</strong></div>`;
+
+        return `<section class="etapa etapa-retirada">
+          <h1 class="titulo">Local de retirada</h1>
+          ${seletor("retirada", estado.retirada, "Retirada no estabelecimento", "Definir local de retirada", "loja", "endereco")}
+          ${dadosEndereco}
+          <div class="resumo-detalhe">
+            <div><p>Tempo estimado</p><strong>35 <span>minutos</span></strong></div>
+            ${blocoTaxa}
+          </div>
+          ${botaoContinuar()}
+        </section>`;
+      }
+
+      function botaoPagamento(tipo, valor, rotulo, valorAtivo, classeExtra = "") {
+        return `<button class="opcao-pagamento ${valor === valorAtivo ? "ativa" : ""} ${classeExtra}" type="button" data-acao="pagamento" data-tipo="${tipo}" data-valor="${valor}">${rotulo}</button>`;
+      }
+
+      // ETAPA 3 — Método e modalidade de pagamento
+      function desenharEtapaPagamento() {
+        const pagamentoOnline = estado.pagamento === "online";
+        const opcoes = pagamentoOnline
+          ? `<div class="opcoes-pagamento online">
+              ${botaoPagamento("online", "pix", "Pix", estado.pagamentoOnline)}
+              ${botaoPagamento("online", "google", "Google Pay", estado.pagamentoOnline, "google")}
+              ${botaoPagamento("online", "cartao", "Cartão de crédito/débito", estado.pagamentoOnline)}
+            </div>`
+          : `<div class="opcoes-pagamento">
+              ${botaoPagamento("entrega", "dinheiro", "Dinheiro", estado.pagamentoEntrega)}
+              ${botaoPagamento("entrega", "cartao", "Cartão de crédito/débito", estado.pagamentoEntrega)}
+            </div>`;
+
+        return `<section class="etapa etapa-pagamento">
+          <h1 class="titulo">Método de pagamento</h1>
+          ${seletor("pagamento", estado.pagamento, "Pagamento online", "Pagamento na entrega", "online", "entrega")}
+          ${opcoes}
+          <div class="resumo-detalhe resumo-pagamento">
+            <div><p>Total a pagar</p><strong>${formatarMoeda(totalPedido())}</strong></div>
+          </div>
+          ${botaoContinuar()}
+        </section>`;
+      }
+
+      function ilustracaoCafe(numero) {
+        const id = `fundo-cafe-${numero}`;
+        return `<svg viewBox="0 0 124 80" width="124" height="80" aria-hidden="true">
+          <defs><radialGradient id="${id}" cx="30%" cy="18%"><stop stop-color="#dca66d"/><stop offset="1" stop-color="#54331f"/></radialGradient></defs>
+          <rect width="124" height="80" fill="url(#${id})"/>
+          <ellipse cx="60" cy="61" rx="36" ry="8" fill="#2d1b12" opacity=".55"/>
+          <ellipse cx="58" cy="48" rx="26" ry="13" fill="#e6d6bd"/>
+          <path d="M34 39c0 19 48 19 48 0" fill="#f4e9d0"/>
+          <ellipse cx="58" cy="39" rx="24" ry="10" fill="#6a321b"/>
+          <ellipse cx="58" cy="39" rx="19" ry="7" fill="#b16c37"/>
+          <path d="M44 39c8-7 19-7 28 0-8 4-19 4-28 0Z" fill="#f8e9c4"/>
+          <path d="M83 40c15-5 15 18 0 13" fill="none" stroke="#f4e9d0" stroke-width="5"/>
+        </svg>`;
+      }
+
+      function desenharItem(produto, indice) {
+        const quantidade = estado.quantidades[indice];
+        if (quantidade === 0) return "";
+
+        return `<article class="item-pedido">
+          <div class="produto-ilustracao">${ilustracaoCafe(indice + 1)}</div>
+          <div class="texto-item">
+            <h2>${produto.nome}</h2>
+            <span class="selo">${produto.selo}</span>
+            <p>${produto.descricao}</p>
+          </div>
+          <div class="controle-item">
+            <strong>${formatarMoeda(produto.preco * quantidade)}</strong>
+            <div class="linha-quantidade">
+              <div class="quantidade">
+                <button type="button" data-acao="quantidade" data-indice="${indice}" data-mudanca="-1" aria-label="Diminuir quantidade">−</button>
+                <span>${quantidade}</span>
+                <button type="button" data-acao="quantidade" data-indice="${indice}" data-mudanca="1" aria-label="Aumentar quantidade">+</button>
+              </div>
+              <button class="remover-item" type="button" data-acao="remover" data-indice="${indice}" aria-label="Remover item">♧</button>
+            </div>
+          </div>
+        </article>`;
+      }
+
+      // ETAPA 4 — Conferência do pedido e ajuste de quantidades
+      function desenharEtapaRevisao() {
+        const local = estado.retirada === "loja"
+          ? "Alameda Cel. Eizío Pereira, S/N - 0 - Estradinha, Paranaguá"
+          : `${estado.endereco.rua || "Endereço"}, ${estado.endereco.numero || "S/N"}`;
+
+        return `<section class="etapa etapa-revisao">
+          <div class="lista-itens">${produtos.map(desenharItem).join("")}</div>
+          <div class="caixa-total">
+            <div class="linha-pedido"><span>Subtotal</span><strong>${formatarMoeda(totalItens())}</strong></div>
+            <div class="linha-pedido linha-local"><span>Local de retirada ⌖</span><p>${escaparHtml(local)}</p></div>
+            <div class="linha-pedido linha-total"><span>Total</span><strong>${formatarMoeda(totalPedido())}</strong></div>
+          </div>
+          ${botaoContinuar("Finalizar pedido")}
+        </section>`;
+      }
+
+      function renderizar() {
+        desenharProgresso();
+
+        const etapas = {
+          1: desenharEtapaCliente,
+          2: desenharEtapaRetirada,
+          3: desenharEtapaPagamento,
+          4: desenharEtapaRevisao
+        };
+
+        conteudo.innerHTML = etapas[estado.etapa]();
+      }
+
+      // =============================================================
+      // 4. EVENTOS DO USUÁRIO
+      // =============================================================
+      document.addEventListener("input", evento => {
+        const campoEditado = evento.target.dataset.campo;
+        if (!campoEditado) return;
+
+        if (campoEditado === "nome" || campoEditado === "telefone") {
+          estado.cliente[campoEditado] = evento.target.value;
+        } else {
+          estado.endereco[campoEditado] = evento.target.value;
+        }
+      });
+
+      document.addEventListener("submit", evento => {
+        if (!evento.target.matches("[data-formulario='cliente']")) return;
+        evento.preventDefault();
+        estado.etapa = 2;
+        renderizar();
+      });
+
+      document.addEventListener("click", evento => {
+        const botao = evento.target.closest("button");
+        if (!botao || botao.disabled) return;
+
+        if (botao.dataset.etapa) {
+          estado.etapa = Number(botao.dataset.etapa);
+          renderizar();
+          return;
+        }
+
+        const acao = botao.dataset.acao;
+
+        if (acao === "avancar") {
+          estado.etapa = estado.etapa === 4 ? 1 : estado.etapa + 1;
+          renderizar();
+          return;
+        }
+
+        if (acao === "abrir-seletor") {
+          const seletorAtual = document.querySelector(`[data-seletor="${botao.dataset.seletor}"]`);
+          const opcoes = seletorAtual.querySelector(".opcoes-seletor");
+          const estaAberto = seletorAtual.classList.toggle("aberto");
+          opcoes.hidden = !estaAberto;
+          return;
+        }
+
+        if (acao === "escolher") {
+          estado[botao.dataset.tipo] = botao.dataset.valor;
+          renderizar();
+          return;
+        }
+
+        if (acao === "pagamento") {
+          if (botao.dataset.tipo === "online") {
+            estado.pagamentoOnline = botao.dataset.valor;
+          } else {
+            estado.pagamentoEntrega = botao.dataset.valor;
+          }
+          renderizar();
+          return;
+        }
+
+        if (acao === "quantidade") {
+          const indice = Number(botao.dataset.indice);
+          estado.quantidades[indice] = Math.max(1, estado.quantidades[indice] + Number(botao.dataset.mudanca));
+          renderizar();
+          return;
+        }
+
+        if (acao === "remover") {
+          estado.quantidades[Number(botao.dataset.indice)] = 0;
+          renderizar();
+        }
+      });
+
+      // Inicia o checkout na etapa 1.
+      renderizar();
+    </script>
+  </body>
+</html>
