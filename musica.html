@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Cafeteria Premium</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'TAN-NIMBUS';
+            src: url('fonts/TAN-NIMBUS.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --disc-size: clamp(180px, 30vw, 260px);
+            --frame-size: calc(var(--disc-size) * 1.3);
+            --glass-bg: rgba(43, 27, 18, 0.85);
+            --glass-border: rgba(217, 179, 140, 0.4);
+            --accent: #b56a3c;
+            --secondary: #d9b38c;
+            --text-main: #fff;
+            --text-muted: #d4c0a8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'TAN-NIMBUS', 'Poppins', sans-serif;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text-main);
+            position: relative;
+            background-image: url(img/fotoFundoMusica.jpeg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #000000a7;    /*responsavel pela cor escura */
+            background-blend-mode: multiply;  /*   9*/
+        }
+
+        
+
+        /* ========== BOTÃO VOLTAR ========== */
+        .btn-voltar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            background: rgba(43, 27, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #f7e3c8;
+            font-size: 24px;
+            transition: 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* ========== BARRA DE PESQUISA ========== */
+        .barra-pesquisa-musicas {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(500px, 90vw);
+            z-index: 150;
+        }
+
+        .campo-pesquisa-musicas {
+            width: 100%;
+            background: rgba(43, 27, 18, 0.7);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 14px 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .campo-pesquisa-musicas::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .campo-pesquisa-musicas:focus {
+            border-color: var(--accent);
+        }
+
+        .sugestoes-pesquisa {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(43, 27, 18, 0.95);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            list-style: none;
+            overflow: hidden;
+            display: none;
+            z-index: 160;
+        }
+
+        .sugestoes-pesquisa li {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(217, 179, 140, 0.1);
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .sugestoes-pesquisa li:hover {
+            background: rgba(217, 179, 140, 0.2);
+        }
+
+        /* ========== SETAS NAVEGAÇÃO ========== */
+        .botao-navegacao-musicas {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(43, 27, 18, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 150;
+        }
+
+        .botao-navegacao-musicas:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #seta-esquerda { left: 30px; }
+        #seta-direita { right: 30px; }
+
+        /* ========== CARROSSEL ========== */
+        #area-carrossel {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1200px;
+            z-index: 10;
+        }
+
+        .moldura-fixa {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: var(--frame-size);
+            height: var(--frame-size);
+            background: rgba(43, 27, 18, 0.95);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .moldura-fixa::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+        }
+
+        .moldura-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: var(--frame-size);
+            height: var(--frame-size);
+            z-index: 11;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .moldura-info h3 {
+            font-family: 'TAN-NIMBUS', sans-serif;
+            font-size: 16px;
+            color: #f7e3c8;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .moldura-info p {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .carrossel-musicas {
+            position: relative;
+            transform-style: preserve-3d;
+            width: var(--disc-size);
+            height: var(--disc-size);
+            z-index: 2;
+        }
+
+        .disco-musical {
+            position: absolute;
+            width: var(--disc-size);
+            height: var(--disc-size);
+            border-radius: 50%;
+            background-color: #111;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid rgba(217, 179, 140, 0.5);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s, border-color 0.3s, filter 0.3s;
+            cursor: pointer;
+            opacity: 0.85;
+        }
+
+        .disco-musical:hover {
+            filter: brightness(1.2) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8));
+        }
+
+        .disco-musical::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12%;
+            height: 12%;
+            background: radial-gradient(circle, #000 0%, #333 60%, transparent 100%);
+            border-radius: 50%;
+            border: 2px solid #555;
+        }
+
+        .disco-musical.selecionado {
+            border: 3px solid var(--accent);
+            opacity: 1;
+            z-index: 10;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .disco-musical.selecionado.reproduzindo {
+            animation: spin 4s linear infinite;
+        }
+
+        .disco-musical:focus-visible {
+            outline: 3px solid var(--secondary);
+            outline-offset: 6px;
+        }
+
+        /* ========== PLAYER ========== */
+        #painel-player {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 120%);
+            width: min(900px, 95vw);
+            background: rgba(43, 27, 18, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            display: flex;
+            gap: 40px;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        #painel-player.visivel {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%);
+        }
+
+        .botao-voltar-player {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(217, 179, 140, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .botao-voltar-player:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .arte-player {
+            width: 320px;
+            flex-shrink: 0;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .arte-player .moldura-capa {
+            width: 100%;
+            height: 280px;
+            background: #1a100b;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .arte-player .moldura-capa::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+        }
+
+        .player-vinyl {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--secondary);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .player-vinyl.reproduzindo {
+            animation: spin 4s linear infinite;
+        }
+
+        .player-vinyl::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12%;
+            height: 12%;
+            background: radial-gradient(circle, #000 0%, #333 60%, transparent 100%);
+            border-radius: 50%;
+        }
+
+        .arte-player .informacoes-capa {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .arte-player .informacoes-capa h3 {
+            font-family: 'TAN-NIMBUS', sans-serif;
+            font-size: 18px;
+            color: #f7e3c8;
+            text-transform: uppercase;
+        }
+
+        .arte-player .informacoes-capa p {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .detalhes-player {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-top: 20px;
+        }
+
+        .cabecalho-faixa {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .cabecalho-faixa h2 {
+            font-family: 'TAN-NIMBUS', sans-serif;
+            font-size: 26px;
+            color: #f7e3c8;
+            text-transform: uppercase;
+        }
+
+        .cabecalho-faixa p {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .tempo-faixa {
+            font-family: 'TAN-NIMBUS', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #f7e3c8;
+            text-align: right;
+        }
+
+        .progresso-musica {
+            width: 100%;
+            height: 6px;
+            background: rgba(217, 179, 140, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .progresso-musica::before {
+            content: '';
+            position: absolute;
+            inset: -15px 0;
+        }
+
+        .barra-progresso {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(181, 106, 60, 0.5);
+        }
+
+        .indicador-progresso {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--secondary);
+            border-radius: 50%;
+            transition: left 120ms linear;
+            pointer-events: none;
+        }
+
+        /* ========== CONTROLES (Shuffle, Loop, Volume) ========== */
+        .controles-player-musica {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .botao-controle-player-musica {
+            background: rgba(217, 179, 140, 0.15);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            color: #f7e3c8;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botao-controle-player-musica:hover {
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .botao-controle-player-musica.botao-destaque-player-musica {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: #2b1b12;
+            border: none;
+            font-size: 24px;
+        }
+
+        .botao-controle-player-musica.botao-destaque-player-musica:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .botao-controle-player-musica.ativo {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .botao-controle-player-musica svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Slider de Volume Elástico (Estilo Uiverse) */
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 250px;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: rgba(217, 179, 140, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: rgba(217, 179, 140, 0.3);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--secondary);
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: 0.2s;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .lista-reproducao {
+            width: 100%;
+            list-style: none;
+            overflow-y: auto;
+            max-height: 160px;
+            padding-right: 10px;
+        }
+
+        .lista-reproducao li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .lista-reproducao li:hover {
+            background: rgba(217, 179, 140, 0.15);
+            color: #fff;
+        }
+
+        .lista-reproducao li.faixa-atual {
+            background: rgba(181, 106, 60, 0.3);
+            color: #fff;
+            border: 1px solid var(--accent);
+        }
+
+        .lista-reproducao li:focus-visible {
+            outline: 3px solid var(--secondary);
+            outline-offset: 2px;
+        }
+
+        .lista-reproducao li.lista-vazia {
+            justify-content: center;
+            color: var(--text-muted);
+            cursor: default;
+        }
+
+        .miniatura-faixa {
+            width: 32px;
+            height: 32px;
+            flex: 0 0 32px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+        }
+
+        .equalizador {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+            height: 12px;
+            margin-left: auto;
+        }
+
+        .equalizador span {
+            width: 3px;
+            background: var(--secondary);
+            animation: equalize 1s infinite ease-in-out;
+        }
+
+        .equalizador span:nth-child(2) { animation-delay: 0.2s; }
+        .equalizador span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes equalize {
+            0%, 100% { height: 4px; }
+            50% { height: 12px; }
+        }
+
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 900px) {
+            #painel-player {
+                flex-direction: column;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            .arte-player {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 40px;
+            }
+            .botao-navegacao-musicas {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+            #seta-esquerda { left: 15px; }
+            #seta-direita { right: 15px; }
+            .volume-container {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão Voltar para index.html -->
+    <button class="btn-voltar" onclick="window.location.href='index.html'" aria-label="Voltar para o início">❮</button>
+
+    <!-- Barra de Pesquisa com Dropdown -->
+    <div class="barra-pesquisa-musicas">
+        <input type="search" class="campo-pesquisa-musicas" id="campo-busca-musica" placeholder="Buscar por música">
+        <ul class="sugestoes-pesquisa" id="sugestoes-lista"></ul>
+    </div>
+
+    <!-- Setas -->
+    <button class="botao-navegacao-musicas" id="seta-esquerda" aria-label="Disco anterior">❮</button>
+    <button class="botao-navegacao-musicas" id="seta-direita" aria-label="Próximo disco">❯</button>
+
+    <!-- Carrossel -->
+    <div id="area-carrossel">
+        <div class="moldura-fixa" id="moldura-fixa"></div>
+        <div class="moldura-info">
+            <h3 id="titulo-moldura-fixa">2017<br>Skin: The Remixes</h3>
+            <p id="artista-moldura-fixa">Flume</p>
+        </div>
+        <div class="carrossel-musicas" id="carrossel-musicas"></div>
+    </div>
+
+    <!-- Player -->
+    <div id="painel-player">
+        <button class="botao-voltar-player" id="botao-voltar-player" aria-label="Voltar">❮</button>
+
+        <div class="arte-player">
+            <div class="moldura-capa">
+                <div class="player-vinyl" id="vinil-player"></div>
+            </div>
+            <div class="informacoes-capa">
+                <h3 id="titulo-moldura-player">2017 Skin: The Remixes</h3>
+                <p id="artista-moldura-player">Flume</p>
+            </div>
+        </div>
+
+        <div class="detalhes-player">
+            <div class="cabecalho-faixa">
+                <div>
+                    <h2 id="titulo-faixa">Take a Chance</h2>
+                    <p id="artista-faixa">Little Dragon</p>
+                </div>
+                <div class="tempo-faixa" id="tempo-faixa">0:00 / 0:00</div>
+            </div>
+
+            <div class="progresso-musica" id="progresso-musica">
+                <div class="barra-progresso" id="barra-progresso"></div>
+                <div class="indicador-progresso"></div>
+            </div>
+
+            <div class="controles-player-musica">
+                <button class="botao-controle-player-musica" id="btn-shuffle" aria-label="Modo aleatório" title="Aleatório">🔀</button>
+                <button class="botao-controle-player-musica" id="anterior" aria-label="Música anterior">⏮</button>
+                <button class="botao-controle-player-musica botao-destaque-player-musica" id="reproduzir" aria-label="Reproduzir ou pausar música">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17.259V6.741a1 1 0 0 1 1.504-.864l9.015 5.26a1 1 0 0 1 0 1.727l-9.015 5.259A1 1 0 0 1 7 17.259Z"/></svg>
+                </button>
+                <button class="botao-controle-player-musica" id="proxima" aria-label="Próxima música">⏭</button>
+                <button class="botao-controle-player-musica" id="btn-loop" aria-label="Repetir" title="Repetir">🔁</button>
+            </div>
+
+            <!-- Slider de Volume Elástico -->
+            <div class="volume-container">
+                <span style="font-size:18px;">🔉</span>
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+                <span style="font-size:18px;">🔊</span>
+            </div>
+
+            <ul class="lista-reproducao" id="lista-faixas"></ul>
+        </div>
+    </div>
+
+    <audio id="audio-musica" preload="metadata"></audio>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // =========================================================
+        // 1. DADOS DAS MÚSICAS
+        // =========================================================
+        const tracks = [
+            // Músicas locais
+            {
+                title: "Brazilian Guitar Vibes",
+                artist: "Denis Pavlov", 
+                mood: ["relax", "calmo", "bossa nova", "brasil"],
+                coffee: "Latte",
+                album: "Cafeteria Sessions",
+                year: 2024,
+                src: "musicasLink/denis-pavlov-music-instrumental-jazz-bossa-nova-brazilian-guitar-vibes-485111%20(2).mp3",
+                image: "https://images.pexels.com/photos/20709394/pexels-photo-20709394.jpeg?_gl=1*yramjx*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUzMTQ4JGoxOCRsMCRoMA.."
+            },
+            {
+                title: "Up in the Air",
+                artist: "DonnySombrero",
+                mood: ["energia", "leve", "manha", "viagem"],
+                coffee: "Cappuccino",
+                album: "Café nas Nuvens",
+                year: 2024,
+                src: "musicasLink/donnysombrero-up-in-the-air-499093.mp3",
+                image: "https://images.pexels.com/photos/28128496/pexels-photo-28128496.jpeg?_gl=1*hcw9y*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUzNTI3JGo0NiRsMCRoMA.."
+            },
+            {
+                title: "Galactic Rap",
+                artist: "Kaffee Beats",
+                mood: ["rap", "focado", "urbano", "energia"],
+                coffee: "Expresso",
+                album: "Noite na Cidade",
+                year: 2024,
+                src: "musicasLink/Galactic%20Rap.mp3",
+                image: "https://images.pexels.com/photos/31104385/pexels-photo-31104385.jpeg?_gl=1*1h5pf6h*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUzNjc2JGoyNCRsMCRoMA.."
+            },
+            {
+                title: "Tranvik",
+                artist: "Scandinavianz",
+                mood: ["relax", "frio", "instrumental", "estudo"],
+                coffee: "Mocha",
+                album: "Janelas de Inverno",
+                year: 2024,
+                src: "musicasLink/musicbyscandinavianz-scandinavianz-tranvik-free-download-158258.mp3",
+                image: "https://images.pexels.com/photos/19198452/pexels-photo-19198452.jpeg?_gl=1*15qexr9*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUzODA1JGoyJGwwJGgw.."
+            },
+            {
+                title: "The Weird Song of a Jazzman",
+                artist: "Paolo Argento",
+                mood: ["jazz", "criativo", "tarde", "leve"],
+                coffee: "Cappuccino",
+                album: "Jazz de Balcão",
+                year: 2024,
+                src: "musicasLink/paoloargento-the-weird-song-of-a-jazzman-164473.mp3",
+                image: "https://images.pexels.com/photos/37538883/pexels-photo-37538883.jpeg?_gl=1*1gno9jv*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUzOTMxJGo1MiRsMCRoMA.."
+            },
+            {
+                title: "Moment",
+                artist: "SergeQuadrado",
+                mood: ["calmo", "romantico", "fim de tarde", "relax"],
+                coffee: "Latte",
+                album: "Pequenos Momentos",
+                year: 2024,
+                src: "musicasLink/sergequadrado-moment-14023.mp3",
+                image: "https://images.pexels.com/photos/17507092/pexels-photo-17507092.jpeg?_gl=1*1rvo7g3*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDU0MTI3JGo5JGwwJGgw"
+            },
+            {
+                title: "The Britons",
+                artist: "The Britons",
+                mood: ["rock", "energia", "classico", "animado"],
+                coffee: "Café preto",
+                album: "Som da Casa",
+                year: 2024,
+                src: "musicasLink/The%20Britons.mp3",
+                image: "https://images.pexels.com/photos/8650160/pexels-photo-8650160.jpeg?_gl=1*yt0ryy*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTY4NTMkbzEzJGcxJHQxNzg5MDU2ODgzJGozMCRsMCRoMA.."
+            },
+
+            // Músicas eletrônicas do SoundHelix
+            {
+                title: "Electronic Pulse 01",
+                artist: "SoundHelix",
+                mood: ["eletronico", "synthwave", "focado", "energia"],
+                coffee: "Expresso",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                image: "https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=500"
+            },
+            {
+                title: "Electronic Pulse 02",
+                artist: "SoundHelix",
+                mood: ["eletronico", "dance", "animado", "noite"],
+                coffee: "Mocha",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                image: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500"
+            },
+            {
+                title: "Electronic Pulse 03",
+                artist: "SoundHelix",
+                mood: ["eletronico", "relax", "ambiental", "estudo"],
+                coffee: "Latte",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                image: "https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=500"
+            },
+            {
+                title: "Electronic Pulse 04",
+                artist: "SoundHelix",
+                mood: ["eletronico", "retro", "energia", "synthwave"],
+                coffee: "Café preto",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                image: "https://images.pexels.com/photos/1306791/pexels-photo-1306791.jpeg?_gl=1*1wru1*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUyMDI5JGo1OSRsMCRoMA.."
+            },
+            {
+                title: "Electronic Pulse 05",
+                artist: "SoundHelix",
+                mood: ["eletronico", "calmo", "noturno", "focado"],
+                coffee: "Cappuccino",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+                image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?_gl=1*18cmr5x*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUxOTY4JGo1OSRsMCRoMA.."
+            },
+            {
+                title: "Electronic Pulse 06",
+                artist: "SoundHelix",
+                mood: ["eletronico", "cinematico", "intenso", "viagem"],
+                coffee: "Expresso",
+                album: "SoundHelix Eletrônica",
+                year: 2024,
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+                image: "https://images.pexels.com/photos/13146356/pexels-photo-13146356.jpeg?_gl=1*1lrmvf*_ga*MTg4NjczNDgzMS4xNzc4MTU1MjM1*_ga_8JE65Q40S6*czE3ODkwNTA4NzckbzEyJGcxJHQxNzg5MDUwOTg5JGo1OCRsMCRoMA.."
+            }
+        ];
+
+        // =========================================================
+        // 2. ELEMENTOS DA PÁGINA
+        // =========================================================
+        const carousel = document.getElementById('carrossel-musicas');
+        const staticFrame = document.getElementById('moldura-fixa');
+        const frameTitle = document.getElementById('titulo-moldura-fixa');
+        const frameArtist = document.getElementById('artista-moldura-fixa');
+        const playerContainer = document.getElementById('painel-player');
+        const playerVinyl = document.getElementById('vinil-player');
+        const playerFrameTitle = document.getElementById('titulo-moldura-player');
+        const playerFrameArtist = document.getElementById('artista-moldura-player');
+        const trackTitleEl = document.getElementById('titulo-faixa');
+        const trackArtistEl = document.getElementById('artista-faixa');
+        const trackTimeEl = document.getElementById('tempo-faixa');
+        const progressContainer = document.getElementById('progresso-musica');
+        const progressBar = document.getElementById('barra-progresso');
+        const progressThumb = document.querySelector('.indicador-progresso');
+        const playBtn = document.getElementById('reproduzir');
+        const prevBtn = document.getElementById('anterior');
+        const nextBtn = document.getElementById('proxima');
+        const playlistList = document.getElementById('lista-faixas');
+        const backButton = document.getElementById('botao-voltar-player');
+        const audio = document.getElementById('audio-musica');
+        const searchBox = document.getElementById('campo-busca-musica');
+        const suggestionsList = document.getElementById('sugestoes-lista');
+        const arrowLeft = document.getElementById('seta-esquerda');
+        const arrowRight = document.getElementById('seta-direita');
+        const btnShuffle = document.getElementById('btn-shuffle');
+        const btnLoop = document.getElementById('btn-loop');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        // =========================================================
+        // 3. ESTADO GLOBAL E ÍCONES
+        // =========================================================
+        let currentIndex = 0;
+        let selectedIndex = -1;
+        let isPlaying = false;
+        let isPlayerOpen = false;
+        let isShuffle = false;
+        let isLoop = false;
+
+        const pauseSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>`;
+        const playSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17.259V6.741a1 1 0 0 1 1.504-.864l9.015 5.26a1 1 0 0 1 0 1.727l-9.015 5.259A1 1 0 0 1 7 17.259Z"/></svg>`;
+
+        // =========================================================
+        // 4. PREFERÊNCIAS SALVAS
+        // =========================================================
+        if(localStorage.getItem('playerVolume')) {
+            audio.volume = parseFloat(localStorage.getItem('playerVolume'));
+            volumeSlider.value = audio.volume;
+        }
+        if(localStorage.getItem('playerShuffle') === 'true') isShuffle = true;
+        if(localStorage.getItem('playerLoop') === 'true') isLoop = true;
+        if(localStorage.getItem('lastTrackIndex')) currentIndex = parseInt(localStorage.getItem('lastTrackIndex')) || 0;
+
+        // =========================================================
+        // 5. FUNÇÕES AUXILIARES
+        // =========================================================
+        function salvarLocalStorage() {
+            localStorage.setItem('playerVolume', audio.volume);
+            localStorage.setItem('playerShuffle', isShuffle);
+            localStorage.setItem('playerLoop', isLoop);
+            localStorage.setItem('lastTrackIndex', currentIndex);
+        }
+
+        function resetProgress() {
+            progressBar.style.width = '0%';
+            progressThumb.style.left = '0%';
+            trackTimeEl.textContent = '0:00 / 0:00';
+        }
+
+        function atualizarAnimacaoDoVinil() {
+            playerVinyl.classList.toggle('reproduzindo', isPlaying);
+        }
+
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function atualizarProgresso() {
+            if (!Number.isFinite(audio.duration) || audio.duration <= 0) {
+                resetProgress();
+                return;
+            }
+
+            const percentual = Math.min(100, Math.max(0, (audio.currentTime / audio.duration) * 100));
+            progressBar.style.width = `${percentual}%`;
+            progressThumb.style.left = `${percentual}%`;
+            trackTimeEl.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        }
+
+        function atualizarBotoesEstado() {
+            btnShuffle.classList.toggle('ativo', isShuffle);
+            btnLoop.classList.toggle('ativo', isLoop);
+        }
+
+        // =========================================================
+        // 6. BUSCA E PLAYLIST
+        // =========================================================
+        function buscarMusicas(termo) {
+            const normalizedTerm = termo.trim().toLowerCase();
+            if (!normalizedTerm) return tracks;
+            const palavras = normalizedTerm.split(' ');
+            return tracks.filter(track => {
+                const searchable = `${track.title} ${track.artist} ${track.album} ${track.year} ${track.coffee} ${track.mood.join(' ')}`.toLowerCase();
+                return palavras.every(palavra => searchable.includes(palavra));
+            });
+        }
+
+        // RENDERIZAÇÃO DA PLAYLIST
+        function renderPlaylist(filter = '') {
+            playlistList.innerHTML = '';
+            const resultados = buscarMusicas(filter);
+            let contador = 0;
+
+            resultados.forEach((track) => {
+                const i = tracks.indexOf(track);
+                contador++;
+
+                const li = document.createElement('li');
+                li.tabIndex = 0;
+                li.setAttribute('role', 'button');
+                li.setAttribute('aria-label', `Reproduzir música: ${track.title} - ${track.artist}`);
+                li.classList.toggle('faixa-atual', i === currentIndex);
+                li.innerHTML = `<img src="${track.image}" class="miniatura-faixa"><span>${i + 1}</span><span>${track.title}</span>`;
+                
+                if (i === currentIndex && isPlaying) {
+                    const eq = document.createElement('div');
+                    eq.className = 'equalizador';
+                    eq.innerHTML = '<span></span><span></span><span></span>';
+                    li.appendChild(eq);
+                } else {
+                    const dots = document.createElement('span');
+                    dots.style.marginLeft = 'auto';
+                    dots.textContent = '•••••';
+                    li.appendChild(dots);
+                }
+
+                const selecionarFaixa = () => openPlayer(i, true);
+                li.addEventListener('click', selecionarFaixa);
+                li.addEventListener('keydown', (evento) => {
+                    if (evento.key === 'Enter' || evento.key === ' ') {
+                        evento.preventDefault();
+                        selecionarFaixa();
+                    }
+                });
+                playlistList.appendChild(li);
+            });
+
+            if (contador === 0) {
+                const vazio = document.createElement('li');
+                vazio.className = 'lista-vazia';
+                vazio.textContent = 'Nenhuma música encontrada.';
+                playlistList.appendChild(vazio);
+            }
+        }
+
+        // =========================================================
+        // 7. SUGESTÕES DE BUSCA
+        // =========================================================
+        function renderSuggestions(filter = '') {
+            suggestionsList.innerHTML = '';
+            const normalizedFilter = filter.trim().toLowerCase();
+            if (!normalizedFilter) {
+                suggestionsList.style.display = 'none';
+                return;
+            }
+
+            const resultados = buscarMusicas(filter);
+            if (resultados.length === 0) {
+                suggestionsList.style.display = 'none';
+                return;
+            }
+
+            resultados.slice(0, 5).forEach((track) => {
+                const li = document.createElement('li');
+                li.textContent = `${track.title} - ${track.artist}`;
+                li.addEventListener('click', () => {
+                    openPlayer(tracks.indexOf(track), true);
+                    searchBox.value = track.title;
+                    suggestionsList.style.display = 'none';
+                });
+                suggestionsList.appendChild(li);
+            });
+
+            suggestionsList.style.display = 'block';
+        }
+
+        searchBox.addEventListener('input', () => {
+            renderPlaylist(searchBox.value);
+            renderSuggestions(searchBox.value);
+        });
+
+        searchBox.addEventListener('blur', () => {
+            setTimeout(() => {
+                suggestionsList.style.display = 'none';
+            }, 200);
+        });
+
+        // =========================================================
+        // 8. CARROSSEL DE DISCOS
+        // =========================================================
+        function createDiscs() {
+            tracks.forEach((track, i) => {
+                const disc = document.createElement('div');
+                disc.className = 'disco-musical';
+                disc.tabIndex = 0;
+                disc.setAttribute('role', 'button');
+                disc.setAttribute('aria-label', `Selecionar música: ${track.title} - ${track.artist}`);
+                disc.style.backgroundImage = `url('${track.image}')`;
+
+                function selecionarDisco() {
+                    if (i === currentIndex) {
+                        if (selectedIndex === i) {
+                            openPlayer(i, true);
+                        } else {
+                            selectedIndex = i;
+                            staticFrame.classList.add('selecionado');
+                            disc.classList.add('selecionado');
+                        }
+                    } else {
+                        if (isPlayerOpen) closePlayer();
+                        updateCarousel(i);
+                        selectedIndex = i;
+                        staticFrame.classList.add('selecionado');
+                    }
+                }
+
+                disc.addEventListener('click', selecionarDisco);
+                disc.addEventListener('keydown', (evento) => {
+                    if (evento.key === 'Enter' || evento.key === ' ') {
+                        evento.preventDefault();
+                        selecionarDisco();
+                    }
+                });
+
+                carousel.appendChild(disc);
+            });
+            updateCarousel(currentIndex);
+        }
+
+        function updateCarousel(index) {
+            currentIndex = index;
+            selectedIndex = -1;
+            const discs = document.querySelectorAll('.disco-musical');
+            staticFrame.classList.remove('selecionado');
+
+            discs.forEach((disc, i) => {
+                let rel = i - currentIndex;
+                let x, y, z, opacity;
+                if (rel === 0) {
+                    x = 0; y = 0; z = 0; opacity = 1;
+                    disc.style.zIndex = 10;
+                    disc.classList.add('selecionado');
+                    frameTitle.textContent = tracks[i].title;
+                    frameArtist.textContent = tracks[i].artist;
+                    
+                    if (isPlayerOpen) {
+                        openPlayer(i, isPlaying);
+                    }
+                } else if (Math.abs(rel) === 1) {
+                    x = rel * 360; y = rel * -35; z = -120; opacity = 0.85;
+                    disc.style.zIndex = 5;
+                    disc.classList.remove('selecionado');
+                } else {
+                    x = rel * 620; y = rel * -45; z = -300; opacity = 0.3;
+                    disc.style.zIndex = 1;
+                    disc.classList.remove('selecionado');
+                }
+                disc.style.transform = `translateX(${x}px) rotateY(${y}deg) translateZ(${z}px)`;
+                disc.style.opacity = opacity;
+            });
+        }
+
+        // =========================================================
+        // 9. PLAYER
+        // =========================================================
+        function openPlayer(index, play = false) {
+            currentIndex = index;
+            isPlayerOpen = true;
+            const track = tracks[index];
+            playerContainer.classList.add('visivel');
+
+            playerVinyl.style.backgroundImage = `url('${track.image}')`;
+            playerFrameTitle.textContent = track.title;
+            playerFrameArtist.textContent = track.artist;
+            trackTitleEl.textContent = track.title;
+            trackArtistEl.textContent = track.artist;
+
+            resetProgress();
+
+            audio.onloadedmetadata = () => {
+                const total = formatTime(audio.duration);
+                trackTimeEl.textContent = `0:00 / ${total}`;
+            };
+            audio.src = track.src;
+            audio.load();
+            audio.volume = parseFloat(volumeSlider.value);
+            salvarLocalStorage();
+
+            renderPlaylist(searchBox.value);
+
+            if (play) {
+                audio.play().catch(() => {
+                    isPlaying = false;
+                    playBtn.innerHTML = playSvg;
+                    document.querySelectorAll('.disco-musical')[currentIndex]?.classList.remove('reproduzindo');
+                    atualizarAnimacaoDoVinil();
+                    renderPlaylist(searchBox.value);
+                });
+                isPlaying = true;
+                playBtn.innerHTML = pauseSvg;
+                document.querySelectorAll('.disco-musical')[currentIndex].classList.add('reproduzindo');
+                atualizarAnimacaoDoVinil();
+            } else {
+                isPlaying = false;
+                playBtn.innerHTML = playSvg;
+                atualizarAnimacaoDoVinil();
+            }
+        }
+
+        audio.addEventListener('loadedmetadata', atualizarProgresso);
+        audio.addEventListener('timeupdate', atualizarProgresso);
+
+        progressContainer.addEventListener('click', (evento) => {
+            if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
+
+            const area = progressContainer.getBoundingClientRect();
+            const percentual = Math.min(1, Math.max(0, (evento.clientX - area.left) / area.width));
+            audio.currentTime = percentual * audio.duration;
+            atualizarProgresso();
+        });
+
+        function closePlayer() {
+            isPlayerOpen = false;
+            playerContainer.classList.remove('visivel');
+            audio.pause();
+            isPlaying = false;
+            document.querySelectorAll('.disco-musical')[currentIndex]?.classList.remove('reproduzindo');
+            atualizarAnimacaoDoVinil();
+            renderPlaylist(searchBox.value);
+        }
+
+        // =========================================================
+        // 10. CONTROLES DO PLAYER
+        // =========================================================
+        backButton.addEventListener('click', closePlayer);
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(() => {
+                    isPlaying = false;
+                    playBtn.innerHTML = playSvg;
+                    document.querySelectorAll('.disco-musical')[currentIndex]?.classList.remove('reproduzindo');
+                    atualizarAnimacaoDoVinil();
+                    renderPlaylist(searchBox.value);
+                });
+                isPlaying = true; playBtn.innerHTML = pauseSvg;
+                document.querySelectorAll('.disco-musical')[currentIndex].classList.add('reproduzindo');
+                atualizarAnimacaoDoVinil();
+                renderPlaylist(searchBox.value);
+            } else {
+                audio.pause(); isPlaying = false; playBtn.innerHTML = playSvg;
+                document.querySelectorAll('.disco-musical')[currentIndex].classList.remove('reproduzindo');
+                atualizarAnimacaoDoVinil();
+                renderPlaylist(searchBox.value);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (isShuffle) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * tracks.length);
+                } while (randomIndex === currentIndex);
+                openPlayer(randomIndex, true);
+            } else {
+                openPlayer((currentIndex + 1) % tracks.length, true);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            openPlayer((currentIndex - 1 + tracks.length) % tracks.length, true);
+        });
+
+        btnShuffle.addEventListener('click', () => {
+            isShuffle = !isShuffle;
+            atualizarBotoesEstado();
+            salvarLocalStorage();
+        });
+
+        btnLoop.addEventListener('click', () => {
+            isLoop = !isLoop;
+            atualizarBotoesEstado();
+            salvarLocalStorage();
+        });
+
+        audio.addEventListener('ended', () => {
+            if (isLoop) {
+                audio.currentTime = 0;
+                audio.play();
+            } else {
+                nextBtn.click();
+            }
+        });
+
+        // CONTROLE DE VOLUME
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = parseFloat(e.target.value);
+            salvarLocalStorage();
+        });
+
+        // ATALHOS DE TECLADO
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            switch(e.key) {
+                case ' ':
+                    e.preventDefault();
+                    playBtn.click();
+                    break;
+                case 'ArrowRight':
+                    nextBtn.click();
+                    break;
+                case 'ArrowLeft':
+                    prevBtn.click();
+                    break;
+                case 's':
+                    btnShuffle.click();
+                    break;
+                case 'l':
+                    btnLoop.click();
+                    break;
+                case 'm':
+                    volumeSlider.value = (audio.volume === 0 ? 0.5 : 0);
+                    audio.volume = parseFloat(volumeSlider.value);
+                    salvarLocalStorage();
+                    break;
+            }
+        });
+
+        // SETAS DE NAVEGAÇÃO
+        arrowLeft.addEventListener('click', () => {
+            const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+            updateCarousel(prevIndex);
+        });
+
+        arrowRight.addEventListener('click', () => {
+            const nextIndex = (currentIndex + 1) % tracks.length;
+            updateCarousel(nextIndex);
+        });
+
+        // INICIALIZAÇÃO
+        atualizarBotoesEstado();
+        createDiscs();
+        renderPlaylist();
+        salvarLocalStorage();
+    </script>
+</body>
+</html>
