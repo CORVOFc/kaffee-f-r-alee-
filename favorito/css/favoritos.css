@@ -1,0 +1,633 @@
+/* ==========================================================
+   RESET GERAL
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --cor-marrom:#6A2203;
+    --cor-marrom-escuro:#4A1701;
+    --cor-creme:#F5F2C8;
+    --cor-dourado:#D8B86A;
+    --cor-texto:#3E1D0C;
+    --cor-branco:#FFFFFF;
+    --cor-sombra:rgba(0,0,0,.25);
+
+    --fonte-titulo:'Cinzel', serif;
+    --fonte-texto:'Segoe UI', sans-serif;
+}
+
+body{
+    background:var(--cor-marrom);
+    font-family:var(--fonte-texto);
+    color:white;
+    min-height:100vh;
+}
+
+/* ==========================================================
+   CABEÇALHO
+========================================================== */
+
+.cabecalho-da-pagina-de-favoritos{
+    padding:30px 25px;
+}
+
+.linha-superior-do-cabecalho{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+#botao-de-voltar-para-a-pagina-index,
+#botao-de-abrir-o-perfil-do-usuario{
+
+    border:none;
+    background:none;
+    color:var(--cor-creme);
+    cursor:pointer;
+    font-size:15px;
+}
+
+#botao-de-voltar-para-a-pagina-index:hover{
+    opacity:.8;
+}
+
+#titulo-da-pagina-produtos-favoritos{
+
+    font-family:var(--fonte-titulo);
+    font-size:52px;
+    line-height:.9;
+    letter-spacing:2px;
+    color:var(--cor-creme);
+}
+
+#contador-da-quantidade-de-produtos-favoritos{
+
+    margin-top:10px;
+    color:#EAD9AA;
+    font-size:15px;
+}
+
+/* ==========================================================
+   BARRA DE PESQUISA
+========================================================== */
+
+.secao-da-pesquisa{
+    padding:0 25px 20px;
+}
+
+.container-da-barra-de-pesquisa{
+
+    background:var(--cor-creme);
+    border-radius:50px;
+    padding:14px 18px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.container-da-barra-de-pesquisa img{
+    width:18px;
+}
+
+#campo-de-pesquisa-dos-produtos-favoritos{
+
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:var(--cor-texto);
+    font-size:15px;
+}
+
+#campo-de-pesquisa-dos-produtos-favoritos::placeholder{
+    color:#8C6E52;
+}
+
+#botao-de-limpar-a-pesquisa{
+
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:#7A5A3A;
+    font-size:16px;
+}
+
+/* ==========================================================
+   FILTROS
+========================================================== */
+
+.secao-dos-filtros-de-categoria{
+
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:0 25px 25px;
+
+    scrollbar-width:none;
+}
+
+.secao-dos-filtros-de-categoria::-webkit-scrollbar{
+    display:none;
+}
+
+.botao-de-filtro-por-categoria{
+
+    padding:10px 18px;
+    border-radius:30px;
+    border:1px solid var(--cor-dourado);
+
+    background:transparent;
+    color:var(--cor-creme);
+
+    cursor:pointer;
+    transition:.3s;
+    white-space:nowrap;
+}
+
+.botao-de-filtro-por-categoria:hover,
+.botao-de-filtro-por-categoria.ativo{
+
+    background:var(--cor-creme);
+    color:var(--cor-marrom);
+}
+
+/* ==========================================================
+   CARROSSEL
+========================================================== */
+
+.secao-do-carrossel-de-produtos{
+
+    position:relative;
+    padding:0 25px;
+}
+
+#lista-horizontal-de-produtos-favoritos{
+
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding-bottom:10px;
+
+    scrollbar-width:none;
+}
+
+#lista-horizontal-de-produtos-favoritos::-webkit-scrollbar{
+    display:none;
+}
+
+/* ==========================================================
+   CARD DO PRODUTO
+========================================================== */
+
+.card-do-produto-favorito{
+
+    min-width:180px;
+    background:var(--cor-creme);
+    border-radius:18px;
+    padding:12px;
+    position:relative;
+
+    transition:.35s;
+    flex-shrink:0;
+}
+
+.card-do-produto-favorito:hover{
+
+    transform:translateY(-8px);
+    box-shadow:0 18px 30px var(--cor-sombra);
+}
+
+.imagem-do-produto-favorito{
+
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:12px;
+}
+
+.botao-de-favoritar-ou-desfavoritar{
+
+    position:absolute;
+    top:14px;
+    right:14px;
+
+    width:34px;
+    height:34px;
+
+    border:none;
+    border-radius:50%;
+
+    background:white;
+    cursor:pointer;
+
+    font-size:16px;
+    transition:.3s;
+}
+
+.botao-de-favoritar-ou-desfavoritar:hover{
+    transform:scale(1.1);
+}
+
+.botao-de-favoritar-ou-desfavoritar.ativo{
+
+    background:#8A1D1D;
+    color:white;
+}
+
+.categoria-do-produto-favorito{
+
+    color:#8C6E52;
+    font-size:12px;
+    text-transform:uppercase;
+}
+
+.nome-do-produto-favorito{
+
+    color:var(--cor-texto);
+    font-size:18px;
+    font-weight:700;
+    margin:5px 0;
+}
+
+.avaliacao-do-produto-favorito{
+
+    color:#E0A500;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.preco-do-produto-favorito{
+
+    color:#6A2203;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.botao-de-abrir-o-modal-do-produto{
+
+    width:100%;
+    padding:10px;
+
+    border:none;
+    border-radius:10px;
+
+    background:var(--cor-marrom);
+    color:white;
+
+    cursor:pointer;
+    transition:.3s;
+}
+
+.botao-de-abrir-o-modal-do-produto:hover{
+    background:var(--cor-marrom-escuro);
+}
+
+/* ==========================================================
+   BOTÕES DO CARROSSEL
+========================================================== */
+
+.botao-de-navegacao-do-carrossel{
+
+    position:absolute;
+    top:42%;
+
+    width:42px;
+    height:42px;
+
+    border:none;
+    border-radius:50%;
+
+    background:var(--cor-creme);
+    color:var(--cor-marrom);
+
+    font-size:24px;
+    cursor:pointer;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.2);
+    transition:.3s;
+}
+
+.botao-de-navegacao-do-carrossel:hover{
+    transform:scale(1.1);
+}
+
+#botao-anterior-do-carrossel{
+    left:5px;
+}
+
+#botao-proximo-do-carrossel{
+    right:5px;
+}
+
+/* ==========================================================
+   INDICADORES
+========================================================== */
+
+#container-dos-indicadores-do-carrossel{
+
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:22px 0 40px;
+}
+
+.indicador-do-carrossel{
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+    background:#B88B63;
+}
+
+.indicador-do-carrossel.ativo{
+    background:var(--cor-creme);
+}
+
+/* ==========================================================
+   JORNAIS
+========================================================== */
+
+.secao-dos-jornais-favoritos{
+    padding:0 25px 50px;
+}
+
+.cabecalho-da-secao-de-jornais{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.cabecalho-da-secao-de-jornais h2{
+
+    font-family:var(--fonte-titulo);
+    font-size:32px;
+    color:var(--cor-creme);
+}
+
+#botao-de-ver-todos-os-jornais{
+
+    background:none;
+    border:none;
+    color:#EAD9AA;
+    cursor:pointer;
+}
+
+#container-da-lista-de-jornais-favoritos{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.card-do-jornal-favorito{
+
+    background:var(--cor-creme);
+    border-radius:15px;
+    padding:12px;
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    transition:.3s;
+}
+
+.card-do-jornal-favorito:hover{
+    transform:translateX(6px);
+}
+
+.imagem-do-jornal-favorito{
+
+    width:70px;
+    height:70px;
+
+    border-radius:12px;
+    object-fit:cover;
+}
+
+.informacoes-do-jornal-favorito{
+    flex:1;
+}
+
+.nome-do-jornal-favorito{
+
+    color:var(--cor-texto);
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.data-da-publicacao-do-jornal{
+
+    color:#8C6E52;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.categoria-do-jornal-favorito{
+
+    background:#E9D8A6;
+    color:#6A2203;
+
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
+}
+
+.botao-de-abrir-o-jornal{
+
+    border:none;
+    border-radius:10px;
+
+    background:var(--cor-marrom);
+    color:white;
+
+    padding:10px 14px;
+    cursor:pointer;
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+#modal-de-visualizacao-rapida-do-produto{
+
+    width:min(92%,420px);
+    border:none;
+    border-radius:22px;
+    padding:22px;
+}
+
+#modal-de-visualizacao-rapida-do-produto::backdrop{
+    background:rgba(0,0,0,.6);
+}
+
+#botao-de-fechar-o-modal{
+
+    float:right;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:18px;
+}
+
+#imagem-do-produto-no-modal{
+
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:14px;
+    margin:15px 0;
+}
+
+#categoria-do-produto-no-modal{
+
+    color:#8C6E52;
+    text-transform:uppercase;
+    font-size:12px;
+}
+
+#titulo-do-produto-no-modal{
+
+    color:var(--cor-texto);
+    margin:8px 0;
+}
+
+#descricao-do-produto-no-modal{
+
+    color:#555;
+    line-height:1.5;
+    margin:10px 0 18px;
+}
+
+#preco-do-produto-no-modal{
+
+    color:var(--cor-marrom);
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+.acoes-do-modal{
+
+    display:flex;
+    gap:10px;
+}
+
+.acoes-do-modal button{
+
+    flex:1;
+    border:none;
+    border-radius:10px;
+    padding:12px;
+    cursor:pointer;
+}
+
+#botao-de-adicionar-ao-carrinho-pelo-modal{
+
+    background:var(--cor-marrom);
+    color:white;
+}
+
+#botao-de-favoritar-pelo-modal{
+
+    background:#EFE6C2;
+    color:var(--cor-marrom);
+}
+
+/* ==========================================================
+   TOAST
+========================================================== */
+
+#toast-de-confirmacao-de-favorito{
+
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+
+    background:#2F1A0D;
+    color:white;
+
+    padding:14px 18px;
+    border-radius:40px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
+#toast-de-confirmacao-de-favorito img{
+    width:18px;
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media (max-width:768px){
+
+    #titulo-da-pagina-produtos-favoritos{
+        font-size:40px;
+    }
+
+    .card-do-produto-favorito{
+        min-width:160px;
+    }
+
+    .imagem-do-produto-favorito{
+        height:130px;
+    }
+
+    .cabecalho-da-secao-de-jornais h2{
+        font-size:26px;
+    }
+
+    .botao-de-navegacao-do-carrossel{
+        display:none;
+    }
+}
+
+@media (max-width:480px){
+
+    .cabecalho-da-pagina-de-favoritos,
+    .secao-da-pesquisa,
+    .secao-dos-filtros-de-categoria,
+    .secao-do-carrossel-de-produtos,
+    .secao-dos-jornais-favoritos{
+
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    #titulo-da-pagina-produtos-favoritos{
+        font-size:34px;
+    }
+
+    .card-do-produto-favorito{
+        min-width:145px;
+    }
+
+    .nome-do-produto-favorito{
+        font-size:16px;
+    }
+
+    .imagem-do-jornal-favorito{
+        width:60px;
+        height:60px;
+    }
+}

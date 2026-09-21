@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoritos | Kaffee Für Alle</title>
+
+    <!-- Fonte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/favoritos.css">
+</head>
+
+<body>
+
+    <!-- ==========================================================
+         CABEÇALHO
+    =========================================================== -->
+
+    <header class="cabecalho-da-pagina-de-favoritos">
+
+        <div class="linha-superior-do-cabecalho">
+
+            <button id="botao-de-voltar-para-a-pagina-index">
+                ← Voltar
+            </button>
+
+            <button id="botao-de-abrir-o-perfil-do-usuario">
+                <img src="img/icones/perfil.svg" alt="Perfil">
+            </button>
+
+        </div>
+
+        <h1 id="titulo-da-pagina-produtos-favoritos">
+            PRODUTOS <br>
+            FAVORITOS
+        </h1>
+
+        <p id="contador-da-quantidade-de-produtos-favoritos">
+            12 produtos salvos
+        </p>
+
+    </header>
+
+    <!-- ==========================================================
+         PESQUISA
+    =========================================================== -->
+
+    <section class="secao-da-pesquisa">
+
+        <div class="container-da-barra-de-pesquisa">
+
+            <img src="img/icones/lupa.svg" alt="Pesquisar">
+
+            <input
+                id="campo-de-pesquisa-dos-produtos-favoritos"
+                type="search"
+                placeholder="Pesquisar cafés, bolos...">
+
+            <button id="botao-de-limpar-a-pesquisa">
+                ✕
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================================================
+         FILTROS
+    =========================================================== -->
+
+    <section class="secao-dos-filtros-de-categoria">
+
+        <button class="botao-de-filtro-por-categoria ativo">
+            Todos
+        </button>
+
+        <button class="botao-de-filtro-por-categoria">
+            Cafés
+        </button>
+
+        <button class="botao-de-filtro-por-categoria">
+            Bolos
+        </button>
+
+        <button class="botao-de-filtro-por-categoria">
+            Doces
+        </button>
+
+    </section>
+
+    <!-- ==========================================================
+         CARROSSEL
+    =========================================================== -->
+
+    <section class="secao-do-carrossel-de-produtos">
+
+        <button
+            id="botao-anterior-do-carrossel"
+            class="botao-de-navegacao-do-carrossel">
+
+            ‹
+
+        </button>
+
+        <!-- BACK-END PREENCHE AQUI -->
+        <div id="lista-horizontal-de-produtos-favoritos">
+
+            <!-- CARD MODELO -->
+            <article
+                class="card-do-produto-favorito"
+                data-id-do-produto="1">
+
+                <button
+                    class="botao-de-favoritar-ou-desfavoritar ativo">
+
+                    ♥
+                </button>
+
+                <img
+                    class="imagem-do-produto-favorito"
+                    src="img/produtos/cafe.png"
+                    alt="Café Especial">
+
+                <span class="categoria-do-produto-favorito">
+                    Café
+                </span>
+
+                <h3 class="nome-do-produto-favorito">
+                    Café Especial
+                </h3>
+
+                <div class="avaliacao-do-produto-favorito">
+                    ★★★★★
+                </div>
+
+                <p class="preco-do-produto-favorito">
+                    R$ 12,90
+                </p>
+
+                <button class="botao-de-abrir-o-modal-do-produto">
+                    Ver detalhes
+                </button>
+
+            </article>
+
+        </div>
+
+        <button
+            id="botao-proximo-do-carrossel"
+            class="botao-de-navegacao-do-carrossel">
+
+            ›
+
+        </button>
+
+    </section>
+
+    <!-- Indicadores -->
+
+    <div id="container-dos-indicadores-do-carrossel">
+
+        <span class="indicador-do-carrossel ativo"></span>
+        <span class="indicador-do-carrossel"></span>
+        <span class="indicador-do-carrossel"></span>
+
+    </div>
+
+    <!-- ==========================================================
+         JORNAIS FAVORITOS
+    =========================================================== -->
+
+    <section class="secao-dos-jornais-favoritos">
+
+        <div class="cabecalho-da-secao-de-jornais">
+
+            <h2>
+                JORNAIS FAVORITOS
+            </h2>
+
+            <button id="botao-de-ver-todos-os-jornais">
+                Ver todos
+            </button>
+
+        </div>
+
+        <div id="container-da-lista-de-jornais-favoritos">
+
+            <article
+                class="card-do-jornal-favorito"
+                data-id-do-jornal="10">
+
+                <img
+                    class="imagem-do-jornal-favorito"
+                    src="img/jornais/gazeta.png"
+                    alt="Gazeta">
+
+                <div class="informacoes-do-jornal-favorito">
+
+                    <h3 class="nome-do-jornal-favorito">
+                        Gazeta
+                    </h3>
+
+                    <p class="data-da-publicacao-do-jornal">
+                        14 Setembro 2026
+                    </p>
+
+                    <span class="categoria-do-jornal-favorito">
+                        Notícias
+                    </span>
+
+                </div>
+
+                <button class="botao-de-abrir-o-jornal">
+                    Ler
+                </button>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================================================
+         MODAL
+    =========================================================== -->
+
+    <dialog id="modal-de-visualizacao-rapida-do-produto">
+
+        <button id="botao-de-fechar-o-modal">
+            ✕
+        </button>
+
+        <img
+            id="imagem-do-produto-no-modal"
+            src=""
+            alt="Produto">
+
+        <span id="categoria-do-produto-no-modal">
+            Café
+        </span>
+
+        <h2 id="titulo-do-produto-no-modal">
+            Café Especial
+        </h2>
+
+        <div id="avaliacao-do-produto-no-modal">
+            ★★★★★
+        </div>
+
+        <p id="descricao-do-produto-no-modal">
+            Descrição do produto enviada pelo banco de dados.
+        </p>
+
+        <h3 id="preco-do-produto-no-modal">
+            R$ 12,90
+        </h3>
+
+        <div class="acoes-do-modal">
+
+            <button id="botao-de-adicionar-ao-carrinho-pelo-modal">
+                Adicionar ao Carrinho
+            </button>
+
+            <button id="botao-de-favoritar-pelo-modal">
+                ♥ Favoritar
+            </button>
+
+        </div>
+
+    </dialog>
+
+    <!-- ==========================================================
+         TOAST
+    =========================================================== -->
+
+    <div id="toast-de-confirmacao-de-favorito">
+
+        <img src="img/icones/check.svg" alt="Sucesso">
+
+        <span>
+            Produto adicionado aos favoritos
+        </span>
+
+    </div>
+
+    <!-- ==========================================================
+         JAVASCRIPT
+    =========================================================== -->
+
+    <script src="js/favoritos.js"></script>
+
+</body>
+
+</html>

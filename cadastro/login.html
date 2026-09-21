@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Login Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Estilos originais mantidos */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lora', serif; background-color: #f5f1ed; color:#631f08; min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-image: url('IMG/coffee-beans-background.png'); background-attachment: fixed; background-size: cover; background-position: center; z-index: 0; }
+        body::after { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.1); z-index: 1; }
+        .container { position: relative; z-index: 10; width: 100%; max-width: 420px; padding: 0 24px; }
+        .login-card { position: relative; background-color: #631f08; border: 2px solid #2b1511; border-radius: 16px; overflow: hidden; backdrop-filter: blur(10px); box-shadow: 16px 20px 3px rgba(110, 54, 26, 0.8); }
+        .card-header { padding: 32px 32px 16px 32px; min-height: 80px; display: flex; align-items: flex-start; }
+        .login-title { font-family: 'Crimson Text', serif; font-size: 2.5rem; font-weight: 600; color: #faf8f3; letter-spacing: 0.15em; margin: 0; }
+        .form-content { padding: 0 32px 32px 32px; display: flex; flex-direction: column; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-label { font-family: 'Crimson Text', serif; font-size: 0.95rem; font-weight: 600; color: #faf8f3; letter-spacing: 0.05em; text-transform: uppercase; }
+        .form-input { background-color: rgba(255, 255, 255, 0.9); color: #333; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'Lora', serif; font-size: 1rem; transition: all 150ms ease-out; outline: none; }
+        .login-button { width: 100%; padding: 12px 16px; background-color: #e8dcc8; color: #3d2817; border: none; border-radius: 8px; font-family: 'Crimson Text', serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 150ms ease-out; }
+        #mensagem-status { text-align: center; font-family: 'Lora', serif; font-size: 0.95rem; font-weight: bold; min-height: 24px; }
+        .sucesso { color: #a3e635; }
+        .erro { color: #fca5a5; }
+        .registration-section { text-align: center; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+        .registration-link { font-weight: 600; color: #faf8f3; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="card-header"><h1 class="login-title">LOGIN</h1></div>
+            <form class="form-content" id="form-login">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="seu.email@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Senha</label>
+                    <input type="password" id="password" class="form-input" placeholder="Sua senha" required>
+                </div>
+                <button class="login-button" type="submit">Entrar</button>
+                <div id="mensagem-status"></div>
+                <div class="registration-section">
+                    <p style="color: white;">NÃO É UM MEMBRO? <a href="cadastro.html" class="registration-link">REGISTRE-SE</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/configuracao-supabase.js"></script>
+    <script>
+      const formularioLogin = document.getElementById('form-login');
+      const mensagemLogin = document.getElementById('mensagem-status');
+      formularioLogin.addEventListener('submit', async (evento) => {
+        evento.preventDefault();
+        mensagemLogin.textContent = 'Verificando...';
+        mensagemLogin.className = '';
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('password').value;
+        const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password: senha });
+        if (error) {
+          mensagemLogin.textContent = 'E-mail ou senha incorretos.';
+          mensagemLogin.className = 'erro';
+          return;
+        }
+        mensagemLogin.textContent = 'Login bem-sucedido!';
+        mensagemLogin.className = 'sucesso';
+        window.setTimeout(() => { window.location.href = '../Perfil/cliente.html'; }, 500);
+      });
+    </script>
+</body>
+</html>

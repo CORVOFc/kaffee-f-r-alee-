@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Cadrastrar-se Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: #f5f1ed;
+            color:#631f08;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background with coffee beans texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('IMG/coffee-beans-background.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        /* Overlay for depth */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 420px;
+            padding: 0 24px;
+        }
+
+        /* Cat silhouette - positioned above card */
+        .cat-silhouette {
+            position: absolute;
+            top: -29px;
+            right: 32px;
+            width: 80px;
+            height: 80px;
+            z-index: 20;
+            filter: drop-shadow(4px 6px 12px rgba(92, 61, 46, 0.6));
+        }
+
+        .cat-silhouette img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Main card container */
+        .login-card {
+            position: relative;
+            background-color: #631f08;
+            border: 2px solid #2b1511;
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 16px 20px 3px rgba(110, 54, 26, 0.8);
+        }
+
+        /* Card header */
+        .card-header {
+            padding: 32px 32px 16px 32px;
+            min-height: 80px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .login-title {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #faf8f3;
+            letter-spacing: 0.15em;
+            margin: 0;
+        }
+
+        /* Form content */
+        .form-content {
+            padding: 0 32px 32px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Form group */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-family: 'Crimson Text', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #faf8f3;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            transition: all 150ms ease-out;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 2px rgba(92, 61, 46, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Password input wrapper */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+            transition: color 150ms ease-out;
+            padding: 4px;
+        }
+
+        .toggle-password:hover {
+            color: #333;
+        }
+
+        /* Login button */
+        .login-button {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #e8dcc8;
+            color: #3d2817;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 150ms ease-out;
+        }
+
+        .login-button:hover {
+            box-shadow: 0 8px 24px rgba(92, 61, 46, 0.2);
+        }
+
+        .login-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Status message */
+        #mensagem-status {
+            text-align: center;
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        .sucesso {
+            color: #a3e635;
+        }
+
+        .erro {
+            color: #fca5a5;
+        }
+
+        /* Registration section */
+        .registration-section {
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .registration-text {
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            color: #faf8f3;
+            margin: 0;
+        }
+
+        .registration-link {
+            font-weight: 600;
+            color: #faf8f3;
+            text-decoration: none;
+            transition: opacity 150ms ease-out;
+        }
+
+        .registration-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+
+    <!-- Importação do SDK do Supabase via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Cat silhouette -->
+        <div class="cat-silhouette">
+            <img src="IMG/login.png" alt="Cat">
+        </div>
+
+        <!-- Login card -->
+        <div class="login-card">
+            <!-- Card header -->
+            <div class="card-header">
+                <h1 class="login-title">CADASTRE-SE</h1>
+            </div>
+
+            <!-- Form content -->
+            <form class="form-content" id="form-cadastro">
+                
+                <div class="form-group">
+                    <label class="form-label" for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" class="form-input" placeholder="EX: jose" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <!-- ATENÇÃO: name/id ajustados para bater exatamente com a coluna 'e-mail' do Supabase -->
+                    <input type="email" id="email" name="email" class="form-input" placeholder="EX: hjhgvkhcgv@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="senha">Senha</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="senha" name="senha" class="form-input" placeholder="Sua senha" required>
+                        <button class="toggle-password" type="button" id="togglePassword" aria-label="Toggle password visibility">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <button class="login-button" type="submit" id="botao-enviar">CADASTRAR</button>
+
+                <!-- Mensagem de feedback do cadastro -->
+                <div id="mensagem-status"></div>
+
+                <div class="registration-section">
+                    <p class="registration-text">
+                        JÁ É UM MEMBRO?
+                        <a href="login.html" class="registration-link">LOGAR</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script JavaScript para o Supabase e interatividade -->
+    <script src="../js/configuracao-supabase.js"></script>
+    <script>
+      const botaoAlternarSenha = document.getElementById('togglePassword');
+      const campoSenha = document.getElementById('senha');
+      botaoAlternarSenha.addEventListener('click', () => {
+        const senhaVisivel = campoSenha.type === 'text';
+        campoSenha.type = senhaVisivel ? 'password' : 'text';
+        botaoAlternarSenha.textContent = senhaVisivel ? '👁️' : '🙈';
+      });
+
+      const formularioCadastro = document.getElementById('form-cadastro');
+      const mensagemCadastro = document.getElementById('mensagem-status');
+      formularioCadastro.addEventListener('submit', async (evento) => {
+        evento.preventDefault();
+        mensagemCadastro.textContent = 'Criando sua conta...';
+        mensagemCadastro.className = '';
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const senha = document.getElementById('senha').value;
+        const { error } = await window.supabaseClient.auth.signUp({
+          email,
+          password: senha,
+          options: { data: { nome_completo: nome } }
+        });
+        if (error) {
+          mensagemCadastro.textContent = error.message;
+          mensagemCadastro.className = 'erro';
+          return;
+        }
+        mensagemCadastro.textContent = 'Cadastro realizado! Verifique seu e-mail para confirmar a conta.';
+        mensagemCadastro.className = 'sucesso';
+        formularioCadastro.reset();
+      });
+    </script>
+</body>
+</html>
