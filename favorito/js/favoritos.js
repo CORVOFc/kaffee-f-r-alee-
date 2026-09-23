@@ -1,410 +1,184 @@
-/* ==========================================================
-   FAVORITOS.JS
-   Projeto: Kaffee Für Alle
-   Autor Front-end: Filipe
-   Objetivo: Controlar pesquisa, filtros, carrossel,
-             modal e favoritos.
-========================================================== */
+/* 01. Ícones e referências */
+lucide.createIcons();
 
+const carrossel = document.getElementById("carrossel");
+const anterior = document.getElementById("anterior");
+const proximo = document.getElementById("proximo");
+const pesquisa = document.getElementById("campo-de-pesquisa");
+const formularioPesquisa = document.getElementById("formulario-pesquisa");
+const modal = document.getElementById("modal-produto");
+const fechar = document.getElementById("fechar-modal");
+const toast = document.getElementById("toast");
+const contadorFavoritos = document.getElementById(
+  "quantidade-total-de-favoritos",
+);
+const modalPerfil = document.getElementById("modal-perfil");
+const formularioPerfil = document.getElementById("formulario-perfil");
+const botaoEditarPerfil = document.getElementById("botao-editar-perfil");
+const fecharModalPerfil = document.getElementById("fechar-modal-perfil");
 
-/* ==========================================================
-   ELEMENTOS DA PÁGINA
-========================================================== */
+/* 02. Usuário demonstrativo para o front-end */
+const usuarioSalvo = JSON.parse(localStorage.getItem("usuario") || "null");
+const usuario = usuarioSalvo || {
+  nome: "Usuário",
+  foto: "img/perfil/default.png",
+};
 
-const campoDePesquisa =
-document.getElementById("campo-de-pesquisa-dos-produtos-favoritos");
+const nomeUsuario = usuario.nome || "Usuário";
+const fotoUsuario = usuario.foto || "img/perfil/default.png";
 
-const botaoLimparPesquisa =
-document.getElementById("botao-de-limpar-a-pesquisa");
+document.getElementById("nome-do-usuario-logado").textContent = nomeUsuario;
+document.getElementById("imagem-do-usuario").src = fotoUsuario;
 
-const listaHorizontalDeProdutos =
-document.getElementById("lista-horizontal-de-produtos-favoritos");
+/*
+  BACK-END:
+  Quando o login/Supabase Auth estiver pronto, substituir o usuário
+  demonstrativo acima por uma sessão real e descomentar este bloco:
 
-const botoesDeFiltro =
-document.querySelectorAll(".botao-de-filtro-por-categoria");
+  const usuarioLogado = JSON.parse(
+    localStorage.getItem("usuario") || "null",
+  );
 
-const botaoAnteriorDoCarrossel =
-document.getElementById("botao-anterior-do-carrossel");
+  if (!usuarioLogado) {
+    window.location.href = "login.html";
+  }
 
-const botaoProximoDoCarrossel =
-document.getElementById("botao-proximo-do-carrossel");
+  const nomeUsuarioLogado = usuarioLogado.nome || usuarioLogado.name;
+  const fotoUsuarioLogado =
+    usuarioLogado.foto || usuarioLogado.avatar || "img/perfil/default.png";
 
-const modalDoProduto =
-document.getElementById("modal-de-visualizacao-rapida-do-produto");
+  document.getElementById("nome-do-usuario-logado").textContent =
+    nomeUsuarioLogado;
+  document.getElementById("imagem-do-usuario").src = fotoUsuarioLogado;
+*/
 
-const botaoFecharModal =
-document.getElementById("botao-de-fechar-o-modal");
+/* 03. Toast */
+let temporizadorToast;
 
-const toastDeConfirmacao =
-document.getElementById("toast-de-confirmacao-de-favorito");
-
-const contadorDeFavoritos =
-document.getElementById("contador-da-quantidade-de-produtos-favoritos");
-
-
-/* ==========================================================
-   DADOS TEMPORÁRIOS
-   (BACK-END substituirá por fetch('/api/favoritos'))
-========================================================== */
-
-let produtosFavoritos = [
-
-    {
-        id:1,
-        nome:"Café Especial",
-        categoria:"cafes",
-        preco:"R$ 12,90",
-        descricao:"Grãos 100% arábica.",
-        favorito:true
-    },
-
-    {
-        id:2,
-        nome:"Brownie Artesanal",
-        categoria:"doces",
-        preco:"R$ 9,90",
-        descricao:"Chocolate belga.",
-        favorito:false
-    }
-
-];
-
-
-/* ==========================================================
-   ATUALIZAR CONTADOR
-========================================================== */
-
-function atualizarContadorDeFavoritos(){
-
-    const quantidade =
-    document.querySelectorAll(
-        ".botao-de-favoritar-ou-desfavoritar.ativo"
-    ).length;
-
-    contadorDeFavoritos.textContent =
-    `${quantidade} produtos salvos`;
-
+function mostrarToast(mensagem) {
+  toast.textContent = mensagem;
+  toast.classList.add("visivel");
+  clearTimeout(temporizadorToast);
+  temporizadorToast = window.setTimeout(() => {
+    toast.classList.remove("visivel");
+  }, 2400);
 }
 
+/* 04. Skeleton loading */
+window.setTimeout(() => {
+  document.querySelectorAll(".card.carregando").forEach((card) => {
+    card.classList.remove("carregando");
+  });
+}, 450);
 
-/* ==========================================================
-   TOAST
-========================================================== */
-
-function mostrarToast(mensagem){
-
-    toastDeConfirmacao.querySelector("span").textContent = mensagem;
-
-    toastDeConfirmacao.hidden = false;
-
-    setTimeout(()=>{
-
-        toastDeConfirmacao.hidden = true;
-
-    },2000);
-
-}
-
-
-/* ==========================================================
-   FAVORITAR / DESFAVORITAR
-========================================================== */
-
-document
-.querySelectorAll(".botao-de-favoritar-ou-desfavoritar")
-.forEach(botao=>{
-
-    botao.addEventListener("click",()=>{
-
-        const card =
-        botao.closest(".card-do-produto-favorito");
-
-        const idProduto =
-        card.dataset.idDoProduto;
-
-        botao.classList.toggle("ativo");
-
-        if(botao.classList.contains("ativo")){
-
-            botao.textContent = "♥";
-
-            mostrarToast("Produto adicionado aos favoritos");
-
-        }else{
-
-            botao.textContent = "♡";
-
-            mostrarToast("Produto removido dos favoritos");
-
-        }
-
-        atualizarContadorDeFavoritos();
-
-        console.log("Produto:",idProduto);
-
-        /* BACK-END
-
-        fetch(`/api/favoritos/${idProduto}`,{
-            method:"POST"
-        });
-
-        */
-
-    });
-
+/* 05. Carrossel com scroll snap */
+proximo.addEventListener("click", () => {
+  carrossel.scrollBy({ left: 250, behavior: "smooth" });
 });
 
+anterior.addEventListener("click", () => {
+  carrossel.scrollBy({ left: -250, behavior: "smooth" });
+});
 
-/* ==========================================================
-   PESQUISA EM TEMPO REAL
-========================================================== */
+/* 06. Contador e coração com IDs únicos */
+function atualizarContadorFavoritos() {
+  const total = document.querySelectorAll(".toggle-heart:checked").length;
+  contadorFavoritos.textContent = String(total);
+}
 
-campoDePesquisa.addEventListener("input",()=>{
+document.querySelectorAll(".toggle-heart").forEach((coracao) => {
+  coracao.addEventListener("change", () => {
+    const rotulo = document.querySelector(`label[for="${coracao.id}"]`);
+    const produto = coracao.closest(".card")?.querySelector("h3")?.textContent;
+    const favoritado = coracao.checked;
 
-    const texto =
-    campoDePesquisa.value.toLowerCase();
+    rotulo?.setAttribute(
+      "aria-label",
+      favoritado
+        ? `Remover ${produto} dos favoritos`
+        : `Adicionar ${produto} aos favoritos`,
+    );
+    atualizarContadorFavoritos();
+    mostrarToast(
+      favoritado
+        ? `${produto} adicionado aos favoritos.`
+        : `${produto} removido dos favoritos.`,
+    );
+  });
+});
 
+atualizarContadorFavoritos();
+
+/* 07. Pesquisa */
+function filtrarProdutos() {
+  const valor = pesquisa.value.toLowerCase().trim();
+
+  document.querySelectorAll(".card").forEach((card) => {
+    const nome = card.querySelector("h3").textContent.toLowerCase();
+    card.hidden = !nome.includes(valor);
+  });
+}
+
+pesquisa.addEventListener("input", filtrarProdutos);
+formularioPesquisa.addEventListener("reset", () => {
+  window.setTimeout(() => {
+    pesquisa.value = "";
+    filtrarProdutos();
+  }, 0);
+});
+
+/* 08. Cinco categorias visuais */
+document.querySelectorAll(".chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
     document
-    .querySelectorAll(".card-do-produto-favorito")
-    .forEach(card=>{
+      .querySelectorAll(".chip")
+      .forEach((item) => item.classList.remove("ativo"));
+    chip.classList.add("ativo");
 
-        const nome =
-        card.querySelector(".nome-do-produto-favorito")
-        .textContent.toLowerCase();
-
-        card.style.display =
-        nome.includes(texto)
-        ? "block"
-        : "none";
-
+    const categoria = chip.dataset.categoria;
+    document.querySelectorAll(".card").forEach((card) => {
+      card.hidden =
+        categoria !== "todos" && card.dataset.categoria !== categoria;
     });
-
+  });
 });
 
-
-/* ==========================================================
-   LIMPAR PESQUISA
-========================================================== */
-
-botaoLimparPesquisa.addEventListener("click",()=>{
-
-    campoDePesquisa.value="";
-
-    campoDePesquisa.dispatchEvent(new Event("input"));
-
+/* 09. Modal com transição visual */
+document.querySelectorAll(".ver-detalhes").forEach((botao) => {
+  botao.addEventListener("click", () => modal.showModal());
 });
 
+fechar.addEventListener("click", () => modal.close());
 
-/* ==========================================================
-   FILTROS
-========================================================== */
+/* 10. Jornal favorito */
+const botaoRemoverJornal = document.getElementById("botao-remover-jornal");
+botaoRemoverJornal.addEventListener("click", () => {
+  botaoRemoverJornal.classList.add("jornal-removendo");
+  botaoRemoverJornal.setAttribute("aria-pressed", "false");
+  botaoRemoverJornal.setAttribute(
+    "aria-label",
+    "Adicionar Gazeta aos jornais favoritos",
+  );
+  mostrarToast("Jornal removido dos favoritos.");
 
-botoesDeFiltro.forEach(botao=>{
-
-    botao.addEventListener("click",()=>{
-
-        botoesDeFiltro.forEach(item=>{
-
-            item.classList.remove("ativo");
-
-        });
-
-        botao.classList.add("ativo");
-
-        const categoriaSelecionada =
-        botao.textContent.toLowerCase();
-
-        document
-        .querySelectorAll(".card-do-produto-favorito")
-        .forEach(card=>{
-
-            const categoria =
-            card.dataset.categoriaDoProduto;
-
-            if(categoriaSelecionada==="todos"){
-
-                card.style.display="block";
-
-                return;
-
-            }
-
-            card.style.display =
-            categoria===categoriaSelecionada
-            ? "block"
-            : "none";
-
-        });
-
-    });
-
+  window.setTimeout(() => {
+    botaoRemoverJornal.closest(".jornal")?.remove();
+  }, 260);
 });
 
-
-/* ==========================================================
-   CARROSSEL
-========================================================== */
-
-const distanciaDoScroll = 220;
-
-botaoProximoDoCarrossel.addEventListener("click",()=>{
-
-    listaHorizontalDeProdutos.scrollBy({
-
-        left:distanciaDoScroll,
-        behavior:"smooth"
-
-    });
-
+/* 11. Perfil editável */
+botaoEditarPerfil.addEventListener("click", () => {
+  const atual = JSON.parse(localStorage.getItem("usuario") || "{}");
+  document.getElementById("campo-nome-perfil").value = atual.nome || "";
+  document.getElementById("campo-foto-perfil").value = atual.foto || "";
+  modalPerfil.showModal();
 });
 
-botaoAnteriorDoCarrossel.addEventListener("click",()=>{
-
-    listaHorizontalDeProdutos.scrollBy({
-
-        left:-distanciaDoScroll,
-        behavior:"smooth"
-
-    });
-
+fecharModalPerfil.addEventListener("click", () => modalPerfil.close());
+formularioPerfil.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  const dados = Object.fromEntries(new FormData(formularioPerfil));
+  localStorage.setItem("usuario", JSON.stringify(dados));
+  window.location.reload();
 });
 
-
-/* ==========================================================
-   ARRASTAR COM MOUSE
-========================================================== */
-
-let estaArrastando = false;
-let posicaoInicial = 0;
-let scrollInicial = 0;
-
-listaHorizontalDeProdutos.addEventListener("mousedown",(evento)=>{
-
-    estaArrastando = true;
-
-    posicaoInicial = evento.pageX;
-
-    scrollInicial = listaHorizontalDeProdutos.scrollLeft;
-
-});
-
-window.addEventListener("mouseup",()=>{
-
-    estaArrastando = false;
-
-});
-
-listaHorizontalDeProdutos.addEventListener("mousemove",(evento)=>{
-
-    if(!estaArrastando) return;
-
-    const distancia =
-    evento.pageX - posicaoInicial;
-
-    listaHorizontalDeProdutos.scrollLeft =
-    scrollInicial - distancia;
-
-});
-
-
-/* ==========================================================
-   MODAL
-========================================================== */
-
-const imagemModal =
-document.getElementById("imagem-do-produto-no-modal");
-
-const tituloModal =
-document.getElementById("titulo-do-produto-no-modal");
-
-const descricaoModal =
-document.getElementById("descricao-do-produto-no-modal");
-
-const precoModal =
-document.getElementById("preco-do-produto-no-modal");
-
-const categoriaModal =
-document.getElementById("categoria-do-produto-no-modal");
-
-document
-.querySelectorAll(".botao-de-abrir-o-modal-do-produto")
-.forEach(botao=>{
-
-    botao.addEventListener("click",()=>{
-
-        const card =
-        botao.closest(".card-do-produto-favorito");
-
-        imagemModal.src =
-        card.querySelector("img").src;
-
-        tituloModal.textContent =
-        card.querySelector(".nome-do-produto-favorito").textContent;
-
-        precoModal.textContent =
-        card.querySelector(".preco-do-produto-favorito").textContent;
-
-        categoriaModal.textContent =
-        card.querySelector(".categoria-do-produto-favorito").textContent;
-
-        descricaoModal.textContent =
-        "Descrição enviada pelo banco de dados.";
-
-        modalDoProduto.showModal();
-
-    });
-
-});
-
-botaoFecharModal.addEventListener("click",()=>{
-
-    modalDoProduto.close();
-
-});
-
-
-/* ==========================================================
-   BOTÃO VOLTAR
-========================================================== */
-
-document
-.getElementById("botao-de-voltar-para-a-pagina-index")
-.addEventListener("click",()=>{
-
-    window.location.href="index.html";
-
-});
-
-
-/* ==========================================================
-   INDICADORES DO CARROSSEL
-========================================================== */
-
-const indicadores =
-document.querySelectorAll(".indicador-do-carrossel");
-
-listaHorizontalDeProdutos.addEventListener("scroll",()=>{
-
-    const largura = 220;
-
-    const pagina =
-    Math.round(listaHorizontalDeProdutos.scrollLeft/largura);
-
-    indicadores.forEach((item,index)=>{
-
-        item.classList.toggle("ativo",index===pagina);
-
-    });
-
-});
-
-
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
-
-window.addEventListener("load",()=>{
-
-    atualizarContadorDeFavoritos();
-
-});
