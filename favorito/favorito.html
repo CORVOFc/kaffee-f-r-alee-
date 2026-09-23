@@ -1,299 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favoritos • Kaffee Für Alle</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos | Kaffee Für Alle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Fonte -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/favoritos.css">
-</head>
+    <link rel="stylesheet" href="css/favoritos.css" />
+  </head>
+  <body>
+    <!-- FUNDO -->
+    <video
+      class="video-de-fundo"
+      autoplay
+      muted
+      loop
+      playsinline
+      aria-hidden="true"
+    >
+      <source src="video-fundo/background-favorito.webm" type="video/webm" />
+    </video>
 
-<body>
+    <div class="overlay-escura" aria-hidden="true"></div>
 
-    <!-- ==========================================================
-         CABEÇALHO
-    =========================================================== -->
+    <main class="pagina-favoritos">
+      <!-- PERFIL -->
+      <header class="cabecalho-do-perfil">
+        <div class="informacoes-do-usuario">
+          <div class="avatar-do-usuario">
+            <img
+              id="imagem-do-usuario"
+              src="img/perfil/default.png"
+              alt="Perfil"
+            />
+          </div>
 
-    <header class="cabecalho-da-pagina-de-favoritos">
+          <div class="dados-do-usuario">
+            <span class="saudacao-do-usuario">Olá,</span>
 
-        <div class="linha-superior-do-cabecalho">
+            <!-- BACK-END ALTERA -->
+            <h2 id="nome-do-usuario-logado">Usuário</h2>
 
-            <button id="botao-de-voltar-para-a-pagina-index">
-                ← Voltar
+            <span class="status-do-usuario">Perfil conectado</span>
+
+            <button
+              class="editar-perfil"
+              id="botao-editar-perfil"
+              type="button"
+            >
+              Editar perfil
             </button>
-
-            <button id="botao-de-abrir-o-perfil-do-usuario">
-                <img src="img/icones/perfil.svg" alt="Perfil">
-            </button>
-
+          </div>
         </div>
 
-        <h1 id="titulo-da-pagina-produtos-favoritos">
-            PRODUTOS <br>
-            FAVORITOS
-        </h1>
+        <div
+          class="contador-de-favoritos"
+          aria-label="Quantidade de produtos favoritos"
+          aria-live="polite"
+        >
+          <i data-lucide="heart"></i>
 
-        <p id="contador-da-quantidade-de-produtos-favoritos">
-            12 produtos salvos
-        </p>
-
-    </header>
-
-    <!-- ==========================================================
-         PESQUISA
-    =========================================================== -->
-
-    <section class="secao-da-pesquisa">
-
-        <div class="container-da-barra-de-pesquisa">
-
-            <img src="img/icones/lupa.svg" alt="Pesquisar">
-
-            <input
-                id="campo-de-pesquisa-dos-produtos-favoritos"
-                type="search"
-                placeholder="Pesquisar cafés, bolos...">
-
-            <button id="botao-de-limpar-a-pesquisa">
-                ✕
-            </button>
-
+          <span id="quantidade-total-de-favoritos">1</span>
         </div>
+      </header>
 
-    </section>
+      <!-- TÍTULO -->
 
-    <!-- ==========================================================
-         FILTROS
-    =========================================================== -->
+      <section class="titulo-da-pagina">
+        <h1>PRODUTOS FAVORITOS</h1>
 
-    <section class="secao-dos-filtros-de-categoria">
+        <p>Seus cafés e doces favoritos</p>
+      </section>
 
-        <button class="botao-de-filtro-por-categoria ativo">
-            Todos
+      <!-- PESQUISA -->
+
+      <form class="form" id="formulario-pesquisa">
+        <label for="campo-de-pesquisa">
+          <input
+            class="input"
+            id="campo-de-pesquisa"
+            type="search"
+            required
+            placeholder="Pesquisar favoritos..."
+            autocomplete="off"
+          />
+          <div class="fancy-bg"></div>
+          <span class="search" aria-hidden="true">
+            <i data-lucide="search"></i>
+          </span>
+          <button
+            class="close-btn"
+            id="botao-de-limpar-pesquisa"
+            type="reset"
+            aria-label="Limpar pesquisa"
+          >
+            <i data-lucide="x"></i>
+          </button>
+        </label>
+      </form>
+
+      <!-- ==========================================================
+          FILTROS DE CATEGORIA
+      ========================================================== -->
+
+      <section class="container-dos-filtros">
+        <button class="btn-23 chip ativo" data-categoria="todos">
+          <span class="text">Todos</span>
+          <span aria-hidden="true" class="marquee">Todos</span>
         </button>
 
-        <button class="botao-de-filtro-por-categoria">
-            Cafés
+        <button class="btn-23 chip" data-categoria="bebidas">
+          <span class="text">Bebidas</span>
+          <span aria-hidden="true" class="marquee">Bebidas</span>
         </button>
 
-        <button class="botao-de-filtro-por-categoria">
-            Bolos
+        <button class="btn-23 chip" data-categoria="doces">
+          <span class="text">Doces</span>
+          <span aria-hidden="true" class="marquee">Doces</span>
         </button>
 
-        <button class="botao-de-filtro-por-categoria">
-            Doces
+        <button class="btn-23 chip" data-categoria="paes">
+          <span class="text">Pães</span>
+          <span aria-hidden="true" class="marquee">Pães</span>
         </button>
 
-    </section>
+        <button class="btn-23 chip" data-categoria="refrigerantes">
+          <span class="text">Refrigerantes</span>
+          <span aria-hidden="true" class="marquee">Refrigerantes</span>
+        </button>
 
-    <!-- ==========================================================
-         CARROSSEL
-    =========================================================== -->
+        <button class="btn-23 chip" data-categoria="salgados">
+          <span class="text">Salgados</span>
+          <span aria-hidden="true" class="marquee">Salgados</span>
+        </button>
+      </section>
+      <!-- CARROSSEL -->
 
-    <section class="secao-do-carrossel-de-produtos">
+      <section class="secao-do-carrossel">
+        <button
+          id="anterior"
+          class="seta"
+          type="button"
+          aria-label="Produto anterior"
+        >
+          <i data-lucide="chevron-left"></i>
+        </button>
+
+        <div id="carrossel" class="lista-de-produtos">
+          <!-- CARD -->
+          <article
+            class="card carregando"
+            data-categoria="bebidas"
+            data-produto-id="001"
+          >
+            <!-- From Uiverse.io by JkHuger -->
+            <div class="controle-coracao">
+              <input
+                id="toggle-heart-001"
+                class="toggle-heart"
+                type="checkbox"
+                checked
+              />
+              <label
+                for="toggle-heart-001"
+                class="heart-label"
+                aria-label="Remover Café Especial dos favoritos"
+                >❤</label
+              >
+            </div>
+
+            <img
+              src="img/produtos/cafe.png"
+              alt="Café Especial"
+              loading="lazy"
+            />
+
+            <span class="categoria">CAFÉ</span>
+
+            <h3>Café Especial</h3>
+
+            <div class="estrelas">★★★★★</div>
+
+            <strong>R$ 12,90</strong>
+
+            <button class="ver-detalhes" type="button">Ver detalhes</button>
+          </article>
+        </div>
 
         <button
-            id="botao-anterior-do-carrossel"
-            class="botao-de-navegacao-do-carrossel">
-
-            ‹
-
+          id="proximo"
+          class="seta"
+          type="button"
+          aria-label="Próximo produto"
+        >
+          <i data-lucide="chevron-right"></i>
         </button>
+      </section>
 
-        <!-- BACK-END PREENCHE AQUI -->
-        <div id="lista-horizontal-de-produtos-favoritos">
+      <div class="indicadores">
+        <span class="dot ativo"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
 
-            <!-- CARD MODELO -->
-            <article
-                class="card-do-produto-favorito"
-                data-id-do-produto="1">
+      <!-- JORNAIS -->
 
-                <button
-                    class="botao-de-favoritar-ou-desfavoritar ativo">
+      <section class="jornais">
+        <div class="titulo-secao">
+          <h2>JORNAIS FAVORITOS</h2>
 
-                    ♥
-                </button>
-
-                <img
-                    class="imagem-do-produto-favorito"
-                    src="img/produtos/cafe.png"
-                    alt="Café Especial">
-
-                <span class="categoria-do-produto-favorito">
-                    Café
-                </span>
-
-                <h3 class="nome-do-produto-favorito">
-                    Café Especial
-                </h3>
-
-                <div class="avaliacao-do-produto-favorito">
-                    ★★★★★
-                </div>
-
-                <p class="preco-do-produto-favorito">
-                    R$ 12,90
-                </p>
-
-                <button class="botao-de-abrir-o-modal-do-produto">
-                    Ver detalhes
-                </button>
-
-            </article>
-
+          <button type="button">Ver todos</button>
         </div>
 
-        <button
-            id="botao-proximo-do-carrossel"
-            class="botao-de-navegacao-do-carrossel">
+        <article class="jornal">
+          <img
+            src="img/jornais/gazeta.png"
+            alt="Jornal Gazeta"
+            loading="lazy"
+          />
 
-            ›
+          <div>
+            <h3>Gazeta</h3>
+            <p>14 Setembro 2026</p>
+          </div>
 
-        </button>
+          <button
+            class="ler jornal-favorito"
+            id="botao-remover-jornal"
+            type="button"
+            aria-label="Remover Gazeta dos jornais favoritos"
+            aria-pressed="true"
+          >
+            <span class="plusButton" aria-hidden="true">
+              <svg
+                class="plusIcon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 30 30"
+              >
+                <path
+                  d="M13.75 23.75V16.25H6.25V13.75H13.75V6.25H16.25V13.75H23.75V16.25H16.25V23.75H13.75Z"
+                ></path>
+              </svg>
+            </span>
+          </button>
+        </article>
+      </section>
+    </main>
 
-    </section>
+    <div
+      id="toast"
+      class="toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
-    <!-- Indicadores -->
+    <!-- MODAL -->
 
-    <div id="container-dos-indicadores-do-carrossel">
+    <dialog id="modal-produto">
+      <button
+        id="fechar-modal"
+        type="button"
+        aria-label="Fechar detalhes do produto"
+      >
+        <i data-lucide="x"></i>
+      </button>
 
-        <span class="indicador-do-carrossel ativo"></span>
-        <span class="indicador-do-carrossel"></span>
-        <span class="indicador-do-carrossel"></span>
+      <img
+        src="img/produtos/cafe.png"
+        alt="Imagem do Café Especial"
+        loading="lazy"
+      />
 
-    </div>
+      <span>CAFÉ</span>
 
-    <!-- ==========================================================
-         JORNAIS FAVORITOS
-    =========================================================== -->
+      <h2>Café Especial</h2>
 
-    <section class="secao-dos-jornais-favoritos">
+      <p>Grãos 100% arábica selecionados.</p>
 
-        <div class="cabecalho-da-secao-de-jornais">
+      <h3>R$ 12,90</h3>
 
-            <h2>
-                JORNAIS FAVORITOS
-            </h2>
-
-            <button id="botao-de-ver-todos-os-jornais">
-                Ver todos
-            </button>
-
-        </div>
-
-        <div id="container-da-lista-de-jornais-favoritos">
-
-            <article
-                class="card-do-jornal-favorito"
-                data-id-do-jornal="10">
-
-                <img
-                    class="imagem-do-jornal-favorito"
-                    src="img/jornais/gazeta.png"
-                    alt="Gazeta">
-
-                <div class="informacoes-do-jornal-favorito">
-
-                    <h3 class="nome-do-jornal-favorito">
-                        Gazeta
-                    </h3>
-
-                    <p class="data-da-publicacao-do-jornal">
-                        14 Setembro 2026
-                    </p>
-
-                    <span class="categoria-do-jornal-favorito">
-                        Notícias
-                    </span>
-
-                </div>
-
-                <button class="botao-de-abrir-o-jornal">
-                    Ler
-                </button>
-
-            </article>
-
-        </div>
-
-    </section>
-
-    <!-- ==========================================================
-         MODAL
-    =========================================================== -->
-
-    <dialog id="modal-de-visualizacao-rapida-do-produto">
-
-        <button id="botao-de-fechar-o-modal">
-            ✕
-        </button>
-
-        <img
-            id="imagem-do-produto-no-modal"
-            src=""
-            alt="Produto">
-
-        <span id="categoria-do-produto-no-modal">
-            Café
-        </span>
-
-        <h2 id="titulo-do-produto-no-modal">
-            Café Especial
-        </h2>
-
-        <div id="avaliacao-do-produto-no-modal">
-            ★★★★★
-        </div>
-
-        <p id="descricao-do-produto-no-modal">
-            Descrição do produto enviada pelo banco de dados.
-        </p>
-
-        <h3 id="preco-do-produto-no-modal">
-            R$ 12,90
-        </h3>
-
-        <div class="acoes-do-modal">
-
-            <button id="botao-de-adicionar-ao-carrinho-pelo-modal">
-                Adicionar ao Carrinho
-            </button>
-
-            <button id="botao-de-favoritar-pelo-modal">
-                ♥ Favoritar
-            </button>
-
-        </div>
-
+      <button class="comprar" type="button">Adicionar ao carrinho</button>
     </dialog>
 
-    <!-- ==========================================================
-         TOAST
-    =========================================================== -->
+    <dialog id="modal-perfil" class="modal-perfil">
+      <form id="formulario-perfil" method="dialog">
+        <button
+          class="fechar-modal"
+          id="fechar-modal-perfil"
+          type="button"
+          aria-label="Fechar edição do perfil"
+        >
+          ×
+        </button>
 
-    <div id="toast-de-confirmacao-de-favorito">
+        <h2>Editar perfil</h2>
 
-        <img src="img/icones/check.svg" alt="Sucesso">
+        <label for="campo-nome-perfil">Nome</label>
+        <input id="campo-nome-perfil" name="nome" type="text" required />
 
-        <span>
-            Produto adicionado aos favoritos
-        </span>
+        <label for="campo-foto-perfil">URL da foto</label>
+        <input id="campo-foto-perfil" name="foto" type="url" />
 
-    </div>
-
-    <!-- ==========================================================
-         JAVASCRIPT
-    =========================================================== -->
+        <button class="comprar" type="submit">Salvar perfil</button>
+      </form>
+    </dialog>
 
     <script src="js/favoritos.js"></script>
-
-</body>
-
+  </body>
 </html>
