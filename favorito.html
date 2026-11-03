@@ -1,300 +1,122 @@
 <!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Favoritos • Kaffee Für Alle</title>
+<html lang="pt-br">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favoritos — Kaffee Für Alle</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/innicial.css">
+  <link rel="stylesheet" href="css/favoritos.css">
+    <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/components/pesquisa-globa.css">
+  <link rel="stylesheet" href="css/components/modal.css">
+  <link rel="stylesheet" href="css/auth-guard.css">
+  <link rel="stylesheet" href="css/site-header.css">
+  <link rel="stylesheet" href="css/site-footer.css">
+</head>
+<body data-protected-page="true" data-page="favoritos">
+  <div class="auth-guard-status" role="status" aria-live="polite">Verificando sua sessão...</div>
 
-    
-
-    <link rel="stylesheet" href="../css/favoritos.css" />
-    <link rel="stylesheet" href="../css/icons.css">
-  </head>
-  <body>
-    
-
-    <div class="overlay-escura" aria-hidden="true"></div>
-
-    <main class="pagina-favoritos">
-      
-      <header class="cabecalho-do-perfil">
-        <div class="informacoes-do-usuario">
-          <div class="avatar-do-usuario">
-            <img
-              id="imagem-do-usuario"
-              src="../assets/icons/user.svg"
-              alt="Perfil"
-            />
-          </div>
-
-          <div class="dados-do-usuario">
-            <span class="saudacao-do-usuario">Olá,</span>
-
-            
-            <h2 id="nome-do-usuario-logado">Usuário</h2>
-
-            <span class="status-do-usuario">Perfil conectado</span>
-
-            <button
-              class="editar-perfil"
-              id="botao-editar-perfil"
-              type="button"
-            >
-              Editar perfil
-            </button>
-          </div>
-        </div>
-
-        <div
-          class="contador-de-favoritos"
-          aria-label="Quantidade de produtos favoritos"
-          aria-live="polite"
-        >
-          <img class="icono-ui" src="../assets/icons/heart.svg" alt="" aria-hidden="true">
-
-          <span id="quantidade-total-de-favoritos">1</span>
-        </div>
-      </header>
-
-      
-
-      <section class="titulo-da-pagina">
-        <h1>PRODUTOS FAVORITOS</h1>
-
-        <p>Seus cafés e doces favoritos</p>
-      </section>
-
-      
-
-      <form class="form" id="formulario-pesquisa">
-        <label for="campo-de-pesquisa">
-          <input
-            class="input"
-            id="campo-de-pesquisa"
-            type="search"
-            required
-            placeholder="Pesquisar favoritos..."
-            autocomplete="off"
-          />
-          <div class="fancy-bg"></div>
-          <span class="search" aria-hidden="true">
-            <img class="icono-ui" src="../assets/icons/search.svg" alt="" aria-hidden="true">
-          </span>
-          <button
-            class="close-btn"
-            id="botao-de-limpar-pesquisa"
-            type="reset"
-            aria-label="Limpar pesquisa"
-          >
-            <img class="icono-ui" src="../assets/icons/close.svg" alt="" aria-hidden="true">
-          </button>
-        </label>
-      </form>
-
-      
-
-      <section class="container-dos-filtros">
-        <button class="btn-23 chip ativo" data-categoria="todos">
-          <span class="text">Todos</span>
-          <span aria-hidden="true" class="marquee">Todos</span>
+  <header class="cabecalho">
+    <div class="logo">
+      <img src="logs/Kaffee Fur Alle hb.png" alt="Kaffee Für Alle Logo">
+    </div>
+  
+    <nav class="menu" aria-label="Navegação principal">
+      <a href="index.html">INICIO</a>
+      <a href="cardapio.html">CARDAPIO</a>
+      <a href="index.html#sobre">SOBRE NÓS</a>
+      <a href="noticias.html" data-login-required>NOTICIAS</a>
+      <a href="musica.html" data-login-required>MÚSICA</a>
+      <div class="BarraPesquisa">
+        <input type="text" class="texto" placeholder="pesquisa" aria-label="Pesquisar no site">
+        <button class="botao" type="button" aria-label="Pesquisar">
+          <img class="abrir" src="logs/icone de pesquisa.png" alt="">
         </button>
-
-        <button class="btn-23 chip" data-categoria="bebidas">
-          <span class="text">Bebidas</span>
-          <span aria-hidden="true" class="marquee">Bebidas</span>
-        </button>
-
-        <button class="btn-23 chip" data-categoria="doces">
-          <span class="text">Doces</span>
-          <span aria-hidden="true" class="marquee">Doces</span>
-        </button>
-
-        <button class="btn-23 chip" data-categoria="paes">
-          <span class="text">Pães</span>
-          <span aria-hidden="true" class="marquee">Pães</span>
-        </button>
-
-        <button class="btn-23 chip" data-categoria="refrigerantes">
-          <span class="text">Refrigerantes</span>
-          <span aria-hidden="true" class="marquee">Refrigerantes</span>
-        </button>
-
-        <button class="btn-23 chip" data-categoria="salgados">
-          <span class="text">Salgados</span>
-          <span aria-hidden="true" class="marquee">Salgados</span>
-        </button>
-      </section>
-      
-
-      <section class="secao-do-carrossel">
-        <button
-          id="anterior"
-          class="seta"
-          type="button"
-          aria-label="Produto anterior"
-        >
-          <img class="icono-ui" src="../assets/icons/arrow-left.svg" alt="" aria-hidden="true">
-        </button>
-
-        <div id="carrossel" class="lista-de-produtos">
-          
-          <article
-            class="card carregando"
-            data-categoria="bebidas"
-            data-produto-id="001"
-          >
-            
-            <div class="controle-coracao">
-              <input
-                id="toggle-heart-001"
-                class="toggle-heart"
-                type="checkbox"
-                checked
-              />
-              <label
-                for="toggle-heart-001"
-                class="heart-label"
-                aria-label="Remover Café Especial dos favoritos"
-                ><img class="icono-ui" src="../assets/icons/heart-filled.svg" alt="" aria-hidden="true"></label
-              >
-            </div>
-
-            <img
-              src="../img/excafe.png"
-              alt="Café Especial"
-              loading="lazy"
-            />
-
-            <span class="categoria">CAFÉ</span>
-
-            <h3>Café Especial</h3>
-
-            <div class="estrelas" aria-label="Avaliação: 5 de 5">5/5</div>
-
-            <strong>R$ 12,90</strong>
-
-            <button class="ver-detalhes" type="button">Ver detalhes</button>
-          </article>
-        </div>
-
-        <button
-          id="proximo"
-          class="seta"
-          type="button"
-          aria-label="Próximo produto"
-        >
-          <img class="icono-ui" src="../assets/icons/arrow-right.svg" alt="" aria-hidden="true">
-        </button>
-      </section>
-
-      <div class="indicadores">
-        <span class="dot ativo"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
       </div>
+    </nav>
+  
+    <div class="icones" aria-label="Áreas da conta">
+      <a href="favorito.html" aria-current="page" aria-label="Favoritos"><img src="assets/icons/heart.svg" alt=""></a>
+      <a href="Carrinho/carrinho.html" aria-label="Carrinho"><img src="assets/icons/cart.svg" alt=""></a>
+      <a href="cliente.html" aria-label="Perfil"><img src="assets/icons/user.svg" alt=""></a>
+    </div>
+  </header>
 
-      
+  <main class="pagina-favoritos">
+    <section class="titulo-da-pagina"><h1>PRODUTOS FAVORITOS</h1><p>Seus cafés e produtos preferidos</p></section>
+  <form class="barra-pesquisa-favoritos" id="formulario-pesquisa" role="search">
+    <img class="icone-pesquisa-favoritos" src="assets/icons/search.svg" alt="" aria-hidden="true">
+    <input class="campo-pesquisa-favoritos" id="campo-de-pesquisa" type="search" placeholder="Pesquisar favoritos..." aria-label="Pesquisar produtos favoritos" autocomplete="off">
+    <button class="botao-limpar-pesquisa-favoritos" id="botao-de-limpar-pesquisa" type="reset" aria-label="Limpar pesquisa">
+      <img src="assets/icons/close.svg" alt="" aria-hidden="true">
+    </button>
+  </form>
+    <section class="container-dos-filtros" aria-label="Filtros de favoritos">
+      <button class="chip ativo" data-categoria="todos" type="button">Todos</button>
+      <button class="chip" data-categoria="bebidas" type="button">Bebidas</button>
+      <button class="chip" data-categoria="doces" type="button">Doces</button>
+      <button class="chip" data-categoria="paes" type="button">Pães</button>
+      <button class="chip" data-categoria="refrigerantes" type="button">Refrigerantes</button>
+      <button class="chip" data-categoria="salgados" type="button">Salgados</button>
+    </section>
+    <section class="secao-do-carrossel">
+      <button id="anterior" class="seta" type="button" aria-label="Produto anterior">
+        <img class="icono-ui" src="assets/icons/arrow-left.svg" alt="" aria-hidden="true"></button>
+        <div id="carrossel" class="lista-de-produtos" aria-live="polite"></div>
+        <button id="proximo" class="seta" type="button" aria-label="Próximo produto">
+          <img class="icono-ui" src="assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+    </button>
+    </section>
+    <p id="favoritos-vazio" class="favoritos-vazio" hidden>Você ainda não adicionou produtos aos favoritos.</p>
+  </main>
 
-      <section class="jornais">
-        <div class="titulo-secao">
-          <h2>JORNAIS FAVORITOS</h2>
-
-          <button type="button">Ver todos</button>
-        </div>
-
-        <article class="jornal">
-          <img
-            src="../logs/000.png"
-            alt="Jornal Gazeta"
-            loading="lazy"
-          />
-
-          <div>
-            <h3>Gazeta</h3>
-            <p>14 Setembro 2026</p>
-          </div>
-
-          <button
-            class="ler jornal-favorito"
-            id="botao-remover-jornal"
-            type="button"
-            aria-label="Remover Gazeta dos jornais favoritos"
-            aria-pressed="true"
-          >
-            <span class="plusButton" aria-hidden="true">
-              <img class="icono-ui" src="../assets/icons/plus.svg" alt="" aria-hidden="true">
-            </span>
-          </button>
-        </article>
+  <footer class="footer-cafeteria" aria-label="Informações e contatos">
+    <div class="footer-cafeteria__conteudo">
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Onde nos encontrar</h2>
+        <address class="footer-cafeteria__texto footer-cafeteria__endereco">
+          Alameda Cel. Elizio Pereira, S/N - Estradinha, Paranaguá - PR, 83206-000
+        </address>
       </section>
-    </main>
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Conheça-nos</h2>
+        <a class="footer-cafeteria__link" href="index.html#sobre">Egípcios FSD</a>
+      </section>
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Ajuda</h2>
+        <a class="footer-cafeteria__link" href="mailto:egipcios.company@gmail.com">egipcios.company@gmail.com</a>
+      </section>
+    </div>
+  </footer>
 
-    <div
-      id="toast"
-      class="toast"
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-    ></div>
+  
+  <div class="sobreposicao-modal" id="modalOverlay"></div>
+  <div class="caixa-modal" id="produtoModal">
+    <button class="botao-fechar-modal" id="btnFecharModal" aria-label="Fechar">&times;</button>
+    <div class="container-img-modal">
+      <img id="modalImg" src="" alt="Produto">
+    </div>
+    <div class="info-modal">
+      <h2 id="modalNome">Nome do Produto</h2>
+      <p id="modalDesc">Descrição do produto.</p>
+      <span class="preco-modal" id="modalPreco">R$ 0,00</span>
+      <button class="botao-adicionar" id="btnAdd">ADICIONAR AO CARRINHO</button>
+    </div>
+  </div>
 
-    
-
-    <dialog id="modal-produto">
-      <button
-        id="fechar-modal"
-        type="button"
-        aria-label="Fechar detalhes do produto"
-      >
-        <img class="icono-ui" src="../assets/icons/close.svg" alt="" aria-hidden="true">
-      </button>
-
-      <img
-        src="../img/excafe.png"
-        alt="Imagem do Café Especial"
-        loading="lazy"
-      />
-
-      <span>CAFÉ</span>
-
-      <h2>Café Especial</h2>
-
-      <p>Grãos 100% arábica selecionados.</p>
-
-      <h3>R$ 12,90</h3>
-
-      <button class="comprar" type="button">Adicionar ao carrinho</button>
-    </dialog>
-
-    <dialog id="modal-perfil" class="modal-perfil">
-      <form id="formulario-perfil" method="dialog">
-        <button
-          class="fechar-modal"
-          id="fechar-modal-perfil"
-          type="button"
-          aria-label="Fechar edição do perfil"
-        >
-          ×
-        </button>
-
-        <h2>Editar perfil</h2>
-
-        <label for="campo-nome-perfil">Nome</label>
-        <input id="campo-nome-perfil" name="nome" type="text" required />
-
-        <label for="campo-foto-perfil">URL da foto</label>
-        <input id="campo-foto-perfil" name="foto" type="url" />
-
-        <button class="comprar" type="submit">Salvar perfil</button>
-      </form>
-    </dialog>
-
-    <script src="js/favoritos.js"></script>
-  </body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/modals/supabaseConfig.js"></script>
+  <script src="js/modals/cart-store.js"></script>
+  <script src="js/modals/modal.js"></script>
+  <script src="js/modals/jornais.js"></script>
+  <script src="js/modals/app-auth.js"></script>
+  <script src="js/favoritos.js"></script>
+  <script src="js/modals/pesquisa-global.js"></script>
+  
+</body>
 </html>

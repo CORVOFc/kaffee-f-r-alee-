@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaffee Für Alle — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Crimson+Text:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-card">
+        <div class="card-header">
+          <h1 class="login-title">LOGIN</h1>
+        </div>
+
+        <form class="form-content" id="form-login">
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              placeholder="seu.email@gmail.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Senha</label>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Sua senha"
+              required
+            />
+          </div>
+
+          <button class="login-button" type="submit" id="botao-login">
+            Entrar
+          </button>
+
+          <div id="mensagem-status" role="alert" aria-live="assertive"></div>
+
+          <div class="registration-section">
+            <p class="registration-text">
+              NÃO É UM MEMBRO?
+              <a href="cadastro.html" class="registration-link">REGISTRE-SE</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/modals/supabaseConfig.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaffee Für Alle — Cadastre-se</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Crimson+Text:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/cadastro.css" />
+    <link rel="stylesheet" href="css/icons.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="cat-silhouette">
+        <img src="logs/gatos/login.png" alt="Gato decorativo" />
+      </div>
+
+      <div class="login-card">
+        <div class="card-header">
+          <h1 class="login-title">CADASTRE-SE</h1>
+        </div>
+
+        <form class="form-content" id="form-cadastro">
+          <div class="form-group">
+            <label class="form-label" for="nome">Nome</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              class="form-input"
+              placeholder="EX: José"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-input"
+              placeholder="EX: usuario@email.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="senha">Senha</label>
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                class="form-input"
+                placeholder="Mínimo 6 caracteres"
+                minlength="6"
+                required
+              />
+              <button
+                class="toggle-password"
+                type="button"
+                id="togglePassword"
+                aria-label="Mostrar ou ocultar senha"
+              >
+                <img class="icono-ui" src="assets/icons/eye.svg" alt="" aria-hidden="true">
+              </button>
+            </div>
+          </div>
+
+          <button class="login-button" type="submit" id="botao-enviar">
+            CADASTRAR
+          </button>
+
+          <div id="mensagem-status"></div>
+
+          <div class="registration-section">
+            <p class="registration-text">
+              JÁ É UM MEMBRO?
+              <a href="login.html" class="registration-link">LOGAR</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/modals/supabaseConfig.js"></script>
+    <script src="js/cadastro.js"></script>
+  </body>
+</html>

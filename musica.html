@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player Cafeteria Premium</title>
+
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+      <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/innicial.css">
+    <link rel="stylesheet" href="css/components/modal.css">
+    <link rel="stylesheet" href="css/musica.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/auth-guard.css">
+  </head>
+  
+  <body data-protected-page="true" data-page="musica">
+    <div class="auth-guard-status" role="status" aria-live="polite">Verificando sua sessão...</div>
+    <a class="pular-conteudo-musica" href="#conteudo-musica">Pular para o conteúdo</a>
+    <main class="pagina-musica" id="conteudo-musica">
+    <div class="barra-pesquisa-musicas">
+      <input
+        type="search"
+        class="campo-pesquisa-musicas"
+        id="campo-busca-musica"
+        placeholder="Buscar por música"
+        aria-label="Buscar músicas por título, artista ou álbum"
+        aria-autocomplete="list"
+        aria-controls="sugestoes-lista"
+      />
+      <ul class="sugestoes-pesquisa" id="sugestoes-lista" aria-label="Resultados da busca de músicas" hidden></ul>
+    </div>
+
+    
+    <button
+      class="botao-navegacao-musicas"
+      id="seta-esquerda"
+      aria-label="Disco anterior"
+    >
+      <img class="icono-ui" src="assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+    </button>
+    <button
+      class="botao-navegacao-musicas"
+      id="seta-direita"
+      aria-label="Próximo disco"
+    >
+      <img class="icono-ui" src="assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+    </button>
+
+    
+    <div id="area-carrossel">
+      <div class="moldura-fixa" id="moldura-fixa"></div>
+      <div class="moldura-info">
+        <h3 id="titulo-moldura-fixa">2017<br />Skin: The Remixes</h3>
+        <p id="artista-moldura-fixa">Flume</p>
+      </div>
+      <div class="carrossel-musicas" id="carrossel-musicas"></div>
+    </div>
+
+    
+    <div id="painel-player">
+      <button
+        class="botao-voltar-player"
+        id="botao-voltar-player"
+        aria-label="Voltar"
+      >
+        <img class="icono-ui" src="assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+      </button>
+
+      <div class="arte-player">
+        <div class="moldura-capa">
+          <div class="player-vinyl" id="vinil-player"><img class="player-vinyl-capa" alt=""></div>
+        </div>
+        <div class="informacoes-capa">
+          <h3 id="titulo-moldura-player">2017 Skin: The Remixes</h3>
+          <p id="artista-moldura-player">Flume</p>
+        </div>
+      </div>
+
+      <div class="detalhes-player">
+        <div class="cabecalho-faixa">
+          <div>
+            <h2 id="titulo-faixa">Take a Chance</h2>
+            <p id="artista-faixa">Little Dragon</p>
+          </div>
+          <div class="tempo-faixa" id="tempo-faixa">0:00 / 0:00</div>
+        </div>
+
+        <div class="progresso-musica" id="progresso-musica">
+          <progress class="barra-progresso" id="barra-progresso" max="100" value="0" aria-label="Progresso da música"></progress>
+        </div>
+
+        <div class="controles-player-musica">
+          <button
+            class="botao-controle-player-musica"
+            id="btn-shuffle"
+            aria-label="Modo aleatório"
+            title="Aleatório"
+          >
+            <img class="icono-ui" src="assets/icons/shuffle.svg" alt="" aria-hidden="true">
+          </button>
+          <button
+            class="botao-controle-player-musica"
+            id="anterior"
+            aria-label="Música anterior"
+          >
+            <img class="icono-ui" src="assets/icons/skip-back.svg" alt="" aria-hidden="true">
+          </button>
+          <button
+            class="botao-controle-player-musica botao-destaque-player-musica"
+            id="reproduzir"
+            aria-label="Reproduzir ou pausar música"
+          >
+            <img class="icono-ui" src="assets/icons/play.svg" alt="" aria-hidden="true">
+          </button>
+          <button
+            class="botao-controle-player-musica"
+            id="proxima"
+            aria-label="Próxima música"
+          >
+            <img class="icono-ui" src="assets/icons/skip-forward.svg" alt="" aria-hidden="true">
+          </button>
+          <button
+            class="botao-controle-player-musica"
+            id="btn-loop"
+            aria-label="Repetir"
+            title="Repetir"
+          >
+            <img class="icono-ui" src="assets/icons/repeat.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+
+        
+        <div class="volume-container">
+          <span class="icone-volume"><img class="icono-ui" src="assets/icons/volume-low.svg" alt="" aria-hidden="true"></span>
+          <input
+            type="range"
+            class="volume-slider"
+            id="volume-slider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.5"
+          />
+          <span class="icone-volume"><img class="icono-ui" src="assets/icons/volume-high.svg" alt="" aria-hidden="true"></span>
+        </div>
+
+        <ul class="lista-reproducao" id="lista-faixas"></ul>
+      </div>
+    </div>
+    </main>
+
+    <audio id="audio-musica" preload="metadata"></audio>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/modals/supabaseConfig.js"></script>
+    <script src="js/modals/app-auth.js"></script>
+    <script src="js/musica.js"></script>
+  </body>
+</html>

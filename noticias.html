@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jornal Kaffee Für Alle</title>
+
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#631f08" />
+    <script src="js/noticias-theme.js"></script>
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    
+    <link rel="stylesheet" href="css/noticias.css" />
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/legacy-inline.css" />
+    <link rel="stylesheet" href="css/auth-guard.css" />
+  </head>
+
+  <body data-protected-page="true">
+    <div class="auth-guard-status" role="status" aria-live="polite">Verificando sua sessão...</div>
+    <canvas id="fundo-seda" aria-hidden="true"></canvas>
+    <canvas id="efeito-clique" aria-hidden="true"></canvas>
+
+    
+    <button
+      class="btn-voltar-index"
+      data-voltar-inicio
+      aria-label="Voltar para a página inicial"
+      title="Voltar para o início"
+    >
+      <div class="sign"><img class="icono-ui" src="assets/icons/arrow-left.svg" alt="" aria-hidden="true"></div>
+      <div class="text">Voltar</div>
+    </button>
+
+    
+    <label class="switch" aria-label="Escolher tema claro ou escuro">
+      <input
+        id="seletor-tema"
+        type="checkbox"
+        data-tema
+        aria-label="Ativar modo escuro"
+      />
+      <span class="slider round">
+        <span class="sun-moon" aria-hidden="true"><img class="icono-ui" src="assets/icons/theme.svg" alt=""></span>
+        <span class="stars" aria-hidden="true">
+          <img class="icono-ui" src="assets/icons/star.svg" alt="">
+        </span>
+      </span>
+    </label>
+
+    <main id="aplicacao">
+      <div id="home" class="pagina">
+        <section class="destaque-principal" aria-labelledby="titulo-hero">
+          <div class="destaque-principal-texto">
+            <span class="sobretitulo">destaque da casa</span>
+            <h1 id="titulo-hero">Informação que cabe na sua pausa.</h1>
+            <p>
+              Uma seleção de jornais organizada por assunto para você acompanhar
+              o dia com clareza, no ritmo de um bom café.
+            </p>
+            <button type="button" class="link-texto" data-categoria="Todos">
+              Explorar jornais
+            </button>
+          </div>
+        </section>
+
+        <section class="atalhos" aria-label="Atalhos por assunto">
+          <button type="button" data-categoria="Economia">
+            <span class="sobretitulo">Economia</span>
+            <strong>Mercados e escolhas para entender o dia.</strong>
+          </button>
+          <button type="button" data-categoria="Tecnologia">
+            <span class="sobretitulo">Tecnologia</span>
+            <strong>Ideias desenhando o próximo capítulo.</strong>
+          </button>
+          <button type="button" data-categoria="Ciência & Cultura">
+            <span class="sobretitulo">Ciência & Cultura</span>
+            <strong>Repertório para olhar o mundo por ângulos diversos.</strong>
+          </button>
+        </section>
+
+        <section class="busca-topo" aria-label="Buscar jornal">
+          <label class="campo-busca">
+            <span class="leitor-tela">Buscar jornal</span>
+            <span aria-hidden="true"><img class="icono-ui" src="assets/icons/search.svg" alt=""></span>
+            <input
+              id="campo-busca-jornais"
+              type="search"
+              placeholder="Buscar jornal..."
+            />
+          </label>
+        </section>
+
+        <section
+          class="secao-jornais"
+          id="lista-jornais"
+          aria-labelledby="titulo-jornais"
+        >
+          <div class="cabecalho-secao">
+            <div>
+              <span class="sobretitulo">navegue por assunto</span>
+              <h2 id="titulo-jornais">Jornais disponíveis</h2>
+            </div>
+          </div>
+          <p id="resultado-busca" class="resultado">
+            <strong>18</strong> jornais encontrados.
+          </p>
+
+          <div class="filtros" aria-label="Filtrar jornais">
+            <button
+              type="button"
+              class="botao-filtro"
+              data-favoritos
+              aria-pressed="false"
+            >
+              Favoritos
+            </button>
+            <button type="button" class="botao-limpar" data-limpar-filtros>
+              Limpar filtros
+            </button>
+            <button
+              type="button"
+              class="botao-filtro ativo"
+              data-categoria="Todos"
+              aria-pressed="true"
+            >
+              Todos
+            </button>
+            <button type="button" class="botao-filtro" data-categoria="Notícias">
+              Notícias
+            </button>
+            <button type="button" class="botao-filtro" data-categoria="Economia">
+              Economia
+            </button>
+            <button
+              type="button"
+              class="botao-filtro"
+              data-categoria="Tecnologia"
+            >
+              Tecnologia
+            </button>
+            <button type="button" class="botao-filtro" data-categoria="Esportes">
+              Esportes
+            </button>
+            <button
+              type="button"
+              class="botao-filtro"
+              data-categoria="Ciência & Cultura"
+            >
+              Ciência & Cultura
+            </button>
+          </div>
+          <p id="estado-vazio" class="estado-vazio" hidden>
+            Nenhum jornal encontrado.
+            <button type="button" data-limpar>limpar busca</button>
+          </p>
+
+          
+          <div id="grupos-jornais"></div>
+        </section>
+
+        <section class="secao-cafeteria" aria-labelledby="titulo-cafeteria">
+          <div class="cabecalho-secao">
+            <div>
+              <span class="sobretitulo">espaço & essência</span>
+              <h2 id="titulo-cafeteria">A Cafeteria Kaffee Für Alle</h2>
+            </div>
+            <span class="quantidade">hospitalidade & leitura</span>
+          </div>
+          <div class="grade-institucional">
+            <div class="historia">
+              <span class="sobretitulo">nossa história</span>
+              <h3>Onde o aroma do café encontra a clareza da notícia.</h3>
+              <p>
+                Fundada para ser um refúgio urbano contra a pressa do dia a dia,
+                a Kaffee Für Alle combina a excelência dos grãos selecionados com
+                o prazer de acompanhar os principais acontecimentos.
+              </p>
+              <p>
+                Nosso espaço foi feito para conversas, introspecção e uma pausa
+                revigorante, sempre acompanhada de um café bem extraído.
+              </p>
+              <a
+                class="botao-principal"
+                data-role-only="desenvolvedor"
+                href="#/admin"
+                >Gerenciar jornais</a
+              >
+            </div>
+            <div class="informacoes">
+              <article class="info-card">
+                <span class="marcador">horários</span>
+                <h3>Horário de funcionamento</h3>
+                <p>Segunda a sexta: 07:30 — 20:00</p>
+                <p>Sábados: 08:00 — 19:30</p>
+                <p>Domingos: 08:30 — 15:00</p>
+              </article>
+              <article class="info-card">
+                <span class="marcador">endereço</span>
+                <h3>Localização & contato</h3>
+                <p>Rua dos Cafeicultores, 412 — Centro Histórico</p>
+                <p>(11) 98765-4321</p>
+                <p>contato@kaffefuralle.com.br</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    
+    <template id="modelo-admin">
+      <main class="pagina pagina-interna">
+        <a class="voltar" href="#/">Voltar para o início</a>
+        <section class="painel">
+          <header class="cabecalho-painel">
+            <span class="sobretitulo">gerenciamento da cafeteria</span>
+            <h1>Painel Administrativo</h1>
+          </header>
+          <div id="admin-conteudo"></div>
+        </section>
+      </main>
+    </template>
+
+    
+    <template id="modelo-jornal">
+      <main class="pagina pagina-interna">
+        <a class="voltar" href="#/">Voltar para categorias</a>
+        <header class="cabecalho-artigo">
+          <span id="jornal-categoria" class="sobretitulo"></span>
+          <h1 id="jornal-nome"></h1>
+          <a id="jornal-site" target="_blank" rel="noopener"
+            >Visitar site oficial</a
+          >
+        </header>
+        <div
+          id="lista-manchetes"
+          class="lista-manchetes"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <p class="carregando">Carregando manchetes...</p>
+        </div>
+      </main>
+    </template>
+
+    
+    <div
+      class="modal-fundo"
+      id="modal-fundo"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-titulo"
+    >
+      <div class="modal-caixa">
+        <h3 id="modal-titulo">Confirmar</h3>
+        <p id="modal-texto">Tem certeza?</p>
+        <div class="modal-acoes">
+          <button type="button" class="modal-cancelar" data-modal-cancelar>
+            Cancelar
+          </button>
+          <button type="button" class="modal-confirmar" data-modal-confirmar>
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      id="voltar-topo"
+      class="voltar-topo escondido"
+      aria-label="Voltar ao topo"
+    >
+      ↑
+    </button>
+    <div
+      id="mensagem-acessivel"
+      class="leitor-tela"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/modals/supabaseConfig.js"></script>
+    <script src="js/modals/jornais.js"></script>
+    <script src="js/modals/app-auth.js"></script>
+    <script src="js/modals/news-access.js"></script>
+    <script src="js/noticias.js"></script>
+  </body>
+</html>

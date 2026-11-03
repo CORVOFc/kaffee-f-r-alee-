@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaffee Für Alle - Cafeteria Especial</title>
+    
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/innicial.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/components/pesquisa-globa.css">
+    <link rel="stylesheet" href="css/components/modal.css">
+
+    <link rel="stylesheet" href="css/sobre-index.css">
+    <link rel="stylesheet" href="css/site-header.css">
+    <link rel="stylesheet" href="css/site-footer.css">
+  </head>
+<body data-page="inicio">
+
+  <header class="cabecalho">
+    <div class="logo">
+      <img src="logs/Kaffee Fur Alle hb.png" alt="Kaffee Für Alle Logo">
+    </div>
+  
+    <nav class="menu">
+      <div class="gato-site">
+        <img src="logs/gatos/gatoInicio.png" alt="">
+      </div>
+      <a href="index.html">INICIO</a>
+      <a href="cardapio.html">CARDAPIO</a>
+      <a href="index.html#sobre">SOBRE NÓS</a>
+      <a href="noticias.html" data-login-required>NOTICIAS</a>
+      <a href="musica.html" data-login-required>MÚSICA</a>
+      <div class="BarraPesquisa">
+        <input type="text" class="texto" placeholder="pesquisa">
+        <button class="botao" type="button">
+          <img class="abrir" src="logs/icone de pesquisa.png" alt="Pesquisar">
+        </button>
+      </div>
+    </nav>
+  
+    <div class="icones">
+      <a href="favorito.html"><img src="assets/icons/heart.svg" alt="Favoritos"></a>
+      <a href="Carrinho/carrinho.html"><img src="assets/icons/cart.svg" alt="Carrinho"></a>
+      <a href="cliente.html"><img src="assets/icons/user.svg" alt="Perfil"></a>
+    </div>
+  </header>
+
+    
+    <section class="hero">
+        <div class="hero-slides">
+            <img src="img/fundo1.png" alt="Café especial" class="hero-slide active">
+            <img src="img/fundo2.png" alt="Café especial 2" class="hero-slide">
+            <img src="img/fundo3.png" alt="Café especial 3" class="hero-slide">
+        </div>
+
+        <div class="hero-overlay">
+            <h2 class="hero-text"><br></h2>
+        </div>
+        <div class="hero-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn" data-carousel-target="carrossel-1" data-carousel-direction="-1">&#10094;</button>
+                
+                
+                <div class="products-grid" id="carrossel-1">
+                    <p class="estado-vazio-carrossel">Carregando produtos especiais...</p>
+                </div>
+
+                <button class="carousel-btn next-btn" data-carousel-target="carrossel-1" data-carousel-direction="1">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="hero">
+        <div class="hero-slides">
+            <img src="logs/imagemDFundo.png" alt="Café especial" class="hero-slide active">
+            <img src="img/CAFEINA.png" alt="Café especial 2" class="hero-slide">
+            <img src="img/CARDAPIO.png" alt="Café especial 3" class="hero-slide">
+        </div>
+        <div class="hero-overlay">
+            <h2 class="hero-text">Promoções</h2>
+        </div>
+        <div class="hero-dots">
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </section>
+                
+    
+    <section class="products-section">
+        <div class="container">
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn" data-carousel-target="carrossel-2" data-carousel-direction="-1">&#10094;</button>
+                
+                <div class="products-grid" id="carrossel-2">
+                    
+                </div>
+
+                <button class="carousel-btn next-btn" data-carousel-target="carrossel-2" data-carousel-direction="1">&#10095;</button>
+            </div>
+        </div>
+    </section>
+
+    
+    <div class="container-mapa">
+      <img class="cat-decoration" src="logs/gatos/map.png" alt="">
+        <div class="secao-info">
+            <div class="texto-titulo">
+                MAIS PERTO DE<br>VOCÊ
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Col%C3%A9gio+Estadual+Jos%C3%A9+Bonif%C3%A1cio+Paranagu%C3%A1" target="_blank" class="botao-acao" aria-label="Abrir localização no mapa">
+                <img class="icono-ui" src="assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+            </a>
+        </div>
+
+        <div class="secao-mapa">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.275822607144!2d-48.52317802460064!3d-25.53096187749666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94db9b4bda3ee9d5%3A0xfa1b561d19f11dba!2sCol%C3%A9gio%20Estadual+Jos%C3%A9+Bonif%C3%A1cio!5e0!3m2!1spt-BR!2sbr!4v1722860000000!5m2!1spt-BR!2sbr" 
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+      
+      <section id="sobre" class="sobre" aria-label="Informações sobre a cafeteria">
+        <div class="sobre__grade">
+          <article class="sobre__cartao">
+            <h2 class="sobre__titulo">Quem somos?</h2>
+            <p class="sobre__texto">
+              Nascida no Colégio Estadual Cívico Militar José Bonifácio, a Kaffee Für Alle é fruto da iniciativa dos estudantes Rafaele Nargel e Filipi Corrêa. Unimos tecnologia e gastronomia para criar uma cafeteria onde a restrição alimentar não é um obstáculo, mas o ponto de partida para um atendimento inclusivo.
+            </p>
+          </article>
+  
+          <article class="sobre__cartao">
+            <h2 class="sobre__titulo">Nossa missão</h2>
+            <p class="sobre__texto">
+              Democratizar o acesso a uma alimentação segura e saborosa. Com 51% da população brasileira propensa a intolerâncias, nossa missão é garantir que ninguém precise abrir mão de um bom café por falta de opções adaptadas.
+            </p>
+          </article>
+  
+          <article class="sobre__cartao">
+            <h2 class="sobre__titulo">O que fazemos?</h2>
+            <p class="sobre__texto">
+              Oferecemos uma plataforma online onde você personaliza seu pedido conforme suas necessidades, como zero lactose, sem glúten ou opções para diabéticos. Unimos a segurança de ingredientes selecionados à praticidade de um sistema ágil para retirada.
+            </p>
+          </article>
+        </div>
+      </section>
+        
+        <footer class="footer-cafeteria" aria-label="Informações e contatos">
+            <div class="footer-cafeteria__conteudo">
+            <section class="footer-cafeteria__grupo">
+                <h2 class="footer-cafeteria__titulo">Onde nos encontrar</h2>
+                <address class="footer-cafeteria__texto footer-cafeteria__endereco">
+                Alameda Cel. Elizio Pereira, S/N - Estradinha, Paranaguá - PR, 83206-000
+                </address>
+            </section>
+
+            <section class="footer-cafeteria__grupo">
+                <h2 class="footer-cafeteria__titulo">Conheça-nos</h2>
+                <a class="footer-cafeteria__link" href="#sobre">Egípcios FSD</a>
+            </section>
+
+            <section class="footer-cafeteria__grupo">
+                <h2 class="footer-cafeteria__titulo">Ajuda</h2>
+                <a class="footer-cafeteria__link" href="mailto:egipcios.company@gmail.com">egipcios.company@gmail.com</a>
+            </section>
+            </div>
+        </footer>
+
+    
+    <div class="sobreposicao-modal" id="modalOverlay"></div>
+    <div class="caixa-modal" id="produtoModal">
+        <button class="botao-fechar-modal" id="btnFecharModal">&times;</button>
+        <div class="container-img-modal">
+            <img id="modalImg" src="" alt="Produto">
+        </div>
+        <div class="info-modal">
+            <h2 id="modalNome">Nome do Produto</h2>
+            <p id="modalDesc">Descrição detalhada do produto.</p>
+            <span class="preco-modal" id="modalPreco">R$ 0,00</span>
+            <button class="botao-adicionar" id="btnAdd">ADICIONAR AO CARRINHO</button>
+        </div>
+    </div>
+
+       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+       <script src="js/modals/supabaseConfig.js"></script>
+       <script src="js/modals/cart-store.js"></script>
+       <script src="js/inicial.js"></script>
+       <script src="js/modals/modal.js"></script>
+       
+       <script src="js/modals/jornais.js"></script>
+       <script src="js/modals/gato-site.js"></script>
+       <script src="js/modals/Produtos.js"></script>
+      <script src="js/modals/app-auth.js"></script>
+      <script src="js/modals/pesquisa-global.js"></script>
+</body>
+</html>

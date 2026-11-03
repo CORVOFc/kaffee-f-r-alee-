@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#4c1f0a">
+    <title>Meu perfil | Kaffee Für Alle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/components/pesquisa-globa.css">
+    <link rel="stylesheet" href="css/components/modal.css">
+    <link rel="stylesheet" href="css/auth-guard.css">
+    <link rel="stylesheet" href="css/site-header.css">
+    <link rel="stylesheet" href="css/site-footer.css">
+  </head>
+  
+  <body id="inicio" data-protected-page="true">
+    <div class="auth-guard-status" role="status" aria-live="polite">Verificando sua sessão...</div>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+  
+    <header class="cabecalho">
+      <a class="logo" href="index.html" aria-label="Kaffee Für Alle">
+        <img src="logs/Kaffee Fur Alle hb.png" alt="Kaffee Für Alle Logo">
+      </a>
+      <nav class="menu" aria-label="Navegação principal">
+        <a href="index.html">INICIO</a>
+        <a href="cardapio.html">CARDAPIO</a>
+        <a href="index.html#sobre">SOBRE NÓS</a>
+        <a href="noticias.html" data-login-required>NOTICIAS</a>
+        <a href="musica.html" data-login-required>MÚSICA</a>
+        <div class="BarraPesquisa">
+          <input type="text" class="texto" placeholder="pesquisa" aria-label="Pesquisar">
+          <button class="botao" type="button" aria-label="Pesquisar">
+            <img class="abrir icono-ui" src="assets/icons/search.svg" alt="" aria-hidden="true">
+          </button>
+        </div>
+      </nav>
+      <div class="icones" aria-label="Áreas da conta">
+        <a href="favorito.html" aria-label="Favoritos"><img src="assets/icons/heart.svg" alt=""></a>
+        <a href="Carrinho/carrinho.html" aria-label="Carrinho"><img src="assets/icons/cart.svg" alt=""></a>
+        <a class="icone-atual" href="cliente.html" aria-current="page" aria-label="Perfil — página atual"><img src="assets/icons/user.svg" alt=""></a>
+      </div>
+    </header>
+  
+    
+
+  <main class="conteudo-perfil" id="conteudo">
+    <section class="introducao" aria-labelledby="titulo-pagina">
+      <p class="sobretitulo">KAFFEE FÜR ALLE <span aria-hidden="true">·</span> SUA CONTA</p>
+      <h1 id="titulo-pagina">Meu perfil</h1>
+      <p class="introducao-texto">Um espaço tranquilo para acompanhar sua experiência na casa.</p>
+    </section>
+
+    <section class="cartao-perfil" id="perfil" aria-labelledby="titulo-perfil">
+      <div class="cartao-lateral" aria-hidden="true">
+        <span class="selo-cafe">K</span>
+        <span class="avatar-perfil" id="profile-initial">K</span>
+        <span class="legenda-avatar">MEU PERFIL</span>
+      </div>
+
+      <div class="cartao-conteudo">
+        <div class="perfil-cabecalho">
+          <div>
+            <p class="rotulo-secao">SEU ESPAÇO NA CASA</p>
+            <h2 id="titulo-perfil">Perfil de usuário</h2>
+          </div>
+          <span class="estado-sessao" id="profile-state" aria-live="polite">SEM SESSÃO</span>
+        </div>
+
+        <p class="texto-perfil" id="profile-summary">Confira seus dados e acesse os recursos disponíveis para sua conta.</p>
+
+        <dl class="dados-perfil" aria-label="Dados do perfil autenticado">
+          <div><dt>Nome</dt><dd id="profile-name">Não disponível</dd></div>
+          <div><dt>E-mail</dt><dd id="profile-email">Não disponível</dd></div>
+          <div><dt>Telefone</dt><dd id="profile-phone">Não disponível</dd></div>
+          <div><dt>Nível de acesso</dt><dd id="profile-role">Não disponível</dd></div>
+        </dl>
+        <div class="perfil-conta-acoes" id="logout-fallback" data-auth-only hidden>
+          <button class="botao-sair-conta" type="button" data-action="logout">Sair da conta</button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="estado-vazio nota-rotas" id="role-empty" aria-labelledby="role-empty-title">
+      <div class="nota-rotas-marca" aria-hidden="true"><img class="icono-ui icono-ui--medium" src="assets/icons/coffee.svg" alt=""></div>
+      <div>
+        <p class="rotulo-secao">SEU PERFIL</p>
+        <h2 id="role-empty-title">Aguardando seu perfil</h2>
+        <p id="role-empty-copy">Aguardando a sessão autenticada e o perfil ativo do Supabase.</p>
+      </div>
+    </section>
+
+    <section class="secao-hub" id="metrics-section" aria-labelledby="metrics-title" hidden>
+      <div class="hub-heading">
+        <div><p class="rotulo-secao">UM OLHAR RÁPIDO</p><h2 id="metrics-title">Seu resumo</h2></div>
+        <span class="hub-aside">Indicadores carregados conforme seu nível de acesso</span>
+      </div>
+      <div class="grade-metricas" id="metrics-grid"></div>
+    </section>
+
+    <div class="role-sections" id="role-sections" hidden></div>
+
+    <section class="secao-hub acesso-rapido" id="quick-section" aria-labelledby="quick-title" hidden>
+      <div class="hub-heading">
+        <div><p class="rotulo-secao">NAVEGAÇÃO DO PERFIL</p><h2 id="quick-title">Acesso rápido</h2></div>
+        <span class="hub-aside">Atalhos para as seções desta página</span>
+      </div>
+      <div class="grade-atalhos" id="quick-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer-cafeteria" aria-label="Informações e contatos Kaffee Für Alle">
+    <div class="footer-cafeteria__conteudo">
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Onde nos encontrar</h2>
+        <address class="footer-cafeteria__texto footer-cafeteria__endereco">Alameda Cel. Elizio Pereira, S/N - Estradinha, Paranaguá - PR, 83206-000</address>
+      </section>
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Conheça-nos</h2>
+        <a class="footer-cafeteria__link" href="index.html#sobre">Egípcios FSD</a>
+      </section>
+      <section class="footer-cafeteria__grupo">
+        <h2 class="footer-cafeteria__titulo">Ajuda</h2>
+        <a class="footer-cafeteria__link" href="mailto:egipcios.company@gmail.com">egipcios.company@gmail.com</a>
+      </section>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/modals/supabaseConfig.js"></script>
+  <script src="js/modals/cart-store.js"></script>
+  <script src="js/modals/app-auth.js"></script>
+  <script src="js/modals/pesquisa-global.js"></script>
+  <script src="js/perfil.js"></script>
+  <script src="js/perfil-data.js"></script>
+  <script src="js/modals/perfil-integracao.js"></script>
+</body>
+</html>
