@@ -1,0 +1,459 @@
+:root {
+    --vinho: #692008;
+    --vinho-escuro: #421606;
+    --marrom: #5a1f0d;
+    --borda: #985e36;
+    --creme: #fff5e7;
+    --baunilha: #f8dfad;
+    --verde: #2a994c;
+    --serifa: Georgia, "Times New Roman", serif;
+  }
+  
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; }
+  
+  body {
+    min-width: 320px;
+    margin: 0;
+    color: var(--marrom);
+    font-family: var(--serifa);
+    background:
+      radial-gradient(circle at 50% 45%, rgba(123, 51, 16, 0.25), transparent 42%),
+      linear-gradient(135deg, #54210e, var(--vinho-escuro));
+  }
+  
+  button, input { font: inherit; }
+  button { color: inherit; cursor: pointer; }
+  
+  /* ---------- Estrutura principal ---------- */
+  .pagina-checkout {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 12px;
+  }
+  
+  .checkout {
+    width: min(100%, 900px);
+    min-height: 534px;
+    position: relative;
+    overflow: hidden;
+    padding: 14px 27px 13px;
+    border: 3px solid #f3dfb9;
+    border-radius: 26px;
+    background:
+      radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.56), transparent 35%),
+      linear-gradient(115deg, #fff4e6, #f9ece1 52%, #fff8ec);
+    box-shadow:
+      inset 0 0 0 2px #8b512c,
+      0 5px 0 rgba(42, 12, 3, 0.35),
+      0 18px 32px rgba(25, 6, 0, 0.27);
+  }
+  
+  .checkout::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: 0.17;
+    background-image: radial-gradient(rgba(102, 44, 14, 0.18) 0.65px, transparent 0.65px);
+    background-size: 5px 5px;
+  }
+  
+  .progresso,
+  .conteudo { position: relative; z-index: 1; }
+  
+ /* ---------- Indicador de etapas ---------- */
+.progresso {
+    min-height: 79px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .grupo-etapa { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+  
+  .numero-etapa {
+    width: 36px;
+    height: 36px;
+    display: flex; /* Mudado de grid para flex para garantir centralização */
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 3px solid #693018;
+    border-radius: 50% !important; /* Força ser redondo */
+    background: #f8e6b9;
+    box-shadow: inset 0 0 0 2px #cba76a;
+    color: #663018;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .numero-etapa.atual { background: #e2c171; }
+  .numero-etapa.concluida { color: var(--verde); background: #5d2a16; }
+  .numero-etapa:disabled { cursor: default; opacity: 0.6; }
+  
+  .linha-etapa {
+    width: 40px;
+    height: 2px;
+    margin: 0 5px;
+    background: #71351c;
+  }
+  
+  /* ---------- Elementos compartilhados ---------- */
+  .conteudo { padding: 19px 1px 0; }
+  
+  .etapa {
+    min-height: 399px;
+    display: flex;
+    flex-direction: column;
+    animation: entrar 180ms ease-out;
+  }
+  
+  .titulo,
+  .campo label,
+  .resumo-detalhe p,
+  .linha-pedido > span {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .titulo {
+    margin: 0 0 8px 5px;
+    font-size: clamp(19px, 2.4vw, 25px);
+  }
+  
+  .campo label {
+    display: block;
+    margin: 0 0 2px 5px;
+    font-size: clamp(17px, 2.1vw, 24px);
+  }
+  
+  .campo input,
+  .entrada-com-icone {
+    width: 100%;
+    height: 42px;
+    border: 1.5px solid var(--borda);
+    border-radius: 11px;
+    background: linear-gradient(100deg, #fff0c5, var(--baunilha));
+    box-shadow: inset 0 1px 2px rgba(90, 37, 10, 0.14);
+  }
+  
+  .campo input {
+    padding: 0 14px;
+    outline: none;
+    color: #683018;
+    font-size: 23px;
+  }
+  
+  .campo input:focus,
+  .entrada-com-icone:focus-within {
+    border-color: #6f270f;
+    box-shadow: 0 0 0 3px rgba(185, 126, 43, 0.24);
+  }
+
+  
+    .entrada-com-icone.erro-campo, 
+    .campo input.erro-campo {
+    border-color: #d93838 !important;
+    box-shadow: 0 0 0 3px rgba(217, 56, 56, 0.2) !important;
+    }
+
+  
+    .mensagem-erro {
+    display: block;
+    margin-top: 4px;
+    color: #d93838;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: sans-serif; 
+    }
+  
+  .entrada-com-icone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 11px;
+    color: #9d764e;
+  }
+  
+  .entrada-com-icone input {
+    height: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .botao-continuar {
+    width: 100%;
+    max-width: 400px; /* Impede que o botão fique esparramado em telas grandes */
+    min-height: 54px;
+    display: flex; /* Mudado para flex para alinhar melhor */
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 24px;
+    margin: 0 auto; /* Centraliza o botão na tela */
+    border: 1.5px solid #a87851;
+    border-radius: 8px;
+    color: #faeac7;
+    background: linear-gradient(90deg, #712208, #591a07 55%, #702207);
+    box-shadow: inset 0 1px 0 rgba(255, 233, 190, 0.15);
+    font-size: clamp(21px, 3.2vw, 28px);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  /* Força a xícara a ter o tamanho certo */
+  .icone-xicara { 
+    width: 38px; 
+    height: 38px; 
+    flex-shrink: 0; 
+  }
+  
+  .botao-continuar:active { transform: scale(0.985); }
+  .icone-xicara { width: 48px; height: 48px; }
+  
+  /* ---------- Menu de escolha ---------- */
+  .seletor { position: relative; z-index: 3; }
+  
+  .botao-seletor,
+  .opcoes-seletor button {
+    width: 100%;
+    min-height: 42px;
+    padding: 4px 15px;
+    border: 1.5px solid var(--borda);
+    color: #693018;
+    background: linear-gradient(100deg, #fff0c5, var(--baunilha));
+    text-align: left;
+    font-size: clamp(16px, 2.1vw, 22px);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .botao-seletor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 7px;
+  }
+  
+  .seletor.aberto .botao-seletor { border-radius: 7px 7px 0 0; }
+  .seletor.aberto .seta { transform: rotate(180deg); }
+  
+  .seta { transition: transform 160ms ease; }
+  
+  .opcoes-seletor {
+    position: absolute;
+    top: calc(100% - 1px);
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    border-radius: 0 0 7px 7px;
+    box-shadow: 0 7px 9px rgba(66, 24, 5, 0.08);
+  }
+  
+  .opcoes-seletor[hidden] { display: none; }
+  .opcoes-seletor button { border-top: 0; background: #fbefdb; }
+  
+  /* ---------- Etapa 1: cliente ---------- */
+  .etapa-cliente { gap: 25px; padding: 9px 3px 8px; }
+  .etapa-cliente .botao-continuar { margin-top: auto; }
+  
+  /* ---------- Etapa 2: retirada ---------- */
+  .etapa-retirada { padding: 7px 1px 5px; }
+  
+  .endereco-fixo {
+    margin: 18px 7px 0;
+    font-size: clamp(18px, 2.4vw, 23px);
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  
+  .grade-endereco {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 86px;
+    margin: 8px 2px 0;
+  }
+  
+  .resumo-detalhe {
+    padding-top: 20px;
+    display: flex;
+    gap: 80px;
+    margin: auto 7px 15px;
+  }
+  
+  .resumo-detalhe p { margin: 0; font-size: clamp(17px, 2.3vw, 23px); }
+  .resumo-detalhe strong { display: block; margin-left: 10px; font-size: clamp(24px, 3.1vw, 29px); }
+  .resumo-detalhe strong span { margin-left: 8px; font-size: 0.82em; font-weight: 400; text-transform: uppercase; }
+  
+  /* ---------- Etapa 3: pagamento ---------- */
+  .etapa-pagamento { padding: 7px 0 5px; }
+  
+  .opcoes-pagamento {
+    display: grid;
+    grid-template-columns: minmax(0, 363px);
+    gap: 15px;
+    margin-top: 29px;
+  }
+  
+  .opcoes-pagamento.online {
+    grid-template-columns: minmax(0, 363px) minmax(0, 363px);
+    column-gap: 83px;
+  }
+  
+  .opcao-pagamento {
+    min-height: 39px;
+    padding: 4px 16px;
+    border: 1.5px solid var(--borda);
+    border-radius: 6px;
+    color: #693018;
+    background: rgba(255, 239, 198, 0.35);
+    text-align: left;
+    font-size: clamp(15px, 2.05vw, 21px);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .opcao-pagamento.ativa { background: var(--baunilha); }
+  .opcao-pagamento.google { grid-column: 2; grid-row: 1; border-color: #9b5aed; }
+  .resumo-pagamento { margin-top: auto; margin-bottom: 15px; }
+  
+  /* ---------- Etapa 4: revisão ---------- */
+  .etapa-revisao { min-height: 430px; padding: 20px 0 2px; }
+  .lista-itens { display: grid; gap: 20px; padding: 0 27px; }
+  
+  .item-pedido {
+    display: grid;
+    grid-template-columns: 124px minmax(0, 1fr) 196px;
+    align-items: center;
+    gap: 17px;
+  }
+  
+  .produto-ilustracao {
+    width: 124px;
+    height: 80px;
+    overflow: hidden;
+    border: 2px solid #8b512c;
+    border-radius: 9px;
+    background: #e6d6bd; /* Cor de fundo caso a imagem falhe */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .imagem-produto-checkout {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantém o preenchimento, mas evita esticar */
+    object-position: center; /* Centraliza o foco da imagem */
+    display: block;
+  }
+  
+  .texto-item h2 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; }
+  .selo { display: inline-block; min-width: 105px; border-radius: 9px; padding: 2px 10px; color: #ffedbd; background: #a36a23; font-size: 9px; text-align: center; text-transform: uppercase; }
+  .texto-item p { margin: 4px 0 0; color: #7c4933; font-size: 11px; text-transform: uppercase; }
+  
+  .controle-item { display: grid; justify-items: end; gap: 13px; }
+  .controle-item > strong { font-size: 23px; }
+  .linha-quantidade { display: flex; align-items: center; gap: 22px; }
+  
+  .quantidade {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border: 2px solid #7c3519;
+    border-radius: 8px;
+  }
+  
+  .quantidade button { width: 40px; height: 100%; border: 0; background: transparent; font-size: 20px; }
+  .quantidade span { min-width: 34px; text-align: center; font-size: 17px; }
+  .remover-item { border: 0; color: #8a4c2e; background: transparent; font-size: 25px; }
+  
+  .caixa-total {
+    overflow: hidden;
+    margin: auto 0 3px;
+    border: 1.5px solid var(--borda);
+    border-radius: 13px;
+    background: linear-gradient(105deg, #fff2ca, #f7dfaf);
+  }
+  
+  .linha-pedido {
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 23px;
+  }
+  
+  .linha-pedido > span { font-size: 15px; }
+  .linha-pedido > strong { font-size: 21px; }
+  
+  .linha-local {
+    gap: 18px;
+    border-bottom: 1px solid rgba(139, 81, 44, 0.42);
+  }
+  
+  .linha-local p {
+    flex: 1;
+    margin: 0;
+    overflow: hidden;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+  }
+  
+  .linha-total { min-height: 38px; }
+  .linha-total > span, .linha-total > strong { font-size: 24px; }
+  
+  @keyframes entrar {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ---------- Responsividade ---------- */
+  @media (max-width: 650px) {
+    .pagina-checkout { display: block; padding: 7px; }
+    .checkout { min-height: calc(100dvh - 14px); padding: 8px 14px 12px; border-radius: 20px; }
+    .progresso { min-height: 65px; }
+    .numero-etapa { width: 31px; height: 31px; font-size: 16px; }
+    .linha-etapa { width: clamp(15px, 7vw, 31px); margin: 0 3px; }
+    .conteudo { padding-top: 10px; }
+    .etapa { min-height: calc(100dvh - 100px); }
+    .titulo, .campo label { margin-left: 1px; }
+    .campo input, .entrada-com-icone { height: 45px; }
+    .botao-continuar { grid-template-columns: 38px auto; gap: 10px; min-height: 51px; padding: 5px 10px; }
+    .icone-xicara { width: 38px; height: 38px; }
+    .grade-endereco { grid-template-columns: 1fr; gap: 10px; }
+    .resumo-detalhe { margin-top: 100px; gap: 35px; margin-left: 1px; }
+    .opcoes-pagamento, .opcoes-pagamento.online { grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+    .opcao-pagamento.google { grid-column: auto; grid-row: auto; }
+    .etapa-revisao { min-height: calc(100dvh - 90px); padding-top: 5px; }
+    .lista-itens { gap: 13px; padding: 0 2px; }
+    .item-pedido { grid-template-columns: 78px minmax(0, 1fr); gap: 9px; }
+    .produto-ilustracao { width: 78px; height: 60px; }
+    .texto-item h2 { font-size: 10px; }
+    .texto-item p { font-size: 9px; }
+    .controle-item { grid-column: 1 / -1; grid-template-columns: 1fr auto; align-items: center; gap: 4px; }
+    .controle-item > strong { grid-column: 2; grid-row: 1; font-size: 18px; }
+    .linha-quantidade { grid-column: 1; grid-row: 1; gap: 13px; }
+    .quantidade { height: 31px; }
+    .quantidade button { width: 32px; }
+    .caixa-total { margin-top: 15px; }
+    .linha-pedido { padding: 4px 10px; }
+    .linha-local { align-items: flex-start; flex-direction: column; gap: 3px; }
+    .linha-local p { width: 100%; font-size: 13px; text-align: left; }
+  }

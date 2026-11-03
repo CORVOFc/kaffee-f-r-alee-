@@ -1,0 +1,87 @@
+:root {
+          --vinho: #4d1b08;
+          --cartao: #e1e1e1;
+          --texto: #53230f;
+         
+        }
+  
+        * { box-sizing: border-box; }
+        .sobre {
+          
+          
+          display: flex;
+          align-items: center;
+          padding: 10px 20px 70px;
+        
+         
+        }
+  
+        .sobre__grade {
+          width: min(100%, 1395px);
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 25px;
+          margin: 0 auto;
+        }
+        .sobre__cartao {
+          min-height: 260px;
+          position: relative;
+          padding: 16px 22px 69px;
+          background: var(--cartao);
+          clip-path: polygon(
+            0 0,
+            100% 0,
+            100% calc(100% - 49px),
+            39% calc(100% - 46px),
+            12% 100%,
+            12% calc(100% - 46px),
+            0 calc(100% - 46px)
+          );
+          transition: transform 180ms ease, filter 180ms ease;
+        }
+  
+        .sobre__cartao:hover {
+          transform: translateY(-5px);
+          filter: brightness(1.04);
+        }
+  
+        .sobre__titulo {
+          margin: 0 0 14px;
+          color: var(--texto);
+          font-size: clamp(21px, 2.45vw, 29px);
+          font-family: 'Cinzel Decorative', serif;
+          font-weight: 500;
+          line-height: 1.05;
+          letter-spacing: -0.04em;
+          text-transform: uppercase;
+        }
+  
+        .sobre__texto {
+          margin: 0;
+          font-size: clamp(14px, 1.38vw, 17px);
+          font-family: 'Cinzel Decorative', serif;
+          font-weight: 700;
+          line-height: 1.18;
+          text-align: justify;
+        }
+  
+        @media (max-width: 760px) {
+          .sobre { align-items: flex-start; padding: 34px 20px; }
+  
+          .sobre__grade {
+            grid-template-columns: 1fr;
+            gap: 18px;
+          }
+  
+          .sobre__cartao {
+            min-height: 230px;
+            padding: 18px 22px 62px;
+          }
+  
+          .sobre__titulo { font-size: 26px; }
+          .sobre__texto { font-size: 16px; }
+        }
+  
+        @media (prefers-reduced-motion: reduce) {
+          .sobre__cartao { transition: none; }
+        }

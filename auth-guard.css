@@ -1,0 +1,24 @@
+body[data-protected-page="true"]:not([data-auth-state="authorized"]) > :not(.auth-guard-status) {
+  visibility: hidden !important;
+}
+
+.auth-guard-status {
+  display: none;
+}
+
+body[data-protected-page="true"]:not([data-auth-state="authorized"]) > .auth-guard-status {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #4c1f0a;
+  color: #fffaf2;
+  font-family: Quicksand, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  visibility: visible !important;
+}

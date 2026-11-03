@@ -1,0 +1,20 @@
+.icono-ui{display:block;flex:none;width:24px;height:24px;object-fit:contain}
+.icono-ui--small{width:18px;height:18px}
+.icono-ui--medium{width:28px;height:28px}
+.metrica-icone .icono-ui,.modulo-icone .icono-ui,.atalho-icone .icono-ui{width:18px;height:18px}
+.toggle-password .icono-ui{width:19px;height:19px}
+.search .icono-ui{width:18px;height:18px}
+.close-btn .icono-ui{width:16px;height:16px}
+.seta .icono-ui{width:24px;height:24px}
+.favorito-produto .icono-ui,.favorito-remover .icono-ui{width:20px;height:20px}
+.botao-controle-player-musica .icono-ui{width:22px;height:22px}
+.volume-container .icono-ui{width:20px;height:20px}
+.btn-voltar .icono-ui,.botao-navegacao-musicas .icono-ui{width:24px;height:24px}
+.menu-toggle .icono-ui,.nota-rotas-marca .icono-ui,.botao .icono-ui{filter:invert(1)}
+.search .icono-ui,.seta .icono-ui,.close-btn .icono-ui,.favorito-remover .icono-ui{filter:invert(1)}
+.botao-controle-player-musica .icono-ui,.volume-container .icono-ui,.btn-voltar .icono-ui,.botao-navegacao-musicas .icono-ui{filter:invert(1)}
+.btn-voltar-index .sign .icono-ui{width:17px;height:17px;filter:invert(1)}
+.switch .sun-moon .icono-ui{width:16px;height:16px;filter:invert(1)}
+.switch #seletor-tema:checked+.slider .sun-moon .icono-ui{filter:none}
+.switch .stars .icono-ui{position:absolute;top:9px;right:4px;width:14px;height:14px;filter:invert(1)}
+.heart-label .icono-ui{width:24px;height:24px}

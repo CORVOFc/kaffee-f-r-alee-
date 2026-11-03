@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finalizar Pedido — Kaffee Für Alle</title>
+
+    <!-- Fontes e Estilos Globais -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/innicial.css" />
+    <link rel="stylesheet" href="checkout.css" />
+    <link rel="stylesheet" href="../css/auth-guard.css" />
+  </head>
+  <body data-protected-page="true">
+    <div class="auth-guard-status" role="status" aria-live="polite">Verificando sua sessão...</div>
+
+    <main class="pagina-checkout">
+      <section class="checkout" aria-label="Checkout do café">
+        <nav id="progresso" class="progresso" aria-label="Progresso do checkout"></nav>
+        <section id="conteudo" class="conteudo" aria-live="polite"></section>
+      </section>
+    </main>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/modals/supabaseConfig.js"></script>
+    <script src="../js/modals/cart-store.js"></script>
+    <script src="../js/modals/app-auth.js"></script>
+    
+    
+    <script src="../js/modals/checkout.js"></script>
+  </body>
+</html>

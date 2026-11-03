@@ -1,0 +1,436 @@
+:root {
+  --site-header-height: 100px;
+  --music-header-height: 100px;
+  --site-coffee: #4c1f0a;
+  --site-coffee-menu: #5a220c;
+  --site-terracotta: #c97b5a;
+  --site-header-text: #f5d6c6;
+}
+
+.cabecalho {
+  position: relative;
+  z-index: 400;
+  display: flex;
+  width: 100%;
+  min-height: var(--site-header-height);
+  height: var(--site-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 1.5vw, 20px);
+  padding: 1px 35px;
+  background: var(--site-coffee);
+}
+
+.cabecalho .logo {
+  display: flex;
+  flex: 0 0 auto;
+  width: clamp(180px, 20vw, 240px);
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.cabecalho .logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cabecalho .menu {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(8px, 1.4vw, 20px);
+  overflow: visible;
+  min-height: 42px;
+  padding: 7px clamp(14px, 2vw, 24px);
+  border: 2px solid var(--site-terracotta);
+  border-radius: 999px;
+  background: var(--site-coffee-menu);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .4);
+  scrollbar-width: none;
+}
+
+.cabecalho .menu::-webkit-scrollbar {
+  display: none;
+}
+
+.cabecalho .menu a,
+.cabecalho .item-menu-indisponivel {
+  color: var(--site-header-text);
+  font-family: "Cinzel Decorative", Georgia, serif;
+  font-size: clamp(12px, 1.1vw, 15px);
+  font-weight: 900;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cabecalho .menu a {
+  transition: color .2s ease, transform .2s ease;
+}
+
+.cabecalho .menu a:hover {
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+.cabecalho .item-menu-indisponivel {
+  opacity: .63;
+  cursor: not-allowed;
+}
+
+.cabecalho .BarraPesquisa {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  padding-left: 3px;
+}
+
+.cabecalho .texto {
+  width: 0;
+  max-width: 100px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font-family: "Cinzel Decorative", Georgia, serif;
+  font-size: 12px;
+  transition: width .3s, padding .3s;
+}
+
+.cabecalho .BarraPesquisa:hover > .texto,
+.cabecalho .BarraPesquisa:focus-within > .texto {
+  width: 100px;
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(201, 123, 90, .75);
+}
+
+.cabecalho .texto:disabled {
+  opacity: .58;
+}
+
+.cabecalho .texto::placeholder {
+  color: #e3c9ba;
+}
+
+.cabecalho .botao {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cabecalho .botao img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.cabecalho .icones {
+  z-index: 10;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(10px, 1.5vw, 20px);
+}
+
+.cabecalho .icones a {
+  display: inline-grid;
+  min-width: 30px;
+  min-height: 32px;
+  place-items: center;
+}
+
+.cabecalho .icones img {
+  display: block;
+  width: clamp(20px, 2vw, 26px);
+  height: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: transform .2s;
+}
+
+.cabecalho .icones a:hover img {
+  transform: scale(1.12);
+}
+
+.cabecalho .icone-atual {
+  border-radius: 50%;
+}
+
+.cabecalho .icone-atual img {
+  width: clamp(23px, 2vw, 28px);
+}
+
+.cabecalho .menu .gato-site {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  z-index: 2;
+  display: block;
+  width: 90px;
+  height: auto;
+  margin: 0;
+  margin-top: -4px;
+  pointer-events: none;
+  transition: transform .4s cubic-bezier(.25, 1, .5, 1);
+}
+
+.cabecalho .menu .gato-site img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cabecalho .menu a.gato-link-ativo {
+  position: relative;
+}
+
+.cabecalho .menu a.gato-link-ativo .gato-site {
+  top: -42px;
+  left: 30%;
+  transform: translateX(-50%);
+}
+
+.cabecalho .pesquisa-dropdown {
+  min-width: min(500px, 92vw);
+}
+
+body[data-page="musica"] .cabecalho {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(76, 31, 10, .97);
+  backdrop-filter: blur(12px);
+}
+
+body[data-page="musica"] .barra-pesquisa-musicas {
+  top: calc(var(--music-header-height) + 12px);
+}
+
+@media (max-width: 1120px) {
+  :root {
+    --site-header-height: 140px;
+    --music-header-height: 140px;
+  }
+
+  .cabecalho {
+    height: auto;
+    min-height: var(--site-header-height);
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding: 8px 22px 12px;
+  }
+
+  .cabecalho .logo {
+    width: min(200px, 48vw);
+    height: 72px;
+  }
+
+  .cabecalho .icones {
+    margin-left: auto;
+  }
+
+  .cabecalho .menu {
+    order: 3;
+    flex: 1 0 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 7px 14px;
+    border-radius: 999px;
+  }
+
+  .cabecalho .menu a,
+  .cabecalho .item-menu-indisponivel {
+    font-size: clamp(11px, 1.8vw, 14px);
+  }
+
+  .cabecalho .menu .gato-site {
+    display: none;
+  }
+
+  .cabecalho .menu a.gato-link-ativo .gato-site {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --site-header-height: 142px;
+    --music-header-height: 142px;
+  }
+
+  .cabecalho {
+    display: grid;
+    grid-template-areas: "marca icones" "navegacao navegacao";
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 8px 16px 12px;
+  }
+
+  .cabecalho .logo {
+    grid-area: marca;
+    width: min(200px, 48vw);
+    height: 68px;
+  }
+
+  .cabecalho .icones {
+    grid-area: icones;
+    gap: 8px;
+    margin-left: 0;
+  }
+
+  .cabecalho .icones img {
+    width: 22px;
+  }
+
+  .cabecalho .menu {
+    grid-area: navegacao;
+    width: 100%;
+    margin: 0;
+    gap: 12px;
+    padding: 7px 10px;
+    border-radius: 999px;
+  }
+
+  .cabecalho .menu a,
+  .cabecalho .item-menu-indisponivel {
+    font-size: 11px;
+  }
+
+  .cabecalho .BarraPesquisa {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .cabecalho {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .cabecalho .logo {
+    width: min(165px, 43vw);
+  }
+
+  .cabecalho .icones {
+    gap: 4px;
+  }
+
+  .cabecalho .icones img {
+    width: 19px;
+  }
+
+  .cabecalho .menu {
+    gap: 8px 12px;
+    padding: 7px 9px;
+  }
+
+  .cabecalho .menu a,
+  .cabecalho .item-menu-indisponivel {
+    font-size: 12px;
+  }
+
+  .cabecalho .menu {
+    gap: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .cabecalho .BarraPesquisa .botao {
+    width: 24px;
+    height: 24px;
+  }
+
+  .cabecalho .botao img {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+@media (min-width: 1121px) {
+  .cabecalho {
+    max-width: 1577px;
+    margin-right: auto;
+    margin-left: 0;
+    background: transparent;
+    isolation: isolate;
+  }
+
+  .cabecalho::before {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    background: var(--site-coffee);
+    content: "";
+    pointer-events: none;
+  }
+
+  .cabecalho .logo img {
+    position: relative;
+    left: -45px;
+    transform: scale(1.36);
+    transform-origin: center;
+  }
+
+  .cabecalho .menu {
+    flex: 0 1 min(780px, calc(100vw - 500px));
+    width: min(780px, calc(100vw - 500px));
+    max-width: 780px;
+    min-height: 52px;
+    height: 52px;
+    gap: clamp(16px, 1.6vw, 30px);
+    padding: 7px 24px;
+    transform: translate(-22px, -3px);
+  }
+
+  .cabecalho .menu a,
+  .cabecalho .item-menu-indisponivel {
+    font-size: clamp(15px, 1.1vw, 20px);
+  }
+
+  .cabecalho .icones {
+    width: 130px;
+    justify-content: space-between;
+    gap: 0;
+    position: relative;
+    top: -3px;
+  }
+
+  body[data-page="cardapio"] .cabecalho .menu .gato-site {
+    top: -42px;
+    left: 27%;
+    width: 90px;
+    
+  }
+
+  
+}

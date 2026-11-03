@@ -1,0 +1,46 @@
+.inline-style-1 {
+  opacity: 0.6;
+}
+
+.inline-style-2 {
+  color: var(--orange);
+}
+
+.inline-style-3 {
+  margin-bottom: 16px;
+}
+
+.inline-style-4 {
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.inline-style-5 {
+  overflow-x: auto;
+}
+
+.inline-style-6 {
+  text-align: center;
+  color: var(--muted);
+}
+
+.inline-style-7 {
+  display: grid;
+  gap: 12px;
+}
+.nav-ativo { color: var(--orange); }
+.bloco-espacado { margin-bottom: 16px; }
+.form-painel { border: 1px solid var(--line); padding: 16px; border-radius: 8px; margin-bottom: 16px; }
+.tabela-scroll { overflow-x: auto; }
+.layout-grid { display: grid; gap: 12px; }
+.celula-vazia { text-align: center; color: var(--muted); }
+
+.ver-mais-produtos {
+  flex: 0 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #6b4423;
+}

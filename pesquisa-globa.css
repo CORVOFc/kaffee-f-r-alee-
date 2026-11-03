@@ -1,0 +1,125 @@
+.BarraPesquisa {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.BarraPesquisa .texto {
+  width: 0;
+  max-width: 100px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: #fff;
+  font-family: "Cinzel Decorative", serif;
+  transition: width 0.3s, padding 0.3s;
+}
+
+.BarraPesquisa .botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.BarraPesquisa .botao img {
+  width: auto;
+  height: clamp(16px, 2vw, 30px);
+}
+
+.BarraPesquisa:hover > .texto,
+.BarraPesquisa:focus-within > .texto,
+.BarraPesquisa .texto:focus {
+  width: 100px;
+  margin-right: 5px;
+  padding: 2px 8px;
+  border: 1px solid #c97b5a;
+  border-radius: 15px;
+  background: rgba(43, 17, 5, 0.7);
+}
+
+.pesquisa-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  z-index: 1000;
+  display: grid;
+  width: min(720px, 92vw);
+  min-width: min(500px, 92vw);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px;
+  transform: translateX(-50%);
+  border: 2px solid #c97b5a;
+  border-radius: 18px;
+  background: #4c1f0a;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.pesquisa-dropdown[hidden] {
+  display: none !important;
+}
+
+.pesquisa-coluna h3 {
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #c97b5a;
+  color: #f5d6c6;
+  font-family: "Cinzel Decorative", serif;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.pesquisa-coluna ul {
+  max-height: 280px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.pesquisa-coluna li a,
+.pesquisa-coluna li button.pesquisa-resultado {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #f7e3c8;
+  font-family: "Quicksand", sans-serif;
+  font-size: 13px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pesquisa-coluna li a:hover,
+.pesquisa-coluna li a:focus,
+.pesquisa-coluna li button.pesquisa-resultado:hover,
+.pesquisa-coluna li button.pesquisa-resultado:focus {
+  outline: none;
+  background: rgba(201, 123, 90, 0.25);
+}
+
+.pesquisa-vazio {
+  padding: 8px 10px;
+  color: rgba(247, 227, 200, 0.5);
+  font-size: 12px;
+  font-style: italic;
+}
+
+@media (max-width: 720px) {
+  .pesquisa-dropdown {
+    max-height: 70vh;
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
